@@ -1,29 +1,19 @@
 <?php
+require_once('dbSingleton.class.php');
+
+class model {
 
 
-class model extends dbSingleton{
+    /**
+     * @var dbSingleton|PDO|void
+     */
+    public $database;
 
-
+    public $attributesType;
 
     public function __construct()
     {
-        parent::__construct();
-    }
-
-    /**
-     * Connection to the database
-     */
-    public static function dbConnection()
-    {
-        $dbName=$_ENV['DB_NAME'];
-        $dbUser=$_ENV['DB_USER'];
-        $dbPwd=$_ENV['DB_PWD'];
-        try {
-            $database = new PDO("mysql:host=localhost;dbname=$dbName;charset=utf8", $dbUser, $dbPwd);
-        } catch(Exception $e) {
-            die('Erreur : '.$e->getMessage());
-        }
-        return $database;
+        $this->database=dbSingleton::getInstance();
     }
 
 
@@ -49,10 +39,10 @@ class model extends dbSingleton{
 
         $sql="INSERT INTO $table($columnsString) VALUES ($valuesString)";
         /*var_dump($sql);die;*/
-        $statement=self::$instance->prepare($sql);
+        $statement=$this->database->prepare($sql);
         $i=1;
         foreach ($datas as $k=>&$v){
-            $type=ATTRIBUTES_TYPE[$k];
+            $type=$this->attributesType[$k];
             $statement->bindParam($i,$v,$type);
             $i++;
         }
@@ -70,7 +60,7 @@ class model extends dbSingleton{
     public function read(string $table,int $id){
         $sql="SELECT * FROM $table WHERE $table"."_id=$id";
         /*var_dump($sql);die;*/
-        $statement=self::$instance->prepare($sql);
+        $statement=$this->database->prepare($sql);
         $statement->execute();
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
@@ -84,7 +74,7 @@ class model extends dbSingleton{
     public function updateRow(string $table, array $datas,int $id){
         $sql = "UPDATE $table SET ";
         foreach ($datas as $k => $v) {
-            if (ATTRIBUTES_TYPE[$k] == PDO::PARAM_STR) {
+            if ($this->attributesType[$k] == PDO::PARAM_STR) {
                 $sql .= "$k='$v',";
             } else {
                 $sql .= "$k=$v,";
@@ -93,7 +83,7 @@ class model extends dbSingleton{
         $sql = substr($sql, 0, -1);
         $sql .= " WHERE $table" . "_id=$id";
         /*var_dump($sql);die;*/
-        $statement = self::$instance->prepare($sql);
+        $statement = $this->database->prepare($sql);
         return $statement->execute();
     }
 

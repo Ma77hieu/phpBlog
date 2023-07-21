@@ -21,6 +21,13 @@ class user extends model {
      */
     public $roles;
 
+    public $attributesType = [
+        'user_id' => PDO::PARAM_INT,
+        'email' => PDO::PARAM_STR,
+        'password' => PDO::PARAM_STR,
+        'roles' => PDO::PARAM_STR
+    ];
+
 
     public function __construct()
     {
