@@ -43,6 +43,10 @@ class model {
         $i=1;
         foreach ($datas as $k=>&$v){
             $type=$this->attributesType[$k];
+            //in case of the inserted data being a password, need to hash it
+            if($k=='password'){
+                $v=md5($v);
+            }
             $statement->bindParam($i,$v,$type);
             $i++;
         }
@@ -75,6 +79,9 @@ class model {
         $sql = "UPDATE $table SET ";
         foreach ($datas as $k => $v) {
             if ($this->attributesType[$k] == PDO::PARAM_STR) {
+                if($k=='password'){
+                    $v=md5($v);
+                }
                 $sql .= "$k='$v',";
             } else {
                 $sql .= "$k=$v,";
@@ -88,11 +95,16 @@ class model {
     }
 
     /**
+     * Delete a line from the db table
      * @param string $table name of the table on which to execute the function
      * @param int $id the id of the line in the db
      */
-    private function delete(string $table,int $id){
-
+    public function deleteRow(string $table,int $id){
+        $sql="DELETE FROM $table WHERE $table"."_id=$id";
+        /*var_dump($sql);die;*/
+        $statement=$this->database->prepare($sql);
+        $statement->execute();
+        return $statement->rowCount();
     }
 
 

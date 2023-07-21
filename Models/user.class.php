@@ -28,6 +28,8 @@ class user extends model {
         'roles' => PDO::PARAM_STR
     ];
 
+    public $tableName='user';
+
 
     public function __construct()
     {
@@ -126,6 +128,15 @@ class user extends model {
     public function updateUser($values,$id){
         $update=$this->updateRow('user',$values,$id);
         return $update;
+    }
+
+    /**
+     * Delete a user based on it's id
+     * @param int $userId Id of the user to delete
+     */
+    public function deleteUser($userId){
+        $delete=$this->deleteRow($this->tableName,$userId);
+        return $delete;
     }
 
 }
