@@ -106,7 +106,8 @@ class user extends model {
      * @param array $values array with ['attribute_name'=>'value', ... ]
      */
     public function createUser($values){
-        $creation=$this->insertRow('user',$values);
+        $values=self::hashPwd($values);
+        $creation=$this->insertRow($values);
         return $creation;
     }
 
@@ -115,7 +116,7 @@ class user extends model {
      * @param int $id the user id
      */
     public function getUser($id){
-        $read=$this->read('user',$id);
+        $read=$this->read($id);
         return $read;
     }
 
@@ -126,7 +127,8 @@ class user extends model {
      * @return mixed
      */
     public function updateUser($values,$id){
-        $update=$this->updateRow('user',$values,$id);
+        $values=self::hashPwd($values);
+        $update=$this->updateRow($values,$id);
         return $update;
     }
 
@@ -135,8 +137,43 @@ class user extends model {
      * @param int $userId Id of the user to delete
      */
     public function deleteUser($userId){
-        $delete=$this->deleteRow($this->tableName,$userId);
+        $delete=$this->deleteRow($userId);
         return $delete;
     }
+
+    /**
+     * Find user by its email
+     * @param array $criterias array of the criteria, exple:['column_name'=>value]
+     */
+    public function findUserByName($email){
+        $whereClause="WHERE email='$email'";
+        $find=$this->findRowsBy($whereClause);
+        return $find;
+    }
+
+    /**
+     * Find all users with admin rights
+     */
+    public function findAllAdminUsers(){
+        $whereClause="WHERE roles LIKE '%admin%'";
+        $find=$this->findRowsBy($whereClause);
+        return $find;
+    }
+
+    /** Detect if there is a password inside a data array with
+     * the structure ['column_name'=>value] and encode it if there is
+     * @param array $datas
+     * @return array
+     */
+    private function hashPwd(array $datas){
+        foreach($datas as $k=>$v){
+            if ($k=='password'){
+                $v=md5($v);
+            }
+        }
+        return $datas;
+    }
+
+
 
 }
