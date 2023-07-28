@@ -100,52 +100,11 @@ class user extends model {
         $this->roles = $roles;
     }
 
-
-    /**
-     * Saves a new user in the database
-     * @param array $values array with ['attribute_name'=>'value', ... ]
-     */
-    public function createUser($values){
-        $values=self::hashPwd($values);
-        $creation=$this->insertRow($values);
-        return $creation;
-    }
-
-    /**
-     * Get user's data
-     * @param int $id the user id
-     */
-    public function getUser($id){
-        $read=$this->read($id);
-        return $read;
-    }
-
-    /**
-     * Updates some attributes of a user in the database
-     * @param array $values array with ['attribute_name'=>'value', ... ]
-     * @param int $id the id of the user to be modified
-     * @return mixed
-     */
-    public function updateUser($values,$id){
-        $values=self::hashPwd($values);
-        $update=$this->updateRow($values,$id);
-        return $update;
-    }
-
-    /**
-     * Delete a user based on it's id
-     * @param int $userId Id of the user to delete
-     */
-    public function deleteUser($userId){
-        $delete=$this->deleteRow($userId);
-        return $delete;
-    }
-
     /**
      * Find user by its email
-     * @param array $criterias array of the criteria, exple:['column_name'=>value]
+     * @param string $email email of the searched user
      */
-    public function findUserByName($email){
+    public function findUserByEmail($email){
         $whereClause="WHERE email='$email'";
         $find=$this->findRowsBy($whereClause);
         return $find;
@@ -159,21 +118,5 @@ class user extends model {
         $find=$this->findRowsBy($whereClause);
         return $find;
     }
-
-    /** Detect if there is a password inside a data array with
-     * the structure ['column_name'=>value] and encode it if there is
-     * @param array $datas
-     * @return array
-     */
-    private function hashPwd(array $datas){
-        foreach($datas as $k=>$v){
-            if ($k=='password'){
-                $v=md5($v);
-            }
-        }
-        return $datas;
-    }
-
-
 
 }

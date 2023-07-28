@@ -117,6 +117,48 @@ class model {
         return $results;
     }
 
+    /**
+     * @param string $dateColumnName name of the date column in the database
+     * @param string $comparisonType can be '=','>','<','BETWEEN'
+     * @param string $firstDate the first or only argument in the where clause
+     * @param string $secondDate the second argument of the where clause in case of BETWEEN
+     */
+    public function findByDate($dateColumnName, $comparisonType, $firstDate, $secondDate=null){
+        $table=$this->tableName;
+        if ($secondDate == null){
+            $whereClause="WHERE $dateColumnName $comparisonType '$firstDate'";
+        } else {
+            $whereClause="WHERE $dateColumnName $comparisonType '$firstDate' AND '$secondDate'";
+        }
+        $sql="SELECT * FROM $table $whereClause";
+        $statement=$this->database->prepare($sql);
+        $statement->execute();
+        $results=[];
+        foreach($statement->fetchAll(PDO::FETCH_ASSOC) as $result){
+            $results[]=$result;
+        }
+        return $results;
+    }
+
+    /**
+     * Find a model by its author
+     * @param int $author id of the author of the searched model
+     */
+    public function findByAuthor($author){
+        $whereClause="WHERE author='$author'";
+        $find=$this->findRowsBy($whereClause);
+        return $find;
+    }
+
+    /**
+     * Find a model by its title
+     * @param string $title the title of the searched model
+     */
+    public function findByTitle($title){
+        $whereClause="WHERE title='$title'";
+        $find=$this->findRowsBy($whereClause);
+        return $find;
+    }
 
 }
 
