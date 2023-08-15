@@ -56,13 +56,30 @@ class model {
      * @param int $id the id of the line in the db
      * @return array ['column'=>'value', ... ]
      */
-    public function read(int $id){
+    public function findById(int $id){
         $table=$this->tableName;
         $sql="SELECT * FROM $table WHERE $table"."_id=$id";
         /*var_dump($sql);die;*/
         $statement=$this->database->prepare($sql);
         $statement->execute();
         return $statement->fetch(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Returns all rows from a table
+     * @return array ['column'=>'value', ... ]
+     */
+    public function findAll(){
+        $table=$this->tableName;
+        $sql="SELECT * FROM $table ";
+        /*var_dump($sql);die;*/
+        $statement=$this->database->prepare($sql);
+        $statement->execute();
+        $results=[];
+        foreach($statement->fetchAll(PDO::FETCH_ASSOC) as $result){
+            $results[]=$result;
+        }
+        return $results;
     }
 
     /**
