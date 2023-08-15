@@ -48,7 +48,12 @@ class model {
             $statement->bindParam($i,$v,$type);
             $i++;
         }
-        return $statement->execute();
+        if ($statement->execute()){
+            $retour=$this->database->lastInsertId();
+        } else {
+            $retour=$statement->execute();
+        }
+        return $retour;
     }
 
     /**
@@ -59,7 +64,6 @@ class model {
     public function findById(int $id){
         $table=$this->tableName;
         $sql="SELECT * FROM $table WHERE $table"."_id=$id";
-        /*var_dump($sql);die;*/
         $statement=$this->database->prepare($sql);
         $statement->execute();
         return $statement->fetch(PDO::FETCH_ASSOC);

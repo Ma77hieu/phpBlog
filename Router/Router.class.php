@@ -28,6 +28,11 @@ class Router{
                 $controller=new blogpostController();
                 $controller->getOneBlogpost();
                 break;
+            case('/blogpost/create'):
+                require $this->controllersDir.'blogpostController.php';
+                $controller=new blogpostController();
+                $controller->createBlogpost();
+                break;
             case('/'):
                 require $this->controllersDir.'homepageController.php';
                 $controller=new homepageController();

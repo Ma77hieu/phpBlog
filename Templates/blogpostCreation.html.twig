@@ -1,0 +1,21 @@
+{% extends "index.html.twig" %}
+
+{% block blogpostCreation %}
+    <form action="" method="post" class="form-example">
+        <div class="form-example">
+            <label for="title">Titre: </label>
+            <input type="text" name="title" id="title" required />
+        </div>
+        <div class="form-example">
+            <label for="summary">Résumé: </label>
+            <input type="text" name="summary" id="summary" required />
+        </div>
+        <div class="form-example">
+            <label for="content">Contenu: </label>
+            <input type="text" name="content" id="content" required />
+        </div>
+        <div class="form-example">
+            <input type="submit" value="Enregistrer" />
+        </div>
+    </form>
+{% endblock %}
