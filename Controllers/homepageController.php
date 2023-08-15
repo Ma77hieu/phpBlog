@@ -10,8 +10,6 @@ class homepageController extends baseController {
     public function displayHome(){
         $blogpost=new blogpost();
         $blogposts=$blogpost->findAll();
-        echo $this->twig->render('index.html.twig',
-            ['requested_page' => 'homepage',
-                'blogposts' => $blogposts]);
+        echo $this->twig->render('homepage.html.twig');
     }
 }
