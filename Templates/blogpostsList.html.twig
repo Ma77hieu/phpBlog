@@ -1,0 +1,9 @@
+{% extends "index.html.twig" %}
+
+{% block blogpostsList %}
+    <p>BLOGPOST LIST</p>
+    {% for blogpost in blogposts %}
+        {#{{ dump(blogpost) }}#}
+        {{ include ('blogpostCard.html.twig',{'blogpost':blogpost})}}
+    {% endfor %}
+{% endblock %}
