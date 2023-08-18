@@ -2,7 +2,7 @@
 
 {% block signup %}
     <p>signup form</p>
-    <form action="" method="post" class="signup-form">
+    <form action="signup" method="post" class="signup-form">
         <div class="signup-input">
             <label for="email">Email: </label>
             <input type="email" name="email" id="email" required />
@@ -16,7 +16,7 @@
             <input type="text" name="password_reentry" id="password_reentry" required />
         </div>
         <div class="form-example">
-            <input type="submit" value="Inscription" formaction="index.php/signup" />
+            <input type="submit" value="Inscription" />
         </div>
     </form>
 {% endblock %}

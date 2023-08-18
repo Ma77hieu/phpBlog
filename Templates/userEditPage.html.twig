@@ -1,0 +1,22 @@
+{% extends "index.html.twig" %}
+
+{% block userEditPage %}
+    <p>userEdit page</p>
+    <form action="edit?id={{ user.user_id }}" method="post" class="user_modif-form">
+        <div class="user_modif-input">
+            <label for="email">Email: </label>
+            <input type="email" name="email" id="email" value="{{ user.email }}" />
+        </div>
+        <div class="user_modif-input">
+            <label for="password">Mot de passe: </label>
+            <input type="text" name="password" id="password" />
+        </div>
+        <div class="user_modif-input">
+            <label for="roles">L'utilisateur est admin:</label>
+            <input type="checkbox" name="roles" id="roles" value="admin"/>
+        </div>
+        <div class="form-example">
+            <input type="submit" value="Enregistrer" />
+        </div>
+    </form>
+{% endblock %}

@@ -12,6 +12,7 @@ class userController extends baseController {
     const USER_ALREADY_EXISTS="Cet email est déjà utilisé";
     const ERROR_USER_NOT_FOUND="Problème de récupération des informations de l'utilisateur";
     const USER_FOUND="Voici les informations de l'utilisateur";
+    const USER_UPDATED="Les modifications ont été enregistrées";
 
 
 
@@ -59,9 +60,7 @@ class userController extends baseController {
     }
 
     public function createUser(){
-
         $user = new user();
-
         if(!$_POST){
             //display the form
             $page = 'signup.html.twig';
@@ -134,7 +133,46 @@ class userController extends baseController {
             ['userFeedbacks' => $feedback]);
     }
 
-    public function updateUser($id){
+    public function updateUser(){
+        if ($_GET['id']){
+            $userId=$_GET['id'];
+        }
+        $user = new user();
+        $userFound=$user->findById($userId);
+        if (!$userFound){
+            $page='index.html.twig';
+            $msg=new userFeedback('error',self::ERROR_USER_NOT_FOUND);
+        } else {
+            if (!$_POST) {
+                $page = 'userEditPage.html.twig';
+                $msg = new userFeedback('success', self::USER_FOUND);
+            } else {
+                //handle the form submission
+                //as we use a checkbox, if it is not checked, $_POST['roles'] is not sent by the form
+                if ($_POST['roles'] == 'admin') {
+                    $roles = 'user,admin';
+                } else {
+                    $roles = 'user';
+                }
+                $now=new DateTime();
+                $datas = ['email' => $_POST['email'],
+                    'roles' => $roles];
+                //change password only if needed
+                if($_POST['password']!=''){
+                    $datas[]=['password'=>$_POST['password']];
+                }
+                $user->updateRow($datas,$userId);
+                $page = 'usersList.html.twig';
+                $users=$user->findAll();
+                $msg = new userFeedback('success', self::USER_UPDATED);
+
+            }
+        $feedback=$msg->getFeedback();
+        echo $this->twig->render($page,
+            [ 'user' => $userFound,
+                'users' => $users,
+                'userFeedbacks' => $feedback]);
+    }
 
     }
 

@@ -2,7 +2,7 @@
 
 {% block login %}
     <p>login form</p>
-        <form action="" method="post" class="login-form">
+        <form action="login" method="post" class="login-form">
             <div class="login-input">
                 <label for="email">Email: </label>
                 <input type="email" name="email" id="email" required />
@@ -12,7 +12,7 @@
                 <input type="text" name="password" id="password" required />
             </div>
             <div class="form-example">
-                <input type="submit" value="Connexion" formaction="index.php/login" />
+                <input type="submit" value="Connexion" />
             </div>
         </form>
 {% endblock %}
