@@ -1,0 +1,18 @@
+{% extends "index.html.twig" %}
+
+{% block login %}
+    <p>login form</p>
+        <form action="" method="post" class="login-form">
+            <div class="login-input">
+                <label for="email">Email: </label>
+                <input type="email" name="email" id="email" required />
+            </div>
+            <div class="login-input">
+                <label for="password">Mot de passe: </label>
+                <input type="text" name="password" id="password" required />
+            </div>
+            <div class="form-example">
+                <input type="submit" value="Inscription" formaction="index.php/login" />
+            </div>
+        </form>
+{% endblock %}

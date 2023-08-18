@@ -89,6 +89,29 @@ class userController extends baseController {
             ['userFeedbacks' => $feedback]);
     }
 
+    public function login()
+    {
+        $user = new user();
+        if (!$_POST) {
+            //display the form
+            $page = 'login.html.twig';
+        } else {
+            //handle the form submission
+            $email=$_POST['email'];
+            $encodedPwd=md5($_POST['password']);
+            $userFound=$user->findRowsBy("WHERE email='$email' AND password='$encodedPwd'");
+            if ($userFound==[]){
+                $msg = new userFeedback('error', self::LOGIN_FAIL);
+            } else {
+                $msg = new userFeedback('success', self::LOGIN_OK);
+            }
+            $page = 'index.html.twig';
+            $feedback = $msg->getFeedback();
+        }
+        echo $this->twig->render($page,
+            ['userFeedbacks' => $feedback]);
+    }
+
     public function updateUser($id){
 
     }
@@ -102,15 +125,18 @@ class userController extends baseController {
 
     }
 
-    public function login(){
 
-    }
 
     public function saveLoginInSession($userRoles){
         $_SESSION['isLoggedIn']=true;
         $_SESSION['roles']=$userRoles;
     }
 
+    /**
+     * Checks if an email is already associated to a DB user
+     * @param $userMail
+     * @return bool
+     */
     public function checkAlreadyExistsMail($userMail){
         $existingMail=false;
         $searchUser=new User();

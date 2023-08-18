@@ -38,6 +38,11 @@ class Router{
                 $controller=new userController();
                 $controller->createUser();
                 break;
+            case('/login'):
+                require $this->controllersDir.'userController.php';
+                $controller=new userController();
+                $controller->login();
+                break;
             case('/'):
                 require $this->controllersDir.'homepageController.php';
                 $controller=new homepageController();
