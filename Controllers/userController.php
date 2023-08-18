@@ -112,6 +112,16 @@ class userController extends baseController {
             ['userFeedbacks' => $feedback]);
     }
 
+
+    public function logout(){
+        $_SESSION['isLoggedIn']=false;
+        $_SESSION['roles']=[];
+        $msg=new userFeedback('success',self::LOGOUT_OK);
+        $feedback=$msg->getFeedback();
+        echo $this->twig->render('index.html.twig',
+            ['userFeedbacks' => $feedback]);
+    }
+
     public function updateUser($id){
 
     }
@@ -149,13 +159,5 @@ class userController extends baseController {
 
     }
 
-    public function logout(){
-        $_SESSION['isLoggedIn']=false;
-        $_SESSION['roles']=[];
-        $msg=new userFeedback('success',self::LOGOUT_OK);
-        $feedback=$msg->getFeedback();
-        echo $this->twig->render('index.html.twig',
-            ['userFeedbacks' => $feedback]);
-    }
 
 }

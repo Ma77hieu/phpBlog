@@ -17,8 +17,7 @@ class Router{
 
     public function goToRoute(){
         switch ($this->uri){
-            case('blogposts'):
-                echo('uri reconnue /blogposts ');
+            case('/blogposts'):
                 require $this->controllersDir.'blogpostController.php';
                 $controller=new blogpostController();
                 $controller->displayBlogposts();
@@ -42,6 +41,11 @@ class Router{
                 require $this->controllersDir.'userController.php';
                 $controller=new userController();
                 $controller->login();
+                break;
+            case('/logout'):
+                require $this->controllersDir.'userController.php';
+                $controller=new userController();
+                $controller->logout();
                 break;
             case('/'):
                 require $this->controllersDir.'homepageController.php';
