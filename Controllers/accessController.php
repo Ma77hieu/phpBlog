@@ -4,11 +4,10 @@ class accessController extends baseController {
 
     const ACCESS_ERROR="Vous devez être connecté et avoir les droits suffisants pour accéder à cette page";
 
-    // All pages that should be accessed only with admin rights need
+    // All uri that should be accessed only with admin rights need
     // to be inside this array
-    const PAGE_ADMIN_REQUIRED=['usersList.html.twig','userCard.html.twig'];
-
-
+    const URI_ADMIN_REQUIRED=['/users',
+        '/user/'];
 
     public function __construct()
     {
@@ -42,23 +41,30 @@ class accessController extends baseController {
     }
 
     /**
-     * @param string $page name of the .html.twig file for which we want to check if
+     * @param string $route name of the route for which we want to check if
      * admin rights are required to access
      * @return bool
      */
-    public function isAdminRightRequired($page){
-        if(in_array($page,self::PAGE_ADMIN_REQUIRED)){
-            return true;
-        } else {
-            return false;
+    public function isAdminRightRequired($route)
+    {
+        $isAdminsRequired=false;
+        foreach (self::URI_ADMIN_REQUIRED as $uri) {
+            if (str_contains($route, $uri)) {
+                $isAdminsRequired= true;
+            }
         }
+        return $isAdminsRequired;
     }
 
 
-    public function checkAccessRights($page)
+    public function checkAccessRights()
     {
+        $route=strtok($_SERVER['REQUEST_URI'],'?');
+        if (str_contains($route,'/index.php')!==false){
+            $route=str_replace('/index.php','',$route);
+        }
         $isAccessOk=true;
-        $adminRightNeeded=$this->isAdminRightRequired($page);
+        $adminRightNeeded=$this->isAdminRightRequired($route);
         if ($adminRightNeeded){
             $isLoggedIn=$this->isLoggedIn();
             $isAdmin=$this->isAdmin();

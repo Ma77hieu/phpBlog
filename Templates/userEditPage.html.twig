@@ -2,7 +2,7 @@
 
 {% block userEditPage %}
     <p>userEdit page</p>
-    <form action="edit?id={{ user.user_id }}" method="post" class="user_modif-form">
+    <form action="save?id={{ user.user_id }}" method="post" class="user_modif-form">
         <div class="user_modif-input">
             <label for="email">Email: </label>
             <input type="email" name="email" id="email" value="{{ user.email }}" />

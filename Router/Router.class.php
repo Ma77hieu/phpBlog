@@ -12,7 +12,7 @@ class Router{
             $this->uri=str_replace('/index.php','',$this->uri);
         }
         $this->controllersDir=BASEDIR.'/Controllers/';
-        printf('debug: URI reconnue: '.$this->uri.'    ');
+        /*printf('debug: URI reconnue: '.$this->uri.'    ');*/
     }
 
     public function goToRoute(){
@@ -60,7 +60,12 @@ class Router{
             case('/user/edit'):
                 require $this->controllersDir.'userController.php';
                 $controller=new userController();
-                $controller->updateUser();
+                $controller->displayUpdateUser();
+                break;
+            case('/user/save'):
+                require $this->controllersDir.'userController.php';
+                $controller=new userController();
+                $controller->saveUpdateUser();
                 break;
             case('/'):
                 require $this->controllersDir.'homepageController.php';

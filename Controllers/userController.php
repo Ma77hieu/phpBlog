@@ -22,15 +22,14 @@ class userController extends baseController {
     }
 
     public function displayUsers(){
-
-        $page='usersList.html.twig';
         $rightsChecker=new accessController();
         //we check if the user can access this page that is for admin only
-        if (!($rightsChecker->checkAccessRights($page))){
+        if (!($rightsChecker->checkAccessRights())){
             $page='index.html.twig';
             $msg=new userFeedback('error',$rightsChecker::ACCESS_ERROR);
             $feedback = $msg->getFeedback();
         } else {
+            $page='usersList.html.twig';
             $user=new user();
             $users=$user->findAll();
         }
@@ -41,21 +40,24 @@ class userController extends baseController {
 
     public function getOneUser()
     {
-        if ($_GET['id']){
-            $userId=$_GET['id'];
-        }
-        $user = new user();
-        $userFound=$user->findById($userId);
-        if (!$userFound){
-            $page='index.html.twig';
-            $msg=new userFeedback('error',self::ERROR_USER_NOT_FOUND);
+        $rightsChecker = new accessController();
+        //we check if the user can access this page that is for admin only
+        if (!($rightsChecker->checkAccessRights())) {
+            $page = 'index.html.twig';
+            $msg = new userFeedback('error', $rightsChecker::ACCESS_ERROR);
+            $feedback = $msg->getFeedback();
         } else {
-            $page='userPage.html.twig';
-            $msg=new userFeedback('success',self::USER_FOUND);
+            if (!$this->userFound) {
+                $page = 'index.html.twig';
+                $msg = new userFeedback('error', self::ERROR_USER_NOT_FOUND);
+            } else {
+                $page = 'userPage.html.twig';
+                $msg = new userFeedback('success', self::USER_FOUND);
+            }
         }
-        $feedback=$msg->getFeedback();
+        $feedback = $msg->getFeedback();
         echo $this->twig->render($page,
-            [ 'user' => $userFound,
+            ['user' => $this->userFound,
                 'userFeedbacks' => $feedback]);
     }
 
@@ -133,19 +135,41 @@ class userController extends baseController {
             ['userFeedbacks' => $feedback]);
     }
 
-    public function updateUser(){
-        if ($_GET['id']){
-            $userId=$_GET['id'];
-        }
-        $user = new user();
-        $userFound=$user->findById($userId);
-        if (!$userFound){
-            $page='index.html.twig';
-            $msg=new userFeedback('error',self::ERROR_USER_NOT_FOUND);
+    public function displayUpdateUser()
+    {
+        $rightsChecker = new accessController();
+        //we check if the user can access this page that is for admin only
+        if (!($rightsChecker->checkAccessRights())) {
+            $page = 'index.html.twig';
+            $msg = new userFeedback('error', $rightsChecker::ACCESS_ERROR);
+            $feedback = $msg->getFeedback();
         } else {
-            if (!$_POST) {
+            if (!$this->userFound) {
+                $page = 'index.html.twig';
+                $msg = new userFeedback('error', self::ERROR_USER_NOT_FOUND);
+            } else {
                 $page = 'userEditPage.html.twig';
                 $msg = new userFeedback('success', self::USER_FOUND);
+            }
+        }
+        $feedback = $msg->getFeedback();
+        echo $this->twig->render($page,
+            ['user' => $this->userFound,
+                'userFeedbacks' => $feedback]);
+    }
+
+    public function saveUpdateUser()
+    {
+        $rightsChecker = new accessController();
+        //we check if the user can access this page that is for admin only
+        if (!($rightsChecker->checkAccessRights())) {
+            $page = 'index.html.twig';
+            $msg = new userFeedback('error', $rightsChecker::ACCESS_ERROR);
+            $feedback = $msg->getFeedback();
+        } else {
+            if (!$this->userFound) {
+                $page = 'index.html.twig';
+                $msg = new userFeedback('error', self::ERROR_USER_NOT_FOUND);
             } else {
                 //handle the form submission
                 //as we use a checkbox, if it is not checked, $_POST['roles'] is not sent by the form
@@ -154,36 +178,31 @@ class userController extends baseController {
                 } else {
                     $roles = 'user';
                 }
-                $now=new DateTime();
+                $now = new DateTime();
                 $datas = ['email' => $_POST['email'],
                     'roles' => $roles];
                 //change password only if needed
-                if($_POST['password']!=''){
-                    $datas[]=['password'=>$_POST['password']];
+                if ($_POST['password'] != '') {
+
+                    $datas = $datas + ['password' => $_POST['password']];
                 }
-                $user->updateRow($datas,$userId);
+                $user = new user();
+                $user->updateRow($datas, $this->userFound['user_id']);
                 $page = 'usersList.html.twig';
-                $users=$user->findAll();
+                $users = $user->findAll();
                 $msg = new userFeedback('success', self::USER_UPDATED);
-
             }
-        $feedback=$msg->getFeedback();
+        }
+        $feedback = $msg->getFeedback();
         echo $this->twig->render($page,
-            [ 'user' => $userFound,
-                'users' => $users,
+            ['users' => $users,
                 'userFeedbacks' => $feedback]);
-    }
-
     }
 
     public function deleteUser($id){
 
     }
 
-    public function checkCredentials(){
-        //check if the password and the password reentry are equivalent
-
-    }
 
     public function saveLoginInSession($userId){
         $user=new user();
