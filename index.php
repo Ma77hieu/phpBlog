@@ -18,6 +18,24 @@ spl_autoload_register(function ($class_name) {
     if(file_exists($fullPath)) include $fullPath;
 });
 
+//initialize user's session
+session_start();
+
+//initialize session login status if needed
+if(!isset($_SESSION['isLoggedIn'])){
+    $_SESSION['isLoggedIn']=false;
+}
+
+//initialize role storage for the user if needed
+if(!isset($_SESSION['roles'])){
+    $_SESSION['roles']='[]';
+}
+
+/*foreach($_SESSION as $k=>$v){
+    var_dump("debug session: $k = $v");
+    echo('</br>');
+}*/
+
 require('Router/Router.class.php');
 $router=new Router();
 $router->goToRoute();

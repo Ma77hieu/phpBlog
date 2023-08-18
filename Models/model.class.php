@@ -23,6 +23,7 @@ class model {
 
     /**
      * Add a line to one of the DB table
+     * If successfull, returns the id of the inserted line
      * @param array $datas array with ['column_name'=>'value']
      */
     public function insertRow(array $datas){

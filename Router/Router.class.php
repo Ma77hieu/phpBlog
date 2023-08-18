@@ -33,6 +33,11 @@ class Router{
                 $controller=new blogpostController();
                 $controller->createBlogpost();
                 break;
+            case('/signup'):
+                require $this->controllersDir.'userController.php';
+                $controller=new userController();
+                $controller->createUser();
+                break;
             case('/'):
                 require $this->controllersDir.'homepageController.php';
                 $controller=new homepageController();
