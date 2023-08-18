@@ -1,4 +1,5 @@
 <?php
+require('Controllers/accessController.php');
 
 class userController extends baseController {
 
@@ -20,10 +21,21 @@ class userController extends baseController {
     }
 
     public function displayUsers(){
-        $user=new user();
-        $users=$user->findAll();
-        echo $this->twig->render('usersList.html.twig',
-            ['users' => $users]);
+
+        $page='usersList.html.twig';
+        $rightsChecker=new accessController();
+        //we check if the user can access this page that is for admin only
+        if (!($rightsChecker->checkAccessRights($page))){
+            $page='index.html.twig';
+            $msg=new userFeedback('error',$rightsChecker::ACCESS_ERROR);
+            $feedback = $msg->getFeedback();
+        } else {
+            $user=new user();
+            $users=$user->findAll();
+        }
+        echo $this->twig->render($page,
+        ['userFeedbacks' => $feedback,
+            'users' => $users]);
     }
 
     public function getOneUser()
@@ -58,7 +70,7 @@ class userController extends baseController {
             if ($_POST['password'] == $_POST['password_reentry']) {
                 $datas = ['email' => $_POST['email'],
                     'password' => $_POST['password'],
-                    'roles' => '[user]'];
+                    'roles' => 'user'];
                 //check if the email is already used
                 $alreadyUsedMail = $this->checkAlreadyExistsMail($_POST['email']);
                 if ($alreadyUsedMail) {
@@ -71,9 +83,7 @@ class userController extends baseController {
                         $msg = new userFeedback('error', self::USER_NOT_CREATED);
                     } else {
                         $user = new User();
-                        $userConnected = $user->findById($userCreation);
-                        /*var_dump($userConnected);die;*/
-                        $this->saveLoginInSession($userConnected['roles']);
+                        $this->saveLoginInSession($userCreation);
                         $page = 'index.html.twig';
                         $userFound = $user->findById($userCreation);
                         $msg = new userFeedback('success', self::USER_CREATED);
@@ -103,6 +113,7 @@ class userController extends baseController {
             if ($userFound==[]){
                 $msg = new userFeedback('error', self::LOGIN_FAIL);
             } else {
+                $this->saveLoginInSession($userFound[0]['user_id']);
                 $msg = new userFeedback('success', self::LOGIN_OK);
             }
             $page = 'index.html.twig';
@@ -118,6 +129,7 @@ class userController extends baseController {
         $_SESSION['roles']=[];
         $msg=new userFeedback('success',self::LOGOUT_OK);
         $feedback=$msg->getFeedback();
+        session_unset();
         echo $this->twig->render('index.html.twig',
             ['userFeedbacks' => $feedback]);
     }
@@ -135,9 +147,10 @@ class userController extends baseController {
 
     }
 
-
-
-    public function saveLoginInSession($userRoles){
+    public function saveLoginInSession($userId){
+        $user=new user();
+        $userConnected = $user->findById($userId);
+        $userRoles=explode(',',$userConnected['roles']);
         $_SESSION['isLoggedIn']=true;
         $_SESSION['roles']=$userRoles;
     }

@@ -1,0 +1,8 @@
+{% extends "index.html.twig" %}
+
+{% block usersList %}
+    <p>USERS LIST</p>
+    {% for user in users %}
+        {{ include ('userCard.html.twig',{'user':user})}}
+    {% endfor %}
+{% endblock %}

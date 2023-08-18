@@ -47,6 +47,11 @@ class Router{
                 $controller=new userController();
                 $controller->logout();
                 break;
+            case('/users'):
+                require $this->controllersDir.'userController.php';
+                $controller=new userController();
+                $controller->displayUsers();
+                break;
             case('/'):
                 require $this->controllersDir.'homepageController.php';
                 $controller=new homepageController();
