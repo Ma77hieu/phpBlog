@@ -1,5 +1,4 @@
 <?php
-include_once 'Constants.php';
 
 class dbSingleton{
 

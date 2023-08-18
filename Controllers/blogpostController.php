@@ -2,12 +2,6 @@
 
 class blogpostController extends baseController {
 
-    const BLOGPOST_FOUND="Voici votre blogpost";
-    const ERROR_BLOGPOST_NOT_FOUND="Problème dans la récupération du post";
-    const ERROR_BLOGPOST_CREATION="Problème lors de la création du blogpost";
-    const BLOGPOST_CREATED="Votre post a été enregistré";
-
-
     public function __construct()
     {
         parent::__construct();
@@ -29,10 +23,10 @@ class blogpostController extends baseController {
         $blogpostFound=$blogpost->findById($blogpostId);
         if (!$blogpostFound){
             $page='index.html.twig';
-            $msg=new userFeedback('error',self::ERROR_BLOGPOST_NOT_FOUND);
+            $msg=new userFeedback('error',ERROR_BLOGPOST_NOT_FOUND);
         } else {
             $page='blogpostPage.html.twig';
-            $msg=new userFeedback('success',self::BLOGPOST_FOUND);
+            $msg=new userFeedback('success',BLOGPOST_FOUND);
         }
         $feedback=$msg->getFeedback();
         echo $this->twig->render($page,
@@ -59,11 +53,11 @@ class blogpostController extends baseController {
             $blogpostCreation=$blogpost->insertRow($datas);
             if (!$blogpostCreation){
                 $page='blogpostCreation.html.twig';
-                $msg=new userFeedback('error',self::ERROR_BLOGPOST_CREATION);
+                $msg=new userFeedback('error',ERROR_BLOGPOST_CREATION);
             } else {
                 $page='blogpostPage.html.twig';
                 $blogpostFound=$blogpost->findById($blogpostCreation);
-                $msg=new userFeedback('success',self::BLOGPOST_CREATED);
+                $msg=new userFeedback('success',BLOGPOST_CREATED);
             }
             $feedback=$msg->getFeedback();
 

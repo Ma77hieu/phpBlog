@@ -2,7 +2,7 @@
 
 class accessController extends baseController {
 
-    const ACCESS_ERROR="Vous devez être connecté et avoir les droits suffisants pour accéder à cette page";
+
 
     // All uri that should be accessed only with admin rights need
     // to be inside this array

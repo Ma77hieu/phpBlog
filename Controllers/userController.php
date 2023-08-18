@@ -3,19 +3,6 @@ require('Controllers/accessController.php');
 
 class userController extends baseController {
 
-    const USER_CREATED="Vous êtes désormais enregistré.";
-    const USER_NOT_CREATED="Problème lors de l'enregistrement.";
-    const LOGIN_FAIL="Vos identifiants ne sont pas reconnus, veuillez rééssayer.";
-    const LOGIN_OK="Vous êtes connecté.";
-    const LOGOUT_OK="Vous avez été déconnecté.";
-    const WRONG_PWD_REENTRY="Les deux mots de passe insérés ne correspondent pas, merci de réesayer";
-    const USER_ALREADY_EXISTS="Cet email est déjà utilisé";
-    const ERROR_USER_NOT_FOUND="Problème de récupération des informations de l'utilisateur";
-    const USER_FOUND="Voici les informations de l'utilisateur";
-    const USER_UPDATED="Les modifications ont été enregistrées";
-
-
-
     public function __construct()
     {
         parent::__construct();
@@ -26,7 +13,7 @@ class userController extends baseController {
         //we check if the user can access this page that is for admin only
         if (!($rightsChecker->checkAccessRights())){
             $page='index.html.twig';
-            $msg=new userFeedback('error',$rightsChecker::ACCESS_ERROR);
+            $msg=new userFeedback('error',ACCESS_ERROR);
             $feedback = $msg->getFeedback();
         } else {
             $page='usersList.html.twig';
@@ -44,15 +31,15 @@ class userController extends baseController {
         //we check if the user can access this page that is for admin only
         if (!($rightsChecker->checkAccessRights())) {
             $page = 'index.html.twig';
-            $msg = new userFeedback('error', $rightsChecker::ACCESS_ERROR);
+            $msg = new userFeedback('error', ACCESS_ERROR);
             $feedback = $msg->getFeedback();
         } else {
             if (!$this->userFound) {
                 $page = 'index.html.twig';
-                $msg = new userFeedback('error', self::ERROR_USER_NOT_FOUND);
+                $msg = new userFeedback('error', ERROR_USER_NOT_FOUND);
             } else {
                 $page = 'userPage.html.twig';
-                $msg = new userFeedback('success', self::USER_FOUND);
+                $msg = new userFeedback('success', USER_FOUND);
             }
         }
         $feedback = $msg->getFeedback();
@@ -76,23 +63,23 @@ class userController extends baseController {
                 $alreadyUsedMail = $this->checkAlreadyExistsMail($_POST['email']);
                 if ($alreadyUsedMail) {
                     $page = 'signup.html.twig';
-                    $msg = new userFeedback('error', self::USER_ALREADY_EXISTS);
+                    $msg = new userFeedback('error', USER_ALREADY_EXISTS);
                 } else {
                     $userCreation = $user->insertRow($datas);
                     if (!$userCreation) {
                         $page = 'signup.html.twig';
-                        $msg = new userFeedback('error', self::USER_NOT_CREATED);
+                        $msg = new userFeedback('error', USER_NOT_CREATED);
                     } else {
                         $user = new User();
                         $this->saveLoginInSession($userCreation);
                         $page = 'index.html.twig';
                         $userFound = $user->findById($userCreation);
-                        $msg = new userFeedback('success', self::USER_CREATED);
+                        $msg = new userFeedback('success', USER_CREATED);
                     }
                 }
             } else {
                 $page = 'signup.html.twig';
-                $msg = new userFeedback('error', self::WRONG_PWD_REENTRY);
+                $msg = new userFeedback('error', WRONG_PWD_REENTRY);
             }
             $feedback = $msg->getFeedback();
         }
@@ -112,10 +99,10 @@ class userController extends baseController {
             $encodedPwd=md5($_POST['password']);
             $userFound=$user->findRowsBy("WHERE email='$email' AND password='$encodedPwd'");
             if ($userFound==[]){
-                $msg = new userFeedback('error', self::LOGIN_FAIL);
+                $msg = new userFeedback('error', LOGIN_FAIL);
             } else {
                 $this->saveLoginInSession($userFound[0]['user_id']);
-                $msg = new userFeedback('success', self::LOGIN_OK);
+                $msg = new userFeedback('success', LOGIN_OK);
             }
             $page = 'index.html.twig';
             $feedback = $msg->getFeedback();
@@ -128,7 +115,7 @@ class userController extends baseController {
     public function logout(){
         $_SESSION['isLoggedIn']=false;
         $_SESSION['roles']=[];
-        $msg=new userFeedback('success',self::LOGOUT_OK);
+        $msg=new userFeedback('success',LOGOUT_OK);
         $feedback=$msg->getFeedback();
         session_unset();
         echo $this->twig->render('index.html.twig',
@@ -141,15 +128,15 @@ class userController extends baseController {
         //we check if the user can access this page that is for admin only
         if (!($rightsChecker->checkAccessRights())) {
             $page = 'index.html.twig';
-            $msg = new userFeedback('error', $rightsChecker::ACCESS_ERROR);
+            $msg = new userFeedback('error', ACCESS_ERROR);
             $feedback = $msg->getFeedback();
         } else {
             if (!$this->userFound) {
                 $page = 'index.html.twig';
-                $msg = new userFeedback('error', self::ERROR_USER_NOT_FOUND);
+                $msg = new userFeedback('error', ERROR_USER_NOT_FOUND);
             } else {
                 $page = 'userEditPage.html.twig';
-                $msg = new userFeedback('success', self::USER_FOUND);
+                $msg = new userFeedback('success', USER_FOUND);
             }
         }
         $feedback = $msg->getFeedback();
@@ -164,12 +151,12 @@ class userController extends baseController {
         //we check if the user can access this page that is for admin only
         if (!($rightsChecker->checkAccessRights())) {
             $page = 'index.html.twig';
-            $msg = new userFeedback('error', $rightsChecker::ACCESS_ERROR);
+            $msg = new userFeedback('error', ACCESS_ERROR);
             $feedback = $msg->getFeedback();
         } else {
             if (!$this->userFound) {
                 $page = 'index.html.twig';
-                $msg = new userFeedback('error', self::ERROR_USER_NOT_FOUND);
+                $msg = new userFeedback('error', ERROR_USER_NOT_FOUND);
             } else {
                 //handle the form submission
                 //as we use a checkbox, if it is not checked, $_POST['roles'] is not sent by the form
@@ -190,7 +177,7 @@ class userController extends baseController {
                 $user->updateRow($datas, $this->userFound['user_id']);
                 $page = 'usersList.html.twig';
                 $users = $user->findAll();
-                $msg = new userFeedback('success', self::USER_UPDATED);
+                $msg = new userFeedback('success', USER_UPDATED);
             }
         }
         $feedback = $msg->getFeedback();

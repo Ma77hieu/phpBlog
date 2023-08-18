@@ -1,5 +1,5 @@
 <?php
-
+require('../Translations/fr/userDisplayedMessages.php');
 class baseController {
 
     /**
@@ -16,6 +16,7 @@ class baseController {
 
     public function __construct()
     {
+
         $this->generateTwig();
         $this->getUserId();
     }
