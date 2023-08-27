@@ -36,8 +36,7 @@ class blogpostController extends baseController {
 
     public function createBlogpost(){
         $blogpost = new blogpost();
-        //TODO to variabilise
-        $userId=16;
+        $userId=$_SESSION['id'];
         $now=new DateTime();
 
         if(!$_POST){
