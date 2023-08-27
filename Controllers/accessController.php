@@ -5,7 +5,8 @@ class accessController extends baseController {
 
 
     // All uri that should be accessed only with admin rights need
-    // to be inside this array
+    // to be inside this array, the controller checks for each value of the array if
+    // it is INCLUDED inside the uri (not an exact match)
     const URI_ADMIN_REQUIRED=['/users',
         '/user/'];
 
@@ -20,10 +21,18 @@ class accessController extends baseController {
      */
     public function isAdmin()
     {
-        if (in_array('admin', $_SESSION['roles'])) {
-            return true;
-        } else {
+        if (!$_SESSION['id']) {
             return false;
+        } else {
+            $userId = $_SESSION['id'];
+            $user = new user();
+            $userConnected = $user->findById($userId);
+            $userRoles = explode(',', $userConnected['roles']);
+            if (in_array('admin', $userRoles)) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
@@ -33,7 +42,7 @@ class accessController extends baseController {
      * @return bool
      */
     public function isLoggedIn(){
-        if ($_SESSION['isLoggedIn']){
+        if ($_SESSION['id']){
             return true;
         } else {
             return false;
@@ -57,6 +66,11 @@ class accessController extends baseController {
     }
 
 
+    /**
+     * Checks if the route requires adin rights and if the user has admin rights
+     * returns true for access granted and false for access denied
+     * @return bool
+     */
     public function checkAccessRights()
     {
         $route=strtok($_SERVER['REQUEST_URI'],'?');
@@ -68,7 +82,7 @@ class accessController extends baseController {
         if ($adminRightNeeded){
             $isLoggedIn=$this->isLoggedIn();
             $isAdmin=$this->isAdmin();
-            echo("isLoggedIn: $isLoggedIn, isAdmin: $isAdmin");
+            /*echo("user_id: $isLoggedIn, isAdmin: $isAdmin");*/
             if(!($isLoggedIn && $isAdmin)){
                 $isAccessOk=false;
             }

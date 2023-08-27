@@ -1,5 +1,5 @@
 <?php
-require('../Translations/fr/userDisplayedMessages.php');
+require(BASEDIR.'/Translations/fr/userDisplayedMessages.php');
 class baseController {
 
     /**

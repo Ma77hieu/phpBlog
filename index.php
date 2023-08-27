@@ -22,18 +22,15 @@ spl_autoload_register(function ($class_name) {
 session_start();
 
 //initialize session login status if needed
-if(!isset($_SESSION['isLoggedIn'])){
-    $_SESSION['isLoggedIn']=false;
+if(!isset($_SESSION['id'])){
+    $_SESSION['id']=null;
 }
 
-//initialize role storage for the user if needed
-if(!isset($_SESSION['roles'])){
-    $_SESSION['roles']='[]';
-}
-
+//UNCOMMENT FOLLOWING FOR DEBUG
 /*foreach($_SESSION as $k=>$v){
     var_dump("debug session: $k = $v");
     echo('</br>');
+    var_dump($v);
 }*/
 
 require('Router/Router.class.php');

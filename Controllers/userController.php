@@ -192,11 +192,7 @@ class userController extends baseController {
 
 
     public function saveLoginInSession($userId){
-        $user=new user();
-        $userConnected = $user->findById($userId);
-        $userRoles=explode(',',$userConnected['roles']);
-        $_SESSION['isLoggedIn']=true;
-        $_SESSION['roles']=$userRoles;
+        $_SESSION['id']=$userId;
     }
 
     /**
