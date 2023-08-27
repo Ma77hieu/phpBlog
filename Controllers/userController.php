@@ -1,5 +1,5 @@
 <?php
-require('Controllers/accessController.php');
+
 
 class userController extends baseController {
 

@@ -1,0 +1,22 @@
+{% extends "index.html.twig" %}
+
+{% block blogpostEditPage %}
+    <p>blogpostEdit page</p>
+    <form action="save?id={{ blogpost.blogpost_id }}" method="post" class="blogpost_modif-form">
+        <div class="blogpost_modif-input">
+            <label for="title">Titre: </label>
+            <input type="text" name="title" id="title" value="{{ blogpost.title }}" />
+        </div>
+        <div class="blogpost_modif-input">
+            <label for="summary">Résumé: </label>
+            <input type="text" name="summary" id="summary" value="{{ blogpost.summary }}"/>
+        </div>
+        <div class="blogpost_modif-input">
+            <label for="content">Contenu:</label>
+            <input type="text" name="content" id="content" value="{{ blogpost.content }}"/>
+        </div>
+        <div class="form-example">
+            <input type="submit" value="Enregistrer" />
+        </div>
+    </form>
+{% endblock %}

@@ -89,4 +89,19 @@ class accessController extends baseController {
         }
         return $isAccessOk;
     }
+
+    /**
+     * Returns true if the current user is the author of the blogpost or if
+     * it has admin rights
+     * @param array $blogpost
+     * @return bool
+     */
+    public function isBlogpostOwner($blogpost){
+        $author=$blogpost['author'];
+        if($author==$_SESSION['id'] || $this->isAdmin()){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

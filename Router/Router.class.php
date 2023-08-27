@@ -32,6 +32,16 @@ class Router{
                 $controller=new blogpostController();
                 $controller->createBlogpost();
                 break;
+            case('/blogpost/edit'):
+                require $this->controllersDir.'blogpostController.php';
+                $controller=new blogpostController();
+                $controller->displayUpdateBlogpost();
+                break;
+            case('/blogpost/save'):
+                require $this->controllersDir.'blogpostController.php';
+                $controller=new blogpostController();
+                $controller->saveUpdateBlogpost();
+                break;
             case('/signup'):
                 require $this->controllersDir.'userController.php';
                 $controller=new userController();
