@@ -32,8 +32,10 @@ class comment extends model{
         'title' => PDO::PARAM_STR,
         'text' => PDO::PARAM_STR,
         'author' => PDO::PARAM_INT,
+        'blogpost' => PDO::PARAM_INT,
         'creation_date' => PDO::PARAM_STR,
-        'modification_date' => PDO::PARAM_STR
+        'modification_date' => PDO::PARAM_STR,
+        'is_validated' => PDO::PARAM_BOOL
     ];
 
     public $tableName='comment';

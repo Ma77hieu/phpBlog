@@ -17,8 +17,8 @@ class blogpostController extends baseController {
 
     public function getOneBlogpost()
     {
-        if ($_GET['id']){
-            $blogpostId=$_GET['id'];
+        if ($_GET['blogpost_id']){
+            $blogpostId=$_GET['blogpost_id'];
         }
         $blogpost = new blogpost();
         $blogpostFound=$blogpost->findById($blogpostId);
@@ -29,9 +29,11 @@ class blogpostController extends baseController {
             $page='blogpostPage.html.twig';
             $msg=new userFeedback('success',BLOGPOST_FOUND);
         }
+        $commentsFound=$this->getBlogpostComments();
         $feedback=$msg->getFeedback();
         echo $this->twig->render($page,
             [ 'blogpost' => $blogpostFound,
+                'comments'=>$commentsFound,
                 'userFeedbacks' => $feedback]);
     }
 
@@ -75,12 +77,12 @@ class blogpostController extends baseController {
      */
     public function displayUpdateBlogpost()
     {
-        $blogpostId=$_GET['id'];
+        $blogpostId=$_GET['blogpost_id'];
         $blogpost=new blogpost();
         $blogpostFound=$blogpost->findById($blogpostId);
         $rightsChecker = new accessController();
         //we check if the user tries to access one of its own blogposts
-        if (!($rightsChecker->isBlogpostOwner($blogpostFound))) {
+        if (!($rightsChecker->isUpdateAuthorized($blogpostFound))) {
             $page = 'blogpostsList.html.twig';
             $msg = new userFeedback('error', NOT_OWNER);
         } else {
@@ -91,7 +93,7 @@ class blogpostController extends baseController {
                 $msg = new userFeedback('error', BLOGPOST_NOT_FOUND);
             } else {
                 $page = 'blogpostEditPage.html.twig';
-                $msg = new userFeedback('success', USER_FOUND);
+                $msg = new userFeedback('success', BLOGPOST_FOUND);
             }
         }
         $feedback = $msg->getFeedback();
@@ -109,7 +111,7 @@ class blogpostController extends baseController {
      */
     public function saveUpdateBlogpost()
     {
-        $blogpostId=$_GET['id'];
+        $blogpostId=$_GET['blogpost_id'];
         $blogpost=new blogpost();
         $blogpostFound=$blogpost->findById($blogpostId);
         $rightsChecker = new accessController();
@@ -117,7 +119,7 @@ class blogpostController extends baseController {
         $blogposts=$blogpost->findAll($orderBy);
         $page = 'blogpostsList.html.twig';
         //we check if the user tries to access one of its own blogposts
-        if (!($rightsChecker->isBlogpostOwner($blogpostFound))) {
+        if (!($rightsChecker->isUpdateAuthorized($blogpostFound))) {
             $msg = new userFeedback('error', NOT_OWNER);
         } else {
             if (!$blogpostFound) {
@@ -142,6 +144,23 @@ class blogpostController extends baseController {
 
     public function deleteBlogpost($id){
 
+    }
+
+    /**
+     * Returns an array of all the comments related to the blogpost whose id
+     * is defined inside the url blogpost_id parameter
+     * @return array
+     */
+    public function getBlogpostComments(){
+        $blogpostId=$_GET['blogpost_id'];
+        if(!$blogpostId){
+            $blogpostId=$_POST['blogpost_id'];
+        }
+        $comment=new comment();
+        $where="WHERE blogpost=$blogpostId AND is_validated=true";
+        $orderBy='ORDER BY creation_date DESC';
+        $comments=$comment->findRowsBy($where,$orderBy);
+        return $comments;
     }
 
 

@@ -78,7 +78,6 @@ class model {
     public function findAll($orderBy=''){
         $table=$this->tableName;
         $sql="SELECT * FROM $table $orderBy";
-        /*var_dump($sql);die;*/
         $statement=$this->database->prepare($sql);
         $statement->execute();
         $results=[];
@@ -118,7 +117,6 @@ class model {
     public function deleteRow(int $id){
         $table=$this->tableName;
         $sql="DELETE FROM $table WHERE $table"."_id=$id";
-        /*var_dump($sql);die;*/
         $statement=$this->database->prepare($sql);
         $statement->execute();
         return $statement->rowCount();
@@ -126,11 +124,12 @@ class model {
 
     /**
      * Find one or several rows of a specific database table based on the where clause passed in parameter
-     * @param string $whereClause
+     * @param string $whereClause the 'where ...' clause to add to the query
+     * @param string $orderBy the 'order by ...' clause to add to the query
      */
-    public function findRowsBy(string $whereClause){
+    public function findRowsBy(string $whereClause,string $orderBy=''){
         $table=$this->tableName;
-        $sql="SELECT * FROM $table $whereClause";
+        $sql="SELECT * FROM $table $whereClause $orderBy";
         $statement=$this->database->prepare($sql);
         $statement->execute();
         $results=[];

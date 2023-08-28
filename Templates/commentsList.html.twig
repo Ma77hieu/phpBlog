@@ -1,10 +1,7 @@
 {% extends "index.html.twig" %}
 
-{% block blogpostPage %}
-    <p>BLOGPOST VIEW PAGE</p>
-    <p> BLOGPOST number {{ blogpost.blogpost_id }}</p>
-    <p>{{ blogpost.content }}</p>
-
+{% block commentsList %}
+    <p>COMMENTS LIST</p>
     {% for comment in comments %}
         {{ include ('commentCard.html.twig',{'comment':comment})}}
     {% endfor %}

@@ -42,6 +42,31 @@ class Router{
                 $controller=new blogpostController();
                 $controller->saveUpdateBlogpost();
                 break;
+            case('/comments'):
+                require $this->controllersDir.'commentController.php';
+                $controller=new commentController();
+                $controller->displayCommentsAdmin();
+                break;
+            case('/comment'):
+                require $this->controllersDir.'commentController.php';
+                $controller=new commentController();
+                $controller->getOneComment();
+                break;
+            case('/comment/create'):
+                require $this->controllersDir.'commentController.php';
+                $controller=new commentController();
+                $controller->createComment();
+                break;
+            case('/comment/edit'):
+                require $this->controllersDir.'commentController.php';
+                $controller=new commentController();
+                $controller->displayUpdateComment();
+                break;
+            case('/comment/save'):
+                require $this->controllersDir.'commentController.php';
+                $controller=new commentController();
+                $controller->saveUpdateComment();
+                break;
             case('/signup'):
                 require $this->controllersDir.'userController.php';
                 $controller=new userController();
@@ -83,7 +108,7 @@ class Router{
                 $controller->displayHome();
                 break;
             default:
-                var_dump('404 ERROR');
+                echo('404 ERROR');
                 break;
         }
     }

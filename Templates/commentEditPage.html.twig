@@ -1,0 +1,18 @@
+{% extends "index.html.twig" %}
+
+{% block commentEditPage %}
+    <p>commentEdit page</p>
+    <form action="save?comment_id={{ comment.comment_id }}&blogpost_id={{ blogpost.blogpost_id }}" method="post" class="comment_modif-form">
+        <div class="comment_modif-input">
+            <label for="title">Titre: </label>
+            <input type="text" name="title" id="title" value="{{ comment.title }}" />
+        </div>
+        <div class="comment_modif-input">
+            <label for="content">Contenu:</label>
+            <input type="text" name="content" id="content" value="{{ comment.text }}"/>
+        </div>
+        <div class="form-example">
+            <input type="submit" value="Enregistrer" />
+        </div>
+    </form>
+{% endblock %}

@@ -21,3 +21,13 @@ const BLOGPOST_CREATED="Votre post a été enregistré.";
 const NOT_OWNER="Vous ne pouvez pas modifier ce blogpost.";
 const BLOGPOST_NOT_FOUND="Nous n'avons pas réussi à récupérer les information du blogpost demandé.";
 const BLOGPOST_UPDATED="Votre post a été mis à jour.";
+
+//used in commentController
+const COMMENT_FOUND="Voici votre commentaire.";
+const ERROR_COMMENT_NOT_FOUND="Problème dans la récupération du commentaire.";
+const ERROR_COMMENT_CREATION="Problème lors de la création du commentaire.";
+const COMMENT_CREATED="Votre commentaire a été enregistré, il sera visible dès sa validation par un modérateur.";
+const NOT_OWNER_COMMENT="Vous ne pouvez pas modifier ce commentaire.";
+const COMMENT_NOT_FOUND="Nous n'avons pas réussi à récupérer les information du commentaire demandé.";
+const COMMENT_UPDATED="Votre commentaire a été mis à jour, il sera visible dès sa validation par un modérateur.";
+const COMMENT_NOT_UPDATED="Problème lors de la mise à jour du commentaire.";

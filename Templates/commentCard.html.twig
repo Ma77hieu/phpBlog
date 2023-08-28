@@ -1,0 +1,7 @@
+
+{% block commentCard %}
+    <p> COMMENT n° {{ comment.comment_id }}</p>
+    <p>titre commentaire: {{ comment.title }}</p>
+    <p>commentaire: {{ comment.text }}</p>
+    <a href="comment/edit?blogpost_id={{ blogpost.blogpost_id }}&comment_id={{ comment.comment_id }}">modification</a>
+{% endblock %}

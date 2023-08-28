@@ -8,7 +8,8 @@ class accessController extends baseController {
     // to be inside this array, the controller checks for each value of the array if
     // it is INCLUDED inside the uri (not an exact match)
     const URI_ADMIN_REQUIRED=['/users',
-        '/user/'];
+        '/user/',
+        '/comments'];
 
     public function __construct()
     {
@@ -91,13 +92,13 @@ class accessController extends baseController {
     }
 
     /**
-     * Returns true if the current user is the author of the blogpost or if
-     * it has admin rights
-     * @param array $blogpost
+     * Returns true if the current user is admin or if it is the author of the blogpost or comment
+     * whose id is passed as parameter
+     * @param array $model
      * @return bool
      */
-    public function isBlogpostOwner($blogpost){
-        $author=$blogpost['author'];
+    public function isUpdateAuthorized($model){
+        $author=$model['author'];
         if($author==$_SESSION['id'] || $this->isAdmin()){
             return true;
         } else {
