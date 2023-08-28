@@ -72,11 +72,12 @@ class model {
 
     /**
      * Returns all rows from a table
+     * @param string $orderBy string to add to the sql request if an "order by" is needed
      * @return array ['column'=>'value', ... ]
      */
-    public function findAll(){
+    public function findAll($orderBy=''){
         $table=$this->tableName;
-        $sql="SELECT * FROM $table ";
+        $sql="SELECT * FROM $table $orderBy";
         /*var_dump($sql);die;*/
         $statement=$this->database->prepare($sql);
         $statement->execute();

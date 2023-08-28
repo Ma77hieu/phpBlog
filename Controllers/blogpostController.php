@@ -9,7 +9,8 @@ class blogpostController extends baseController {
 
     public function displayBlogposts(){
         $blogpost=new blogpost();
-        $blogposts=$blogpost->findAll();
+        $orderBy='ORDER BY creation_date DESC';
+        $blogposts=$blogpost->findAll($orderBy);
         echo $this->twig->render('blogpostsList.html.twig',
             ['blogposts' => $blogposts]);
     }
@@ -84,7 +85,8 @@ class blogpostController extends baseController {
             $msg = new userFeedback('error', NOT_OWNER);
         } else {
             if (!$blogpostFound) {
-                $blogposts=$blogpost->findAll();
+                $orderBy='ORDER BY creation_date DESC';
+                $blogposts=$blogpost->findAll($orderBy);
                 $page = 'blogpostsList.html.twig';
                 $msg = new userFeedback('error', BLOGPOST_NOT_FOUND);
             } else {
@@ -111,7 +113,8 @@ class blogpostController extends baseController {
         $blogpost=new blogpost();
         $blogpostFound=$blogpost->findById($blogpostId);
         $rightsChecker = new accessController();
-        $blogposts=$blogpost->findAll();
+        $orderBy='ORDER BY creation_date DESC';
+        $blogposts=$blogpost->findAll($orderBy);
         $page = 'blogpostsList.html.twig';
         //we check if the user tries to access one of its own blogposts
         if (!($rightsChecker->isBlogpostOwner($blogpostFound))) {
