@@ -42,6 +42,11 @@ class Router{
                 $controller=new blogpostController();
                 $controller->saveUpdateBlogpost();
                 break;
+            case('/blogpost/delete'):
+                require $this->controllersDir.'blogpostController.php';
+                $controller=new blogpostController();
+                $controller->deleteBlogpost();
+                break;
             case('/comments'):
                 require $this->controllersDir.'commentController.php';
                 $controller=new commentController();

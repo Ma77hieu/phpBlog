@@ -142,8 +142,26 @@ class blogpostController extends baseController {
                 'userFeedbacks' => $feedback]);
     }
 
-    public function deleteBlogpost($id){
-
+    public function deleteBlogpost(){
+        $blogpostId=$_GET['blogpost_id'];
+        $blogpost=new blogpost();
+        $blogpostFound=$blogpost->findById($blogpostId);
+        $rightsChecker = new accessController();
+        $page='index.html.twig';
+        if (!($rightsChecker->isUpdateAuthorized($blogpostFound))) {
+            $msg = new userFeedback('error', NOT_OWNER);
+        } else {
+            if (!$blogpostFound) {
+                $msg = new userFeedback('error', BLOGPOST_NOT_FOUND);
+            } else {
+                $blogpost = new blogpost();
+                $blogpost->deleteRow($blogpostId);
+                $msg = new userFeedback('success', BLOGPOST_DELETED);
+            }
+        }
+        $feedback = $msg->getFeedback();
+        echo $this->twig->render($page,
+            ['userFeedbacks' => $feedback]);
     }
 
     /**

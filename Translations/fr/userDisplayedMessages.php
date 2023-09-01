@@ -21,6 +21,7 @@ const BLOGPOST_CREATED="Votre post a été enregistré.";
 const NOT_OWNER="Vous ne pouvez pas modifier ce blogpost.";
 const BLOGPOST_NOT_FOUND="Nous n'avons pas réussi à récupérer les information du blogpost demandé.";
 const BLOGPOST_UPDATED="Votre post a été mis à jour.";
+const BLOGPOST_DELETED="Le post a bien été supprimé.";
 
 //used in commentController
 const COMMENT_FOUND="Voici votre commentaire.";
