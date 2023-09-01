@@ -16,6 +16,10 @@ class Router{
     }
 
     public function goToRoute(){
+        //remove duplicates from the uri (can happen when same route called multiple times)
+        $uriBlocks=explode('/',$this->uri);
+        $cleanUriBlocks=array_unique($uriBlocks);
+        $this->uri=implode('/',$cleanUriBlocks);
         switch ($this->uri){
             case('/blogposts'):
                 require $this->controllersDir.'blogpostController.php';
