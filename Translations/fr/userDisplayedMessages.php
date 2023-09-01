@@ -32,3 +32,5 @@ const NOT_OWNER_COMMENT="Vous ne pouvez pas modifier ce commentaire.";
 const COMMENT_NOT_FOUND="Nous n'avons pas réussi à récupérer les information du commentaire demandé.";
 const COMMENT_UPDATED="Votre commentaire a été mis à jour, il sera visible dès sa validation par un modérateur.";
 const COMMENT_NOT_UPDATED="Problème lors de la mise à jour du commentaire.";
+const VISIBILITY_UPDATED="La visbilité du commentaire à été mise à jour.";
+const COMMENT_DELETED="Le commentaire a bien été supprimé.";

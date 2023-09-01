@@ -155,8 +155,61 @@ class commentController extends baseController {
                 'userFeedbacks' => $feedback]);
     }
 
-    public function deleteComment($id){
+    public function deleteComment(){
+        $commentId=$_GET['comment_id'];
+        $comment=new comment();
+        $commentFound=$comment->findById($commentId);
+        $rightsChecker = new accessController();
+        $page='homepage.html.twig';
+        if (!($rightsChecker->isUpdateAuthorized($commentFound))) {
+            $msg = new userFeedback('error', NOT_OWNER);
+        } else {
+            if (!$commentFound) {
+                $msg = new userFeedback('error', COMMENT_NOT_FOUND);
+            } else {
+                $comment = new comment();
+                $comment->deleteRow($commentId);
+                $msg = new userFeedback('success', COMMENT_DELETED);
+            }
+        }
+        $feedback = $msg->getFeedback();
+        echo $this->twig->render($page,
+            ['userFeedbacks' => $feedback]);
+    }
 
+    public function changeCommentVisibility(){
+        $commentId=intval($_GET['comment_id']);
+        $comment=new comment();
+        $commentFound=$comment->findById($commentId);
+        $rightsChecker = new accessController();
+        $page = 'commentsList.html.twig';
+        //we check if the user tries to access one of its own comments
+        if (!($rightsChecker->isUpdateAuthorized($commentFound))) {
+            $msg = new userFeedback('error', NOT_OWNER_COMMENT);
+        } else {
+            if (!$commentFound) {
+                $msg = new userFeedback('error', COMMENT_NOT_FOUND);
+            } else {
+                $currentValidationState=$commentFound['is_validated'];
+                if($currentValidationState==1){
+                    $validation=0;
+                }else{
+                    $validation=1;
+                }
+                $datas = ['is_validated' => $validation];
+                $comment = new comment();
+                $comment->updateRow($datas, $commentId);
+                $msg = new userFeedback('success', VISIBILITY_UPDATED);
+
+            }
+        }
+        $orderBy='ORDER BY creation_date DESC';
+        $comments=$comment->findAll($orderBy);
+        $feedback = $msg->getFeedback();
+        echo $this->twig->render($page,
+            [
+                'comments'=> $comments,
+                'userFeedbacks' => $feedback]);
     }
 
 

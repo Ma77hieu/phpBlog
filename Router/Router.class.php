@@ -72,6 +72,16 @@ class Router{
                 $controller=new commentController();
                 $controller->saveUpdateComment();
                 break;
+            case('/comment/moderate'):
+                require $this->controllersDir.'commentController.php';
+                $controller=new commentController();
+                $controller->changeCommentVisibility();
+                break;
+            case('/comment/delete'):
+                require $this->controllersDir.'commentController.php';
+                $controller=new commentController();
+                $controller->deleteComment();
+                break;
             case('/signup'):
                 require $this->controllersDir.'userController.php';
                 $controller=new userController();
