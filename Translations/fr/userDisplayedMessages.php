@@ -1,5 +1,7 @@
 <?php
 
+const ERROR_404="Erreur 404: Page introuvable, vous avez été redirigé sur la page d'accueil";
+
 //used in userController:
 const USER_CREATED="Vous êtes désormais enregistré.";
 const USER_NOT_CREATED="Problème lors de l'enregistrement.";

@@ -12,7 +12,6 @@ class Router{
             $this->uri=str_replace('/index.php','',$this->uri);
         }
         $this->controllersDir=BASEDIR.'/Controllers/';
-        /*printf('debug: URI reconnue: '.$this->uri.'    ');*/
     }
 
     public function goToRoute(){
@@ -20,6 +19,7 @@ class Router{
         $uriBlocks=explode('/',$this->uri);
         $cleanUriBlocks=array_unique($uriBlocks);
         $this->uri=implode('/',$cleanUriBlocks);
+        /*printf('debug: URI reconnue: "'.$this->uri.'"    ');*/
         switch ($this->uri){
             case('/blogposts'):
                 require $this->controllersDir.'blogpostController.php';
@@ -121,13 +121,16 @@ class Router{
                 $controller=new userController();
                 $controller->saveUpdateUser();
                 break;
+            case(''):
             case('/'):
                 require $this->controllersDir.'homepageController.php';
                 $controller=new homepageController();
-                $controller->displayHome();
+                $controller->displayHome(false);
                 break;
             default:
-                echo('404 ERROR');
+                require $this->controllersDir.'homepageController.php';
+                $controller=new homepageController();
+                $controller->displayHome(true);
                 break;
         }
     }
