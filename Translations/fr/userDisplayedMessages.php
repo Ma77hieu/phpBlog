@@ -36,3 +36,17 @@ const COMMENT_UPDATED="Votre commentaire a été mis à jour, il sera visible d�
 const COMMENT_NOT_UPDATED="Problème lors de la mise à jour du commentaire.";
 const VISIBILITY_UPDATED="La visbilité du commentaire à été mise à jour.";
 const COMMENT_DELETED="Le commentaire a bien été supprimé.";
+
+//used in contactController
+const CONTACT_FORM_ERROR="Problème dans la soumission du formulaire de contact, merci de réessayer.";
+const CONTACT_FORM_OK="Merci de m'avoir contacté, je reviens vers vous au plus vite.";
+const MISSING_LASTNAME="Merci d'indiquer votre nom.";
+const MISSING_FIRSTNAME="Merci d'indiquer votre prénom.";
+const MISSING_EMAIL="Merci de m'indiquer votre email.";
+const MISSING_MESSAGE="Merci d'ajouter un message'.";
+const NOT_EMAIL_TYPE="Le format de l'adresse mail n'est pas valide.";
+const MAIL_SUBJECT="Nouvelle soumission du formulaire de contact sur mon blog.";
+const LASTNAME_FIELD_NAME="Nom: ";
+const FIRSTNAME_FIELD_NAME="Prénom: ";
+const EMAIL_FIELD_NAME="Email: ";
+const MESSAGE_FIELD_NAME="Message: ";

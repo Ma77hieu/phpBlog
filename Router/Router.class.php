@@ -121,6 +121,11 @@ class Router{
                 $controller=new userController();
                 $controller->saveUpdateUser();
                 break;
+            case('/contact'):
+                require $this->controllersDir.'contactController.php';
+                $controller=new contactController();
+                $controller->sendContactForm();
+                break;
             case(''):
             case('/'):
                 require $this->controllersDir.'homepageController.php';
