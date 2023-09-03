@@ -1,9 +1,35 @@
 {% extends "index.html.twig" %}
 
 {% block blogpostPage %}
-    <p>BLOGPOST VIEW PAGE</p>
+    {% if blogpost.modification_date is null %}
+        {% set wording_date,date = 'Créé le: ',blogpost.creation_date %}
+    {% else %}
+        {% set wording_date,date = 'Modifié le: ',blogpost.modification_date %}
+    {% endif %}
+    <div class="container">
+        <div class="row">
+            <div class="main_pricing roomy-100">
+                <div class="col-md-8 col-md-offset-2 col-sm-12">
+                    <div class="head_title text-center">
+                        <h2>{{ blogpost.title }}</h2>
+                        </br>
+                        <div class="separator_auto"></div>
+                        </br>
+                        <h5>{{ blogpost.summary }}</h5>
+                        </br>
+                        </br>
+                        <p>{{ blogpost.content }}</p>
+                        <p>{{ wording_date }}{{ date }}</p>
+                        <p>Publié par: {{ author }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{#    <p>BLOGPOST VIEW PAGE</p>
     <p> BLOGPOST number {{ blogpost.blogpost_id }}</p>
-    <p>{{ blogpost.content }}</p>
+    <p>{{ blogpost.content }}</p>#}
 
     {% for comment in comments %}
         {{ include ('commentCard.html.twig',{'comment':comment})}}

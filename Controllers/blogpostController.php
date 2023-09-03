@@ -27,12 +27,16 @@ class blogpostController extends baseController {
             $msg=new userFeedback('error',ERROR_BLOGPOST_NOT_FOUND);
         } else {
             $page='blogpostPage.html.twig';
+            $user=new user();
+            $userFound=$user->findById(intval($blogpostFound['author']));
+            $author=$userFound['email'];
             $msg=new userFeedback('success',BLOGPOST_FOUND);
         }
         $commentsFound=$this->getBlogpostComments();
         $feedback=$msg->getFeedback();
         echo $this->twig->render($page,
             [ 'blogpost' => $blogpostFound,
+                'author' => $author,
                 'comments'=>$commentsFound,
                 'userFeedbacks' => $feedback]);
     }
