@@ -3,3 +3,4 @@ tests.php
 .idea
 .gitignore
 /vendor/
+/Templates/cache/

@@ -1,9 +1,24 @@
 {% extends "index.html.twig" %}
 
 {% block blogpostsList %}
-    <p>BLOGPOST LIST</p>
-    {% for blogpost in blogposts %}
-        {#{{ dump(blogpost) }}#}
-        {{ include ('blogpostCard.html.twig',{'blogpost':blogpost})}}
-    {% endfor %}
+    <section id="blog" class="blog">
+        <div class="container">
+            <div class="row">
+                <div class="main_blog text-center roomy-100">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <div class="head_title text-center">
+                            <h2>RECENT BLOGS</h2>
+                            <div class="separator_auto"></div>
+                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
+                                sed diam nonummy nibh euismod tincidunt tation ullamcorper
+                                suscipit lobortis nisl ut aliquip ex ea commodo consequat. </p>
+                        </div>
+                    </div>
+                    {% for blogpost in blogposts %}
+                        {{ include ('blogpostCard.html.twig',{'blogpost':blogpost})}}
+                    {% endfor %}
+                </div>
+            </div><!--End off row -->
+        </div><!--End off container -->
+    </section><!-- End off Blog section-->
 {% endblock %}

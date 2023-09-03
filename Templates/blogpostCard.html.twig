@@ -1,6 +1,20 @@
-{#{% extends "blogpostList.html.twig" %}#}
-
 {% block blogpostCard %}
-    <p> BLOGPOST CARD number {{ blogpost.blogpost_id }}</p>
-    <p>{{ blogpost.content }}</p>
+    {% if blogpost.modification_date is null %}
+        {% set wording_date,date = 'Créé le: ',blogpost.creation_date %}
+    {% else %}
+        {% set wording_date,date = 'Modifié le: ',blogpost.modification_date %}
+    {% endif %}
+
+    <div class="col-md-4">
+        <div class="blog_item m-top-20">
+            <div class="blog_item_img">
+                <p>{{ blogpost.title }}</p>
+            </div>
+            <div class="blog_text roomy-40">
+                <h6>{{ blogpost.summary }}</h6>
+                <p>{{ wording_date }}{{ date }}</p>
+                <a href="blogpost?blogpost_id={{ blogpost.blogpost_id}}">Voir le blogpost</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}
