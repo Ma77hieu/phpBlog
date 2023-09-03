@@ -1,7 +1,6 @@
-{% extends "index.html.twig" %}
 
 {% block commentCreation %}
-    <form action="" method="post" class="form-example">
+    <form action="comment/create?blogpost_id={{ blogpost.blogpost_id }}" method="post" class="form-example">
         <div class="form-example">
             <label for="title">Titre: </label>
             <input type="text" name="title" id="title" required />

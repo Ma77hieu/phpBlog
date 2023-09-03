@@ -26,12 +26,33 @@
             </div>
         </div>
     </div>
+    <div class="container">
+        <div class="row">
+            <div class="main_pricing roomy-100">
+                <div class="col-md-8 col-md-offset-2 col-sm-12">
+                    {% for comment in comments %}
+                        {{ include ('commentCard.html.twig',{'comment':comment})}}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="main_pricing roomy-100">
+                <div class="col-md-8 col-md-offset-2 col-sm-12">
+                        {{ include ('commentCreation.html.twig')}}
+                </div>
+            </div>
+        </div>
+    </div>
 
 {#    <p>BLOGPOST VIEW PAGE</p>
     <p> BLOGPOST number {{ blogpost.blogpost_id }}</p>
     <p>{{ blogpost.content }}</p>#}
 
-    {% for comment in comments %}
-        {{ include ('commentCard.html.twig',{'comment':comment})}}
-    {% endfor %}
+
+
+    {#{{ include ('commentCreation.html.twig')}}#}
 {% endblock %}
