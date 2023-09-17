@@ -1737,3 +1737,10 @@ Footer Section style
     text-decoration: none;
 
 }
+.user-card{
+    margin: 20px 100px 40px 100px;
+}
+
+.usr-edit-btn{
+    margin:50px 0;
+}

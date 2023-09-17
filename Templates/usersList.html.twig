@@ -1,8 +1,14 @@
 {% extends "index.html.twig" %}
 
 {% block usersList %}
-    <p>USERS LIST</p>
-    {% for user in users %}
-        {{ include ('userCard.html.twig',{'user':user})}}
-    {% endfor %}
+    <section>
+        <div class="container">
+        <h1>Liste des utilisateurs</h1>
+        <div class="row">
+
+            {% for user in users %}
+                {{ include ('userCard.html.twig',{'user':user}) }}
+            {% endfor %}
+        </div></div>
+    </section>
 {% endblock %}

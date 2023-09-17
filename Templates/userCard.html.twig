@@ -1,6 +1,9 @@
 {% block userCard %}
-    <p> USER CARD number {{ user.user_id }}</p>
-    <p>email:{{ user.email }}</p>
-    <p>roles:{{ user.roles }}</p>
-    <a href="user/edit?id={{ user.user_id }}">modification</a>
+
+        <div class="user-card">
+            <p><span class="text-primary">USER ID:</span> {{ user.user_id }}</p>
+            <p><span class="text-primary">email:</span> {{ user.email }}</p>
+            <p><span class="text-primary">roles:</span> {{ user.roles }}</p>
+            <a class="btn btn-primary m-top-10" href="user/edit?id={{ user.user_id }}">Modification</a>
+        </div>
 {% endblock %}
