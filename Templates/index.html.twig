@@ -163,8 +163,8 @@
             </nav>
 
 
-            <!--Home Sections-->
-            <section style="margin-top:200px;">
+            <!--Following div is to ensure content is not displayed behind topbar menu-->
+            <div style="margin-top:80px;">
             {% if userFeedbacks | length %}
                 {% block user_feedback %}
                     <p>{{ userFeedbacks.text }} {{ userFeedbacks.type }}</p>

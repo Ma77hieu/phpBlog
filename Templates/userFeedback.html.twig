@@ -3,7 +3,7 @@
     {% for feedback in userFeedbacks %}
         {#{% for message in message.type %}#}
         {% if feedback.type=='error' %}
-            {% set feedback_class = 'feedback_error' %}
+            {% set feedback_class = 'alert alert-danger' %}
             {% set feedback_type = 'ERREUR: ' %}
         {% endif %}
         {% if feedback.type=='warning' %}
@@ -11,10 +11,10 @@
             {% set feedback_type = 'Attention: ' %}
         {% endif %}
         {% if feedback.type=='success' %}
-            {% set feedback_class = 'feedback_success' %}
+            {% set feedback_class = 'alert alert-success' %}
             {% set feedback_type = 'Succès: ' %}
         {% endif %}
         {#{% endfor %}#}
-    <p class="{{ feedback_class }}"> {{ feedback_type }}{{ feedback.text }}</p>
+    <div class="{{ feedback_class }}" role="alert"> {{ feedback_type }}{{ feedback.text }}</div>
     {% endfor %}
 {% endblock %}
