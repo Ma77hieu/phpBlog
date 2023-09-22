@@ -8,7 +8,7 @@
     {% endif %}
     <div class="container">
         <div class="row">
-            <div class="main_pricing roomy-100">
+            <div class="main_pricing">
                 <div class="col-md-8 col-md-offset-2 col-sm-12">
                     <div class="head_title text-center">
                         <h2>{{ blogpost.title }}</h2>
@@ -28,23 +28,26 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="main_pricing roomy-100">
+            {#<div class="main_pricing roomy-100">#}
                 <div class="col-md-8 col-md-offset-2 col-sm-12">
+                    {% if comments %}
                     {% for comment in comments %}
+                        <p>comment {{ comment.comment_id }}</p>
                         {{ include ('commentCard.html.twig',{'comment':comment})}}
                     {% endfor %}
+                    {% else %}
+                        <p> Ce blogpost n'a pas encore de commentaires, n'hésitez pas à écrire le votre</p>
+                    {% endif %}
                 </div>
-            </div>
+            {#</div>#}
         </div>
     </div>
 
     <div class="container">
         <div class="row">
-            <div class="main_pricing roomy-100">
-                <div class="col-md-8 col-md-offset-2 col-sm-12">
+                <div class="col-md-8 col-md-offset-2 col-sm-12 m-top-20">
                         {{ include ('commentCreation.html.twig')}}
                 </div>
-            </div>
         </div>
     </div>
 

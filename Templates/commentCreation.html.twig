@@ -1,16 +1,17 @@
 
 {% block commentCreation %}
+    <h2 class="m-bottom-20">Écrire un commentaire:</h2>
     <form action="comment/create?blogpost_id={{ blogpost.blogpost_id }}" method="post" class="form-example">
-        <div class="form-example">
-            <label for="title">Titre: </label>
-            <input type="text" name="title" id="title" required />
+        <div class="form-group">
+            <label for="comment_title" class="col-md-2 p-r-5 text-right">Titre: </label>
+            <input type="text" class="col" name="comment_title" id="comment_title" required />
         </div>
-        <div class="form-example">
-            <label for="content">Contenu: </label>
-            <input type="text" name="content" id="content" required />
+        <div class="form-group">
+            <label class="col-md-2 p-r-5 text-right" for="comment_content">Contenu: </label>
+            <textarea class="col" rows="3" name="comment_content" id="comment_content" required ></textarea>
         </div>
-        <div class="form-example">
-            <input type="submit" value="Enregistrer" />
+        <div class="form-group ">
+            <input class="btn btn-primary col-md-offset-2" type="submit" value="Enregistrer"/>
         </div>
     </form>
 {% endblock %}
