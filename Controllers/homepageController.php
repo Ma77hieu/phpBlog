@@ -23,6 +23,7 @@ class homepageController extends baseController {
         }
         echo $this->twig->render('homepage.html.twig',
             [
-                'userFeedbacks' => $feedback]);
+                'userFeedbacks' => $feedback,
+                'loggedIn'=>$this->isLoggedIn]);
     }
 }

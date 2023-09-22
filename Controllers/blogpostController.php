@@ -12,7 +12,8 @@ class blogpostController extends baseController {
         $orderBy='ORDER BY creation_date DESC';
         $blogposts=$blogpost->findAll($orderBy);
         echo $this->twig->render('blogpostsList.html.twig',
-            ['blogposts' => $blogposts]);
+            ['blogposts' => $blogposts,
+                'loggedIn'=>$this->isLoggedIn]);
     }
 
     public function getOneBlogpost()
@@ -38,6 +39,7 @@ class blogpostController extends baseController {
             [ 'blogpost' => $blogpostFound,
                 'author' => $author,
                 'comments'=>$commentsFound,
+                'loggedIn'=>$this->isLoggedIn,
                 'userFeedbacks' => $feedback]);
     }
 
@@ -70,6 +72,7 @@ class blogpostController extends baseController {
         }
         echo $this->twig->render($page,
             [ 'blogpost' => $blogpostFound,
+                'loggedIn'=>$this->isLoggedIn,
                 'userFeedbacks' => $feedback]);
     }
 
@@ -85,14 +88,14 @@ class blogpostController extends baseController {
         $blogpost=new blogpost();
         $blogpostFound=$blogpost->findById($blogpostId);
         $rightsChecker = new accessController();
+        $orderBy='ORDER BY creation_date DESC';
+        $blogposts=$blogpost->findAll($orderBy);
         //we check if the user tries to access one of its own blogposts
         if (!($rightsChecker->isUpdateAuthorized($blogpostFound))) {
             $page = 'blogpostsList.html.twig';
             $msg = new userFeedback('error', NOT_OWNER);
         } else {
             if (!$blogpostFound) {
-                $orderBy='ORDER BY creation_date DESC';
-                $blogposts=$blogpost->findAll($orderBy);
                 $page = 'blogpostsList.html.twig';
                 $msg = new userFeedback('error', BLOGPOST_NOT_FOUND);
             } else {
@@ -104,6 +107,7 @@ class blogpostController extends baseController {
         echo $this->twig->render($page,
             ['blogposts'=>$blogposts,
                 'blogpost' => $blogpostFound,
+                'loggedIn'=>$this->isLoggedIn,
                 'userFeedbacks' => $feedback]);
     }
 
@@ -143,6 +147,7 @@ class blogpostController extends baseController {
         $feedback = $msg->getFeedback();
         echo $this->twig->render($page,
             ['blogposts' => $blogposts,
+                'loggedIn'=>$this->isLoggedIn,
                 'userFeedbacks' => $feedback]);
     }
 
@@ -165,7 +170,8 @@ class blogpostController extends baseController {
         }
         $feedback = $msg->getFeedback();
         echo $this->twig->render($page,
-            ['userFeedbacks' => $feedback]);
+            ['userFeedbacks' => $feedback,
+                'loggedIn'=>$this->isLoggedIn]);
     }
 
     /**

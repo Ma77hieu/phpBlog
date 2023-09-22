@@ -12,7 +12,8 @@ class commentController extends baseController {
         $orderBy='ORDER BY creation_date DESC';
         $comments=$comment->findAll($orderBy);
         echo $this->twig->render('commentsList.html.twig',
-            ['comments' => $comments]);
+            ['comments' => $comments,
+                'loggedIn'=>$this->isLoggedIn]);
     }
 
 
@@ -33,6 +34,7 @@ class commentController extends baseController {
         $feedback=$msg->getFeedback();
         echo $this->twig->render($page,
             [ 'comment' => $commentFound,
+                'loggedIn'=>$this->isLoggedIn,
                 'userFeedbacks' => $feedback]);
     }
 
@@ -67,6 +69,7 @@ class commentController extends baseController {
         }
         echo $this->twig->render($page,
             ['blogpost' => $blogpostFound,
+                'loggedIn'=>$this->isLoggedIn,
                 'userFeedbacks' => $feedback]);
     }
 
@@ -102,6 +105,7 @@ class commentController extends baseController {
         echo $this->twig->render($page,
             ['blogpost'=>$blogpostFound,
                 'comment' => $commentFound,
+                'loggedIn'=>$this->isLoggedIn,
                 'userFeedbacks' => $feedback]);
     }
 
@@ -152,6 +156,7 @@ class commentController extends baseController {
         echo $this->twig->render($page,
             ['blogpost'=>$blogpostFound,
                 'comments' => $comments,
+                'loggedIn'=>$this->isLoggedIn,
                 'userFeedbacks' => $feedback]);
     }
 
@@ -174,7 +179,8 @@ class commentController extends baseController {
         }
         $feedback = $msg->getFeedback();
         echo $this->twig->render($page,
-            ['userFeedbacks' => $feedback]);
+            ['userFeedbacks' => $feedback,
+                'loggedIn'=>$this->isLoggedIn]);
     }
 
     public function changeCommentVisibility(){
@@ -207,7 +213,7 @@ class commentController extends baseController {
         $comments=$comment->findAll($orderBy);
         $feedback = $msg->getFeedback();
         echo $this->twig->render($page,
-            [
+            ['loggedIn'=>$this->isLoggedIn,
                 'comments'=> $comments,
                 'userFeedbacks' => $feedback]);
     }

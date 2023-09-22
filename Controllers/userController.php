@@ -22,6 +22,7 @@ class userController extends baseController {
         }
         echo $this->twig->render($page,
         ['userFeedbacks' => $feedback,
+            'loggedIn'=>$this->isLoggedIn,
             'users' => $users]);
     }
 
@@ -45,6 +46,7 @@ class userController extends baseController {
         $feedback = $msg->getFeedback();
         echo $this->twig->render($page,
             ['user' => $this->userFound,
+                'loggedIn'=>$this->isLoggedIn,
                 'userFeedbacks' => $feedback]);
     }
 
@@ -84,7 +86,8 @@ class userController extends baseController {
             $feedback = $msg->getFeedback();
         }
         echo $this->twig->render($page,
-            ['userFeedbacks' => $feedback]);
+            ['userFeedbacks' => $feedback,
+                'loggedIn'=>$this->isLoggedIn]);
     }
 
     public function login()
@@ -110,7 +113,6 @@ class userController extends baseController {
         echo $this->twig->render($page,
             ['userFeedbacks' => $feedback]);
     }
-
 
     public function logout(){
         $_SESSION['isLoggedIn']=false;
@@ -185,11 +187,6 @@ class userController extends baseController {
             ['users' => $users,
                 'userFeedbacks' => $feedback]);
     }
-
-    public function deleteUser($id){
-
-    }
-
 
     public function saveLoginInSession($userId){
         $_SESSION['id']=$userId;

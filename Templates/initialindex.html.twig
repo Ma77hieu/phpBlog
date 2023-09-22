@@ -17,30 +17,32 @@
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 
 
-        <link rel="stylesheet" href="/Templates/assets/css/slick.css">
-        <link rel="stylesheet" href="/Templates/assets/css/slick-theme.css">
-        <link rel="stylesheet" href="/Templates/assets/css/animate.css">
-        <link rel="stylesheet" href="/Templates/assets/css/fonticons.css">
-        <link rel="stylesheet" href="/Templates/assets/css/font-awesome.min.css">
-        <link rel="stylesheet" href="/Templates/assets/css/bootstrap.css">
-        <link rel="stylesheet" href="/Templates/assets/css/magnific-popup.css">
-        <link rel="stylesheet" href="/Templates/assets/css/bootsnav.css">
+        <link rel="stylesheet" href="./Templates/assets/css/slick.css">
+        <link rel="stylesheet" href="./Templates/assets/css/slick-theme.css">
+        <link rel="stylesheet" href="./Templates/assets/css/animate.css">
+        <link rel="stylesheet" href="./Templates/assets/css/fonticons.css">
+        <link rel="stylesheet" href="./Templates/assets/css/font-awesome.min.css">
+        <link rel="stylesheet" href="./Templates/assets/css/bootstrap.css">
+        <link rel="stylesheet" href="./Templates/assets/css/magnific-popup.css">
+        <link rel="stylesheet" href="./Templates/assets/css/bootsnav.css">
 
 
         <!--For Plugins external css-->
-        <!--<link rel="stylesheet" href="/Templates/assets/css/plugins.css" />-->
+        <!--<link rel="stylesheet" href="./Templates/assets/css/plugins.css" />-->
 
         <!--Theme custom css -->
-        <link rel="stylesheet" href="/Templates/assets/css/style.css">
-        <!--<link rel="stylesheet" href="/Templates/assets/css/colors/maron.css">-->
+        <link rel="stylesheet" href="./Templates/assets/css/style.css">
+        <!--<link rel="stylesheet" href="./Templates/assets/css/colors/maron.css">-->
 
         <!--Theme Responsive css-->
-        <link rel="stylesheet" href="/Templates/assets/css/responsive.css" />
+        <link rel="stylesheet" href="./Templates/assets/css/responsive.css" />
 
-        <script src="/Templates/assets/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+        <script src="./Templates/assets/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     </head>
 
     <body data-spy="scroll" data-target=".navbar-collapse">
+
+
         <!-- Preloader -->
         <div id="loading">
             <div id="loading-center">
@@ -52,9 +54,14 @@
                 </div>
             </div>
         </div><!--End off Preloader -->
+
+
+
         <div class="culmn">
             <!--Home page style-->
-            <nav class="navbar navbar-default navbar-fixed white bootsnav">
+
+
+            <nav class="navbar navbar-default navbar-fixed white no-background bootsnav">
                 <!-- Start Top Search -->
                 <div class="top-search">
                     <div class="container">
@@ -73,31 +80,34 @@
                         <ul>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" >
-                                    <i class="fa fa-user"></i>
-                                    {#<span class="badge">3</span>#}
+                                    <i class="fa fa-shopping-bag"></i>
+                                    <span class="badge">3</span>
                                 </a>
                                 <ul class="dropdown-menu cart-list">
                                     <li>
-                                        {% if loggedIn %}
-                                            {% set connection_status='connecté' %}
-                                            {% set login_redirect='logout' %}
-                                            {% set text_btn='déconnexion' %}
-                                        {% else %}
-                                            {% set connection_status='déconnecté' %}
-                                            {% set login_redirect='login' %}
-                                            {% set text_btn='connexion' %}
-                                        {% endif %}
-                                        <p class="m-top-10">Vous êtes actuellement <span class="connexion_status">{{ connection_status }}</span></p>
+                                        <a href="#" class="photo"><img src="./Templates/assets/images/thumb01.jpg" class="cart-thumb" alt="" /></a>
+                                        <h6><a href="#">Delica omtantur </a></h6>
+                                        <p class="m-top-10">2x - <span class="connexion_status">$99.99</span></p>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="photo"><img src="./Templates/assets/images/thumb01.jpg" class="cart-thumb" alt="" /></a>
+                                        <h6><a href="#">Delica omtantur </a></h6>
+                                        <p class="m-top-10">2x - <span class="connexion_status">$99.99</span></p>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="photo"><img src="./Templates/assets/images/thumb01.jpg" class="cart-thumb" alt="" /></a>
+                                        <h6><a href="#">Delica omtantur </a></h6>
+                                        <p class="m-top-10">2x - <span class="connexion_status">$99.99</span></p>
                                     </li>
                                     <!---- More List ---->
                                     <li class="total">
-                                        {#<span class="pull-right"><strong>Total</strong>: $0.00</span>#}
-                                        <a href="{{ login_redirect }}" class="btn btn-cart">{{ text_btn }}</a>
+                                        <span class="pull-right"><strong>Total</strong>: $0.00</span>
+                                        <a href="#" class="btn btn-cart">Cart</a>
                                     </li>
                                 </ul>
                             </li>
-                            {#<li class="search"><a href="#"><i class="fa fa-search"></i></a></li>#}
-                            {#<li class="side-menu"><a href="#"><i class="fa fa-bars"></i></a></li>#}
+                            <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
+                            <li class="side-menu"><a href="#"><i class="fa fa-bars"></i></a></li>
                         </ul>
                     </div>        
                     <!-- End Atribute Navigation -->
@@ -107,6 +117,12 @@
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
                             <i class="fa fa-bars"></i>
                         </button>
+                        <a class="navbar-brand" href="#brand">
+
+                            <img src="./Templates/assets/images/logo.png" class="logo logo-display m-top-10" alt="">
+                            <img src="./Templates/assets/images/logo.jpg" class="logo logo-scrolled" alt="">
+
+                        </a>
                     </div>
                     <!-- End Header Navigation -->
 
@@ -154,37 +170,16 @@
             </nav>
 
 
-            <!--Following div is to ensure content is not displayed behind topbar menu-->
-            <div style="margin-top:80px;">
+            <!--Home Sections-->
             {% if userFeedbacks | length %}
                 {% block user_feedback %}
                     <p>{{ userFeedbacks.text }} {{ userFeedbacks.type }}</p>
                     {{ include ('userFeedback.html.twig',{'feedbacks':userFeedbacks}) }}
                 {% endblock %}
             {% endif %}
-            </section>
+
             {% block homepage %}
             {% endblock %}
-
-            {% block blogpostsList %}
-            {% endblock %}
-
-            {% block blogpostPage %}
-            {% endblock %}
-
-            {% block login %}
-            {% endblock %}
-            {% block usersList %}
-            {% endblock %}
-            {% block userEditPage %}
-            {% endblock %}
-
-            {% block blogpostEditPage %}
-            {% endblock %}
-
-
-
-
 
 
 
@@ -345,32 +340,32 @@
             <div class="featured_slider">
                 <div>
                     <div class="featured_img">
-                        <img src="/Templates/assets/images/fprojects/1.jpg" alt="" />
-                        <a href="/Templates/assets/images/fprojects/1.jpg" class="popup-img"></a>
+                        <img src="./Templates/assets/images/fprojects/1.jpg" alt="" />
+                        <a href="./Templates/assets/images/fprojects/1.jpg" class="popup-img"></a>
                     </div>
                 </div>
                 <div>
                     <div class="featured_img">
-                        <img src="/Templates/assets/images/fprojects/2.jpg" alt="" />
-                        <a href="/Templates/assets/images/fprojects/2.jpg" class="popup-img"></a>
+                        <img src="./Templates/assets/images/fprojects/2.jpg" alt="" />
+                        <a href="./Templates/assets/images/fprojects/2.jpg" class="popup-img"></a>
                     </div>
                 </div>
                 <div>
                     <div class="featured_img">
-                        <img src="/Templates/assets/images/fprojects/3.jpg" alt="" />
-                        <a href="/Templates/assets/images/fprojects/3.jpg" class="popup-img"></a>
+                        <img src="./Templates/assets/images/fprojects/3.jpg" alt="" />
+                        <a href="./Templates/assets/images/fprojects/3.jpg" class="popup-img"></a>
                     </div>
                 </div>
                 <div>
                     <div class="featured_img">
-                        <img src="/Templates/assets/images/fprojects/4.jpg" alt="" />
-                        <a href="/Templates/assets/images/fprojects/4.jpg" class="popup-img"></a>
+                        <img src="./Templates/assets/images/fprojects/4.jpg" alt="" />
+                        <a href="./Templates/assets/images/fprojects/4.jpg" class="popup-img"></a>
                     </div>
                 </div>
                 <div>
                     <div class="featured_img">
-                        <img src="/Templates/assets/images/fprojects/5.jpg" alt="" />
-                        <a href="/Templates/assets/images/fprojects/5.jpg" class="popup-img"></a>
+                        <img src="./Templates/assets/images/fprojects/5.jpg" alt="" />
+                        <a href="./Templates/assets/images/fprojects/5.jpg" class="popup-img"></a>
                     </div>
                 </div>
             </div><!-- End off featured slider -->
@@ -472,12 +467,12 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="portfolio_item">
-                                                <img src="/Templates/assets/images/Portfolio/2.jpg" alt="" />
+                                                <img src="./Templates/assets/images/Portfolio/2.jpg" alt="" />
                                                 <div class="portfolio_hover text-center">
                                                     <h6 class="text-uppercase text-white">Title</h6>
                                                     <p class=" text-white">Lorem ipsum dolor sit amet</p>
                                                     <div class="portfolio_hover_icon">
-                                                        <a href="/Templates/assets/images/Portfolio/2.jpg" class="popup-img"><i class="fa fa-expand"></i></a>
+                                                        <a href="./Templates/assets/images/Portfolio/2.jpg" class="popup-img"><i class="fa fa-expand"></i></a>
                                                         <a href=""><i class="fa fa-search"></i></a>
                                                     </div>
                                                 </div>
@@ -485,12 +480,12 @@
                                         </div>
                                         <div class="col-md-6 m-top-30">
                                             <div class="portfolio_item portfolio_item2">
-                                                <img src="/Templates/assets/images/Portfolio/3.jpg" alt="" />
+                                                <img src="./Templates/assets/images/Portfolio/3.jpg" alt="" />
                                                 <div class="portfolio_hover text-center">
                                                     <h6 class="text-uppercase text-white">Title</h6>
                                                     <p class=" text-white">Lorem ipsum dolor sit amet</p>
                                                     <div class="portfolio_hover_icon">
-                                                        <a href="/Templates/assets/images/Portfolio/3.jpg" class="popup-img"><i class="fa fa-expand"></i></a>
+                                                        <a href="./Templates/assets/images/Portfolio/3.jpg" class="popup-img"><i class="fa fa-expand"></i></a>
                                                         <a href=""><i class="fa fa-search"></i></a>
                                                     </div>
                                                 </div>
@@ -498,12 +493,12 @@
                                         </div>
                                         <div class="col-md-6 m-top-30">
                                             <div class="portfolio_item portfolio_item2">
-                                                <img src="/Templates/assets/images/Portfolio/5.jpg" alt="" />
+                                                <img src="./Templates/assets/images/Portfolio/5.jpg" alt="" />
                                                 <div class="portfolio_hover text-center">
                                                     <h6 class="text-uppercase text-white">Title</h6>
                                                     <p class=" text-white">Lorem ipsum dolor sit amet</p>
                                                     <div class="portfolio_hover_icon">
-                                                        <a href="/Templates/assets/images/Portfolio/5.jpg" class="popup-img"><i class="fa fa-expand"></i></a>
+                                                        <a href="./Templates/assets/images/Portfolio/5.jpg" class="popup-img"><i class="fa fa-expand"></i></a>
                                                         <a href=""><i class="fa fa-search"></i></a>
                                                     </div>
                                                 </div>
@@ -514,12 +509,12 @@
 
                                 <div class="col-md-4">
                                     <div class="portfolio_item portfolio_item3 sm-m-top-30">
-                                        <img src="/Templates/assets/images/Portfolio/1.jpg" alt="" />
+                                        <img src="./Templates/assets/images/Portfolio/1.jpg" alt="" />
                                         <div class="portfolio_hover text-center">
                                             <h6 class="text-uppercase text-white">Title</h6>
                                             <p class=" text-white">Lorem ipsum dolor sit amet</p>
                                             <div class="portfolio_hover_icon">
-                                                <a href="/Templates/assets/images/Portfolio/1.jpg" class="popup-img"><i class="fa fa-expand"></i></a>
+                                                <a href="./Templates/assets/images/Portfolio/1.jpg" class="popup-img"><i class="fa fa-expand"></i></a>
                                                 <a href=""><i class="fa fa-search"></i></a>
                                             </div>
                                         </div>
@@ -527,12 +522,12 @@
                                 </div>
                                 <div class="col-md-4 m-top-30">
                                     <div class="portfolio_item portfolio_item2">
-                                        <img src="/Templates/assets/images/Portfolio/6.jpg" alt="" />
+                                        <img src="./Templates/assets/images/Portfolio/6.jpg" alt="" />
                                         <div class="portfolio_hover text-center">
                                             <h6 class="text-uppercase text-white">Title</h6>
                                             <p class=" text-white">Lorem ipsum dolor sit amet</p>
                                             <div class="portfolio_hover_icon">
-                                                <a href="/Templates/assets/images/Portfolio/6.jpg" class="popup-img"><i class="fa fa-expand"></i></a>
+                                                <a href="./Templates/assets/images/Portfolio/6.jpg" class="popup-img"><i class="fa fa-expand"></i></a>
                                                 <a href=""><i class="fa fa-search"></i></a>
                                             </div>
                                         </div>
@@ -540,12 +535,12 @@
                                 </div>
                                 <div class="col-md-8 m-top-30">
                                     <div class="portfolio_item">
-                                        <img src="/Templates/assets/images/Portfolio/4.jpg" alt="" />
+                                        <img src="./Templates/assets/images/Portfolio/4.jpg" alt="" />
                                         <div class="portfolio_hover text-center">
                                             <h6 class="text-uppercase text-white">Title</h6>
                                             <p class=" text-white">Lorem ipsum dolor sit amet</p>
                                             <div class="portfolio_hover_icon">
-                                                <a href="/Templates/assets/images/Portfolio/4.jpg" class="popup-img"><i class="fa fa-expand"></i></a>
+                                                <a href="./Templates/assets/images/Portfolio/4.jpg" class="popup-img"><i class="fa fa-expand"></i></a>
                                                 <a href=""><i class="fa fa-search"></i></a>
                                             </div>
                                         </div>
@@ -839,32 +834,32 @@
                         <div class="main_cbrand text-center roomy-100">
                             <div class="col-md-2 col-sm-4 col-xs-6">
                                 <div class="cbrand_item m-bottom-10">
-                                    <a href=""><img src="/Templates/assets/images/clients/1.jpg" alt="" /></a>
+                                    <a href=""><img src="./Templates/assets/images/clients/1.jpg" alt="" /></a>
                                 </div>
                             </div>
                             <div class="col-md-2 col-sm-4 col-xs-6">
                                 <div class="cbrand_item m-bottom-10">
-                                    <a href=""><img src="/Templates/assets/images/clients/2.jpg" alt="" /></a>
+                                    <a href=""><img src="./Templates/assets/images/clients/2.jpg" alt="" /></a>
                                 </div>
                             </div>
                             <div class="col-md-2 col-sm-4 col-xs-6">
                                 <div class="cbrand_item m-bottom-10">
-                                    <a href=""><img class="" src="/Templates/assets/images/clients/5.jpg" alt="" /></a>
+                                    <a href=""><img class="" src="./Templates/assets/images/clients/5.jpg" alt="" /></a>
                                 </div>
                             </div>
                             <div class="col-md-2 col-sm-4 col-xs-6">
                                 <div class="cbrand_item m-bottom-10">
-                                    <a href=""><img src="/Templates/assets/images/clients/4.jpg" alt="" /></a>
+                                    <a href=""><img src="./Templates/assets/images/clients/4.jpg" alt="" /></a>
                                 </div>
                             </div>
                             <div class="col-md-2 col-sm-4 col-xs-6">
                                 <div class="cbrand_item m-bottom-10">
-                                    <a href=""><img src="/Templates/assets/images/clients/3.jpg" alt="" /></a>
+                                    <a href=""><img src="./Templates/assets/images/clients/3.jpg" alt="" /></a>
                                 </div>
                             </div>
                             <div class="col-md-2 col-sm-4 col-xs-6">
                                 <div class="cbrand_item m-bottom-10">
-                                    <a href=""><img src="/Templates/assets/images/clients/1.jpg" alt="" /></a>
+                                    <a href=""><img src="./Templates/assets/images/clients/1.jpg" alt="" /></a>
                                 </div>
                             </div>
                         </div>
@@ -904,7 +899,56 @@
 
 
             <!--Blog Section-->
-
+            <section id="blog" class="blog">
+                <div class="container">
+                    <div class="row">
+                        <div class="main_blog text-center roomy-100">
+                            <div class="col-sm-8 col-sm-offset-2">
+                                <div class="head_title text-center">
+                                    <h2>RECENT BLOGS</h2>
+                                    <div class="separator_auto"></div>
+                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
+                                        sed diam nonummy nibh euismod tincidunt tation ullamcorper 
+                                        suscipit lobortis nisl ut aliquip ex ea commodo consequat. </p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="blog_item m-top-20">
+                                    <div class="blog_item_img">
+                                        <img src="./Templates/assets/images/Blog/1.jpg" alt="" />
+                                    </div>
+                                    <div class="blog_text roomy-40">
+                                        <h6>PLEASUARE WITHOUT CONSCIENCE</h6>
+                                        <p><em><a href="">May 15, 2016</a> /<a href="">admin</a>/<a href=""> Co-working</a></em></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="blog_item m-top-20">
+                                    <div class="blog_item_img">
+                                        <img src="./Templates/assets/images/Blog/2.jpg" alt="" />
+                                    </div>
+                                    <div class="blog_text roomy-40">
+                                        <h6>PLEASUARE WITHOUT CONSCIENCE</h6>
+                                        <p><em><a href="">May 15, 2016</a> /<a href="">admin</a>/<a href=""> Co-working</a></em></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="blog_item m-top-20">
+                                    <div class="blog_item_img">
+                                        <img src="./Templates/assets/images/Blog/3.jpg" alt="" />
+                                    </div>
+                                    <div class="blog_text roomy-40">
+                                        <h6>PLEASUARE WITHOUT CONSCIENCE</h6>
+                                        <p><em><a href="">May 15, 2016</a> /<a href="">admin</a>/<a href=""> Co-working</a></em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--End off row -->
+                </div><!--End off container -->
+            </section><!-- End off Blog section-->
 
 
 
@@ -999,14 +1043,14 @@
 
             <!-- JS includes -->
 
-            <script src="/Templates/assets/js/vendor/jquery-1.11.2.min.js"></script>
-            <script src="/Templates/assets/js/vendor/bootstrap.min.js"></script>
+            <script src="./Templates/assets/js/vendor/jquery-1.11.2.min.js"></script>
+            <script src="./Templates/assets/js/vendor/bootstrap.min.js"></script>
 
-            <script src="/Templates/assets/js/jquery.magnific-popup.js"></script>
-            <script src="/Templates/assets/js/jquery.easing.1.3.js"></script>
-            <script src="/Templates/assets/js/slick.min.js"></script>
-            <script src="/Templates/assets/js/jquery.collapse.js"></script>
-            <script src="/Templates/assets/js/bootsnav.js"></script>
+            <script src="./Templates/assets/js/jquery.magnific-popup.js"></script>
+            <script src="./Templates/assets/js/jquery.easing.1.3.js"></script>
+            <script src="./Templates/assets/js/slick.min.js"></script>
+            <script src="./Templates/assets/js/jquery.collapse.js"></script>
+            <script src="./Templates/assets/js/bootsnav.js"></script>
 
 
             <!-- paradise slider js -->
@@ -1019,8 +1063,8 @@
 
 
 
-            <script src="/Templates/assets/js/plugins.js"></script>
-            <script src="/Templates/assets/js/main.js"></script>
+            <script src="./Templates/assets/js/plugins.js"></script>
+            <script src="./Templates/assets/js/main.js"></script>
 
     </body>
 </html>

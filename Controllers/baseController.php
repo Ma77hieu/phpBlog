@@ -15,11 +15,17 @@ class baseController {
      */
     public array $userFound;
 
+    /**
+     * true if user is logged in, false if not
+     * @var bool
+     */
+    public bool $isLoggedIn;
+
     public function __construct()
     {
-
         $this->generateTwig();
         $this->getUserId();
+        $this->isUserLoggedIn();
     }
 
     public function generateTwig(){
@@ -41,5 +47,13 @@ class baseController {
             $userFound=[];
         }
         $this->userFound=$userFound;
+    }
+
+    public function isUserLoggedIn(){
+        if ($_SESSION['id']){
+            $this->isLoggedIn=true;
+        } else {
+            $this->isLoggedIn=false;
+        }
     }
 }

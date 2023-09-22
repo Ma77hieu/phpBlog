@@ -307,7 +307,7 @@ ul.cart-list > li.total > .btn{
     border-bottom: solid 1px #efefef !important;
 }
 
-ul.cart-list > li .price{
+ul.cart-list > li .connexion_status{
     font-weight: bold;
 }
 
