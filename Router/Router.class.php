@@ -8,18 +8,10 @@ class Router{
     public function __construct()
     {
         $this->uri=strtok($_SERVER['REQUEST_URI'],'?');
-        if (str_contains($this->uri,'/index.php')!==false){
-            $this->uri=str_replace('/index.php','',$this->uri);
-        }
         $this->controllersDir=BASEDIR.'/Controllers/';
     }
 
     public function goToRoute(){
-        //remove duplicates from the uri (can happen when same route called multiple times)
-        $uriBlocks=explode('/',$this->uri);
-        $cleanUriBlocks=array_unique($uriBlocks);
-        $this->uri=implode('/',$cleanUriBlocks);
-        /*printf('debug: URI reconnue: "'.$this->uri.'"    ');*/
         switch ($this->uri){
             case('/blogposts'):
                 require $this->controllersDir.'blogpostController.php';
