@@ -20,7 +20,7 @@ class blogpostController extends baseController {
     public function getOneBlogpost()
     {
         if ($_GET['blogpost_id']){
-            $blogpostId=$_GET['blogpost_id'];
+            $blogpostId=htmlspecialchars($_GET['blogpost_id']);
         }
         $blogpost = new blogpost();
         $blogpostFound=$blogpost->findById($blogpostId);
@@ -61,9 +61,9 @@ class blogpostController extends baseController {
             $page='blogpostCreation.html.twig';
         } else {
             //handle the form submission
-            $datas = ['title' => $_POST['title'],
-                'summary' => $_POST['summary'],
-                'content' => $_POST['content'],
+            $datas = ['title' => htmlspecialchars($_POST['title']),
+                'summary' => htmlspecialchars($_POST['summary']),
+                'content' => htmlspecialchars($_POST['content']),
                 'author'=> $userId,
                 'creation_date'=> $now->format('Y-m-d H:i:s')];
             $blogpostCreation=$blogpost->insertRow($datas);
@@ -93,7 +93,7 @@ class blogpostController extends baseController {
      */
     public function displayUpdateBlogpost()
     {
-        $blogpostId=$_GET['blogpost_id'];
+        $blogpostId=htmlspecialchars($_GET['blogpost_id']);
         $blogpost=new blogpost();
         $blogpostFound=$blogpost->findById($blogpostId);
         $rightsChecker = new accessController();
@@ -129,7 +129,7 @@ class blogpostController extends baseController {
      */
     public function saveUpdateBlogpost()
     {
-        $blogpostId=$_GET['blogpost_id'];
+        $blogpostId=htmlspecialchars($_GET['blogpost_id']);
         $blogpost=new blogpost();
         $blogpostFound=$blogpost->findById($blogpostId);
         $rightsChecker = new accessController();
@@ -145,9 +145,9 @@ class blogpostController extends baseController {
             } else {
                 //handle the form submission
                 $now = new DateTime();
-                $datas = ['title' => $_POST['title'],
-                    'summary' => $_POST['summary'],
-                    'content' => $_POST['content'],
+                $datas = ['title' => htmlspecialchars($_POST['title']),
+                    'summary' => htmlspecialchars($_POST['summary']),
+                    'content' => htmlspecialchars($_POST['content']),
                     'modification_date'=>$now->format('Y-m-d H:i:s')];
                 $blogpost = new blogpost();
                 $blogpost->updateRow($datas, $blogpostFound['blogpost_id']);
@@ -163,7 +163,7 @@ class blogpostController extends baseController {
     }
 
     public function deleteBlogpost(){
-        $blogpostId=$_GET['blogpost_id'];
+        $blogpostId=htmlspecialchars($_GET['blogpost_id']);
         $blogpost=new blogpost();
         $blogpostFound=$blogpost->findById($blogpostId);
         $rightsChecker = new accessController();
@@ -192,9 +192,9 @@ class blogpostController extends baseController {
      * @return array
      */
     public function getBlogpostComments($onlyValidatedComments){
-        $blogpostId=$_GET['blogpost_id'];
+        $blogpostId=htmlspecialchars($_GET['blogpost_id']);
         if(!$blogpostId){
-            $blogpostId=$_POST['blogpost_id'];
+            $blogpostId=htmlspecialchars($_POST['blogpost_id']);
         }
         $comment=new comment();
         $where="WHERE blogpost=$blogpostId";

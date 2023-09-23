@@ -33,7 +33,7 @@ class commentController extends baseController {
     public function getOneComment()
     {
         if ($_GET['id']){
-            $commentId=$_GET['id'];
+            $commentId=htmlspecialchars($_GET['id']);
         }
         $comment = new comment();
         $commentFound=$comment->findById($commentId);
@@ -55,7 +55,7 @@ class commentController extends baseController {
     public function createComment(){
         $comment = new comment();
         $author=$_SESSION['id'];
-        $blogpostId=$_GET['blogpost_id'];
+        $blogpostId=htmlspecialchars($_GET['blogpost_id']);
         $blogpost=new blogpost();
         $blogpostFound=$blogpost->findById($blogpostId);
         $now = new DateTime();
@@ -64,8 +64,8 @@ class commentController extends baseController {
             $page = 'commentCreation.html.twig';
         } else {
             //handle the form submission
-            $datas = ['title' => $_POST['title'],
-                'text' => $_POST['content'],
+            $datas = ['title' => htmlspecialchars($_POST['title']),
+                'text' => htmlspecialchars($_POST['content']),
                 'author' => intval($author),
                 'blogpost' => intval($blogpostId),
                 'creation_date' => $now->format('Y-m-d H:i:s'),
@@ -96,10 +96,10 @@ class commentController extends baseController {
      */
     public function displayUpdateComment()
     {
-        $commentId=$_GET['comment_id'];
+        $commentId=htmlspecialchars($_GET['comment_id']);
         $comment=new comment();
         $commentFound=$comment->findById($commentId);
-        $blogpostId=$_GET['blogpost_id'];
+        $blogpostId=htmlspecialchars($_GET['blogpost_id']);
         $blogpost=new blogpost();
         $blogpostFound=$blogpost->findById($blogpostId);
         $rightsChecker = new accessController();
@@ -133,8 +133,8 @@ class commentController extends baseController {
      */
     public function saveUpdateComment()
     {
-        $commentId=$_GET['comment_id'];
-        $blogpostId=$_GET['blogpost_id'];
+        $commentId=htmlspecialchars($_GET['comment_id']);
+        $blogpostId=htmlspecialchars($_GET['blogpost_id']);
         $author=$_SESSION['id'];
         $blogpost=new blogpost();
         $blogpostFound=$blogpost->findById($blogpostId);
@@ -151,8 +151,8 @@ class commentController extends baseController {
             } else {
                 //handle the form submission
                 $now = new DateTime();
-                $datas = ['title' => $_POST['comment_edit_title'],
-                    'text' => $_POST['comment_edit_content'],
+                $datas = ['title' => htmlspecialchars($_POST['comment_edit_title']),
+                    'text' => htmlspecialchars($_POST['comment_edit_content']),
                     'author' => intval($author),
                     'blogpost' => intval($blogpostId),
                     'creation_date' => $now->format('Y-m-d H:i:s'),
@@ -182,7 +182,7 @@ class commentController extends baseController {
     }
 
     public function deleteComment(){
-        $commentId=$_GET['comment_id'];
+        $commentId=htmlspecialchars($_GET['comment_id']);
         $comment=new comment();
         $commentFound=$comment->findById($commentId);
         $rightsChecker = new accessController();
@@ -206,7 +206,7 @@ class commentController extends baseController {
     }
 
     public function changeCommentVisibility(){
-        $commentId=intval($_GET['comment_id']);
+        $commentId=intval(htmlspecialchars($_GET['comment_id']));
         $comment=new comment();
         $commentFound=$comment->findById($commentId);
         $rightsChecker = new accessController();

@@ -47,7 +47,7 @@ class baseController {
 
     public function getUserId(){
         if ($_GET['id']){
-            $userId=$_GET['id'];
+            $userId=htmlspecialchars($_GET['id']);
             $user = new user();
             $userFound=$user->findById($userId);
         } else {

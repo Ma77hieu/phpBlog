@@ -12,10 +12,10 @@ class contactController extends baseController {
     public function sendContactForm(){
         $errors = [];
         if (!empty($_POST)) {
-            $lastName = $_POST['last_name'];
-            $firstName = $_POST['first_name'];
-            $email = $_POST['email'];
-            $message = $_POST['message'];
+            $lastName = htmlspecialchars($_POST['last_name']);
+            $firstName = htmlspecialchars($_POST['first_name']);
+            $email = htmlspecialchars($_POST['email']);
+            $message = htmlspecialchars($_POST['message']);
 
             if (empty($lastName)) {
                 $errors[] = MISSING_LASTNAME;

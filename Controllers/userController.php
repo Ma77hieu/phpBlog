@@ -60,11 +60,11 @@ class userController extends baseController {
         } else {
             //handle the form submission only if password = password reentry inside the form
             if ($_POST['password'] == $_POST['password_reentry']) {
-                $datas = ['email' => $_POST['email'],
-                    'password' => $_POST['password'],
+                $datas = ['email' => htmlspecialchars($_POST['email']),
+                    'password' => htmlspecialchars($_POST['password']),
                     'roles' => 'user'];
                 //check if the email is already used
-                $alreadyUsedMail = $this->checkAlreadyExistsMail($_POST['email']);
+                $alreadyUsedMail = $this->checkAlreadyExistsMail(htmlspecialchars($_POST['email']));
                 if ($alreadyUsedMail) {
                     $page = 'signup.html.twig';
                     $msg = new userFeedback('error', USER_ALREADY_EXISTS);
@@ -101,8 +101,8 @@ class userController extends baseController {
             $page = 'login.html.twig';
         } else {
             //handle the form submission
-            $email=$_POST['email'];
-            $encodedPwd=md5($_POST['password']);
+            $email=htmlspecialchars($_POST['email']);
+            $encodedPwd=md5(htmlspecialchars($_POST['password']));
             $userFound=$user->findRowsBy("WHERE email='$email' AND password='$encodedPwd'");
             if ($userFound==[]){
                 $msg = new userFeedback('error', LOGIN_FAIL);
@@ -177,12 +177,12 @@ class userController extends baseController {
                     $roles = 'user';
                 }
                 $now = new DateTime();
-                $datas = ['email' => $_POST['email'],
+                $datas = ['email' => htmlspecialchars($_POST['email']),
                     'roles' => $roles];
                 //change password only if needed
                 if ($_POST['password'] != '') {
 
-                    $datas = $datas + ['password' => $_POST['password']];
+                    $datas = $datas + ['password' => htmlspecialchars($_POST['password'])];
                 }
                 $user = new user();
                 $user->updateRow($datas, $this->userFound['user_id']);
