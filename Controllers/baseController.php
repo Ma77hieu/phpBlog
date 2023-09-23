@@ -21,11 +21,18 @@ class baseController {
      */
     public bool $isLoggedIn;
 
+    /**
+     * true if current user is admin
+     * @var bool
+     */
+    public bool $isUserAdmin;
+
     public function __construct()
     {
         $this->generateTwig();
         $this->getUserId();
         $this->isUserLoggedIn();
+        $this->isUserAdmin();
     }
 
     public function generateTwig(){
@@ -54,6 +61,22 @@ class baseController {
             $this->isLoggedIn=true;
         } else {
             $this->isLoggedIn=false;
+        }
+    }
+
+    public function isUserAdmin(){
+        if (!$_SESSION['id']) {
+            return false;
+        } else {
+            $userId = $_SESSION['id'];
+            $user = new user();
+            $userConnected = $user->findById($userId);
+            $userRoles = explode(',', $userConnected['roles']);
+            if (in_array('admin', $userRoles)) {
+                $this->isUserAdmin=true;
+            } else {
+                $this->isUserAdmin=false;
+            }
         }
     }
 }

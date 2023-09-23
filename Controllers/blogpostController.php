@@ -23,23 +23,30 @@ class blogpostController extends baseController {
         }
         $blogpost = new blogpost();
         $blogpostFound=$blogpost->findById($blogpostId);
+        $authorId=intval($blogpostFound['author']);
         if (!$blogpostFound){
             $page='index.html.twig';
             $msg=new userFeedback('error',ERROR_BLOGPOST_NOT_FOUND);
         } else {
             $page='blogpostPage.html.twig';
             $user=new user();
-            $userFound=$user->findById(intval($blogpostFound['author']));
+            $userFound=$user->findById($authorId);
             $author=$userFound['email'];
             $msg=new userFeedback('success',BLOGPOST_FOUND);
         }
-        $commentsFound=$this->getBlogpostComments();
+        $onlyValidatedComments=true;
+        if($this->isUserAdmin){
+            $onlyValidatedComments=false;
+        }
+        $commentsFound=$this->getBlogpostComments($onlyValidatedComments);
         $feedback=$msg->getFeedback();
         echo $this->twig->render($page,
             [ 'blogpost' => $blogpostFound,
                 'author' => $author,
+                'authorId'=>$authorId,
                 'comments'=>$commentsFound,
                 'loggedIn'=>$this->isLoggedIn,
+                'isUserAdmin'=>$this->isUserAdmin,
                 'userFeedbacks' => $feedback]);
     }
 
@@ -177,18 +184,33 @@ class blogpostController extends baseController {
     /**
      * Returns an array of all the comments related to the blogpost whose id
      * is defined inside the url blogpost_id parameter
+     * @param bool $onlyValidatedComments true if only validated comments need to be returned
      * @return array
      */
-    public function getBlogpostComments(){
+    public function getBlogpostComments($onlyValidatedComments){
         $blogpostId=$_GET['blogpost_id'];
         if(!$blogpostId){
             $blogpostId=$_POST['blogpost_id'];
         }
         $comment=new comment();
-        $where="WHERE blogpost=$blogpostId AND is_validated=true";
+        $where="WHERE blogpost=$blogpostId";
+        if($onlyValidatedComments){
+            $where.=" AND is_validated=true";
+        }
         $orderBy='ORDER BY creation_date DESC';
         $comments=$comment->findRowsBy($where,$orderBy);
-        return $comments;
+        $currentUserId=$_SESSION['id'];
+        $treatedComments=[];
+        foreach($comments as $comment){
+            $isUserAuthor=false;
+            if($currentUserId==$comment['author']){
+                $isUserAuthor=true;
+            }
+            $comment+=['isUserAuthor'=>$isUserAuthor];
+            $treatedComments[]=$comment;
+        }
+        /*var_dump($treatedComments);die;*/
+        return $treatedComments;
     }
 
 

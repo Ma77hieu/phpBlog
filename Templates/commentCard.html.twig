@@ -1,23 +1,31 @@
 
 {% block commentCard %}
-    <p> COMMENT n° {{ comment.comment_id }}</p>
-    <p>titre commentaire: {{ comment.title }}</p>
+    <h5>titre: {{ comment.title }}</h5>
     <p>commentaire: {{ comment.text }}</p>
     {% if comment.is_validated %}
         {% set wording='Invalider' %}
+        {% set btn_class='btn btn-secondary' %}
     {% else %}
         {% set wording='Valider' %}
+        {% set btn_class='btn btn-success' %}
     {% endif %}
-    <div>
-        <a href="comment/moderate?blogpost_id={{ comment.blogpost }}&comment_id={{ comment.comment_id }}">{{ wording }}
-            ce commentaire</a>
-    </div>
-
-    <div>
-        <a href="comment/edit?blogpost_id={{ comment.blogpost }}&comment_id={{ comment.comment_id }}">Modification</a>
-    </div>
-
-    <div>
-        <a href="comment/delete?blogpost_id={{ comment.blogpost }}&comment_id={{ comment.comment_id }}">Supprimer</a>
-    </div>
+    {% if comment.isUserAuthor %}
+        <div class="m-bottom-20">
+            <div>
+                <a href="comment/edit?blogpost_id={{ comment.blogpost }}&comment_id={{ comment.comment_id }}"><i
+                            class="fa fa-edit"></i> Modification</a>
+            </div>
+            <div>
+                <a class="m-bottom-10" href="comment/delete?blogpost_id={{ comment.blogpost }}&comment_id={{ comment.comment_id }}"><i
+                            class="fa fa-trash"></i> Supprimer</a>
+            </div>
+        </div>
+    {% endif %}
+    {% if isUserAdmin %}
+        <div>
+            <a class='{{ btn_class }}' href="comment/moderate?blogpost_id={{ comment.blogpost }}&comment_id={{ comment.comment_id }}">{{ wording }}
+                ce commentaire</a>
+        </div>
+    {% endif %}
+    <div class="separator_small"></div>
 {% endblock %}

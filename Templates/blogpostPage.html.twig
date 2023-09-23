@@ -32,7 +32,6 @@
                 <div class="col-md-8 col-md-offset-2 col-sm-12">
                     {% if comments %}
                     {% for comment in comments %}
-                        <p>comment {{ comment.comment_id }}</p>
                         {{ include ('commentCard.html.twig',{'comment':comment})}}
                     {% endfor %}
                     {% else %}
