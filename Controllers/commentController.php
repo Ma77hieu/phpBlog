@@ -8,25 +8,25 @@ class commentController extends baseController {
     }
 
     public function displayUnvalidatedComments(){
+        $twigData=['isUserAdmin'=>$this->isUserAdmin,
+            'loggedIn'=>$this->isLoggedIn];
         $rightsChecker = new accessController();
         if(!$rightsChecker->isAdmin()){
             $page='index.html.twig';
             $msg=new userFeedback('error',ACCESS_ERROR);
-            $feedback=$msg->getFeedback();
-            $data=['isUserAdmin'=>$this->isUserAdmin,
-                'loggedIn'=>$this->isLoggedIn,
-                'userFeedbacks' => $feedback];
         } else {
             $page='commentsList.html.twig';
             $comment=new comment();
             $whereClause='WHERE is_validated=false';
             $orderBy='ORDER BY creation_date DESC';
             $comments=$comment->findRowsBy($whereClause,$orderBy);
-            $data=['comments' => $comments,
-                'isUserAdmin'=>$this->isUserAdmin,
-                'loggedIn'=>$this->isLoggedIn];
+            $twigData+=['comments' => $comments];
         }
-        echo $this->twig->render($page,$data);
+        if($msg){
+        $feedback=$msg->getFeedback();
+        }
+        $twigData+=['userFeedbacks' => $feedback];
+        echo $this->twig->render($page,$twigData);
     }
 
 
@@ -211,12 +211,15 @@ class commentController extends baseController {
         $commentFound=$comment->findById($commentId);
         $rightsChecker = new accessController();
         $page = 'commentsList.html.twig';
+        $twigData=['isUserAdmin'=>$this->isUserAdmin,
+            'loggedIn'=>$this->isLoggedIn];
         //we check if the user tries to access one of its own comments
-        if (!($rightsChecker->isUpdateAuthorized($commentFound))) {
-            $msg = new userFeedback('error', NOT_OWNER_COMMENT);
+        if(!$rightsChecker->isAdmin()){
+            $msg = new userFeedback('error', ACCESS_ERROR);
         } else {
             if (!$commentFound) {
-                $msg = new userFeedback('error', COMMENT_NOT_FOUND);
+                $page='index.html.twig';
+                $msg=new userFeedback('error',ACCESS_ERROR);
             } else {
                 $currentValidationState=$commentFound['is_validated'];
                 if($currentValidationState==1){
@@ -227,18 +230,16 @@ class commentController extends baseController {
                 $datas = ['is_validated' => $validation];
                 $comment = new comment();
                 $comment->updateRow($datas, $commentId);
+                $whereClause='WHERE is_validated=false';
+                $orderBy='ORDER BY creation_date DESC';
+                $comments=$comment->findRowsBy($whereClause,$orderBy);
                 $msg = new userFeedback('success', VISIBILITY_UPDATED);
-
+                $twigData+=['comments'=> $comments];
             }
         }
-        $orderBy='ORDER BY creation_date DESC';
-        $comments=$comment->findAll($orderBy);
         $feedback = $msg->getFeedback();
-        echo $this->twig->render($page,
-            ['loggedIn'=>$this->isLoggedIn,
-                'isUserAdmin'=>$this->isUserAdmin,
-                'comments'=> $comments,
-                'userFeedbacks' => $feedback]);
+        $twigData+=['userFeedbacks' => $feedback];
+        echo $this->twig->render($page,$twigData);
     }
 
 
