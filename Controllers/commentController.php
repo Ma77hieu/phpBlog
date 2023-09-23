@@ -64,8 +64,8 @@ class commentController extends baseController {
             $page = 'commentCreation.html.twig';
         } else {
             //handle the form submission
-            $datas = ['title' => htmlspecialchars($_POST['title']),
-                'text' => htmlspecialchars($_POST['content']),
+            $datas = ['title' => htmlspecialchars($_POST['comment_title']),
+                'text' => htmlspecialchars($_POST['comment_content']),
                 'author' => intval($author),
                 'blogpost' => intval($blogpostId),
                 'creation_date' => $now->format('Y-m-d H:i:s'),
