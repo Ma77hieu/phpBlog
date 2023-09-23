@@ -83,7 +83,6 @@ class accessController extends baseController {
         if ($adminRightNeeded){
             $isLoggedIn=$this->isLoggedIn();
             $isAdmin=$this->isAdmin();
-            /*echo("user_id: $isLoggedIn, isAdmin: $isAdmin");*/
             if(!($isLoggedIn && $isAdmin)){
                 $isAccessOk=false;
             }

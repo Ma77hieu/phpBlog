@@ -3,7 +3,7 @@
 {% block commentsList %}
     <div class="container m-t-40">
         <div class="row">
-            <h2>Liste des commentaires en attente de validation</h2>
+            <h2 class="m-top-60 m-bottom-40">Liste des commentaires en attente de validation</h2>
             {% for comment in comments %}
                 {{ include ('commentCard.html.twig',{'comment':comment})}}
             {% endfor %}

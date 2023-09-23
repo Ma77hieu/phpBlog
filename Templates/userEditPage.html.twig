@@ -1,22 +1,28 @@
 {% extends "index.html.twig" %}
 
 {% block userEditPage %}
-    <p>userEdit page</p>
-    <form action="save?id={{ user.user_id }}" method="post" class="user_modif-form">
-        <div class="user_modif-input">
-            <label for="email">Email: </label>
-            <input type="email" name="email" id="email" value="{{ user.email }}" />
+    <div class="container">
+        <h1 class="m-bottom-40 m-top-40 col-md-offset-1">Modification des informations utilisateur</h1>
+        <div class="row">
+            <form action="save?id={{ user.user_id }}" method="post">
+                <div class="form-group">
+                    <label for="edit_email" class="col-md-2 p-r-5 text-right">Email: </label>
+                    <input type="edit_email" name="edit_email" id="edit_email" value="{{ user.email }}" />
+                </div>
+                <div class="form-group">
+                    <label for="edit_password" class="col-md-2 p-r-5 text-right">Mot de passe: </label>
+                    <input type="text" name="edit_password" id="edit_password" />
+                </div>
+                <div class="form-group">
+                    <label for="edit_roles" class="col-md-2 p-r-5 text-right">admin?:</label>
+                    <input type="checkbox" name="edit_roles" id="edit_roles" value="admin"/>
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-primary col-md-offset-2" type="submit" value="Enregistrer" id="edit_user_btn"/>
+                </div>
+            </form>
         </div>
-        <div class="user_modif-input">
-            <label for="password">Mot de passe: </label>
-            <input type="text" name="password" id="password" />
-        </div>
-        <div class="user_modif-input">
-            <label for="roles">L'utilisateur est admin:</label>
-            <input type="checkbox" name="roles" id="roles" value="admin"/>
-        </div>
-        <div class="form-example">
-            <input type="submit" value="Enregistrer" />
-        </div>
-    </form>
+    </div>
+
+
 {% endblock %}

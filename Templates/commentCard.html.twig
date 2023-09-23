@@ -1,7 +1,7 @@
 
 {% block commentCard %}
-    <h5>titre: {{ comment.title }}</h5>
-    <p>commentaire: {{ comment.text }}</p>
+    <h5><span class="text-primary m-10">Titre:</span> {{ comment.title }}</h5>
+    <p><span class="text-primary m-10">Commentaire:<br></span> {{ comment.text }}</p>
     {% if comment.is_validated %}
         {% set wording='Invalider' %}
         {% set btn_class='btn btn-secondary' %}

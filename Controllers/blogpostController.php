@@ -33,14 +33,15 @@ class blogpostController extends baseController {
             $user=new user();
             $userFound=$user->findById($authorId);
             $author=$userFound['email'];
-            $msg=new userFeedback('success',BLOGPOST_FOUND);
         }
         $onlyValidatedComments=true;
         if($this->isUserAdmin){
             $onlyValidatedComments=false;
         }
         $commentsFound=$this->getBlogpostComments($onlyValidatedComments);
-        $feedback=$msg->getFeedback();
+        if ($msg) {
+            $feedback = $msg->getFeedback();
+        }
         echo $this->twig->render($page,
             [ 'blogpost' => $blogpostFound,
                 'author' => $author,
@@ -109,10 +110,11 @@ class blogpostController extends baseController {
                 $msg = new userFeedback('error', BLOGPOST_NOT_FOUND);
             } else {
                 $page = 'blogpostEditPage.html.twig';
-                $msg = new userFeedback('success', BLOGPOST_FOUND);
             }
         }
-        $feedback = $msg->getFeedback();
+        if($msg){
+            $feedback = $msg->getFeedback();
+        }
         echo $this->twig->render($page,
             ['blogposts'=>$blogposts,
                 'blogpost' => $blogpostFound,

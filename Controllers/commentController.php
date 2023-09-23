@@ -42,9 +42,10 @@ class commentController extends baseController {
             $msg=new userFeedback('error',ERROR_COMMENT_NOT_FOUND);
         } else {
             $page='commentPage.html.twig';
-            $msg=new userFeedback('success',COMMENT_FOUND);
         }
-        $feedback=$msg->getFeedback();
+        if($msg){
+            $feedback=$msg->getFeedback();
+        }
         echo $this->twig->render($page,
             [ 'comment' => $commentFound,
                 'loggedIn'=>$this->isLoggedIn,
@@ -113,10 +114,11 @@ class commentController extends baseController {
                 $msg = new userFeedback('error', COMMENT_NOT_FOUND);
             } else {
                 $page = 'commentEditPage.html.twig';
-                $msg = new userFeedback('success', COMMENT_FOUND);
             }
         }
-        $feedback = $msg->getFeedback();
+        if($msg){
+            $feedback = $msg->getFeedback();
+        }
         echo $this->twig->render($page,
             ['blogpost'=>$blogpostFound,
                 'comment' => $commentFound,

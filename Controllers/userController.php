@@ -41,10 +41,12 @@ class userController extends baseController {
                 $msg = new userFeedback('error', ERROR_USER_NOT_FOUND);
             } else {
                 $page = 'userPage.html.twig';
-                $msg = new userFeedback('success', USER_FOUND);
             }
         }
-        $feedback = $msg->getFeedback();
+        if($msg){
+            $feedback = $msg->getFeedback();
+        }
+
         echo $this->twig->render($page,
             ['user' => $this->userFound,
                 'loggedIn'=>$this->isLoggedIn,
@@ -145,10 +147,11 @@ class userController extends baseController {
                 $msg = new userFeedback('error', ERROR_USER_NOT_FOUND);
             } else {
                 $page = 'userEditPage.html.twig';
-                $msg = new userFeedback('success', USER_FOUND);
             }
         }
+        if($msg){
         $feedback = $msg->getFeedback();
+        }
         echo $this->twig->render($page,
             ['user' => $this->userFound,
                 'isUserAdmin' => $this->isUserAdmin,
@@ -177,12 +180,12 @@ class userController extends baseController {
                     $roles = 'user';
                 }
                 $now = new DateTime();
-                $datas = ['email' => htmlspecialchars($_POST['email']),
+                $datas = ['email' => htmlspecialchars($_POST['edit_email']),
                     'roles' => $roles];
                 //change password only if needed
                 if ($_POST['password'] != '') {
 
-                    $datas = $datas + ['password' => htmlspecialchars($_POST['password'])];
+                    $datas = $datas + ['password' => htmlspecialchars($_POST['edit_password'])];
                 }
                 $user = new user();
                 $user->updateRow($datas, $this->userFound['user_id']);
