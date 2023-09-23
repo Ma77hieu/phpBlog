@@ -125,7 +125,7 @@ class userController extends baseController {
         $msg=new userFeedback('success',LOGOUT_OK);
         $feedback=$msg->getFeedback();
         session_unset();
-        echo $this->twig->render('index.html.twig',
+        echo $this->twig->render('homepage.html.twig',
             ['userFeedbacks' => $feedback,
                 'isUserAdmin' => $this->isUserAdmin,
                 'isLoggedIn' => $this->isLoggedIn]);
