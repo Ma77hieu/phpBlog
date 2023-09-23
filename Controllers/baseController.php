@@ -66,7 +66,7 @@ class baseController {
 
     public function isUserAdmin(){
         if (!$_SESSION['id']) {
-            return false;
+            $this->isUserAdmin=false;
         } else {
             $userId = $_SESSION['id'];
             $user = new user();

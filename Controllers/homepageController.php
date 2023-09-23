@@ -24,6 +24,7 @@ class homepageController extends baseController {
         echo $this->twig->render('homepage.html.twig',
             [
                 'userFeedbacks' => $feedback,
-                'loggedIn'=>$this->isLoggedIn]);
+                'isUserAdmin' => $this->isUserAdmin,
+                'isLoggedIn' => $this->isLoggedIn]);
     }
 }

@@ -13,6 +13,7 @@ class commentController extends baseController {
         $comments=$comment->findAll($orderBy);
         echo $this->twig->render('commentsList.html.twig',
             ['comments' => $comments,
+                'isUserAdmin'=>$this->isUserAdmin,
                 'loggedIn'=>$this->isLoggedIn]);
     }
 
@@ -35,6 +36,7 @@ class commentController extends baseController {
         echo $this->twig->render($page,
             [ 'comment' => $commentFound,
                 'loggedIn'=>$this->isLoggedIn,
+                'isUserAdmin'=>$this->isUserAdmin,
                 'userFeedbacks' => $feedback]);
     }
 
@@ -70,6 +72,7 @@ class commentController extends baseController {
         echo $this->twig->render($page,
             ['blogpost' => $blogpostFound,
                 'loggedIn'=>$this->isLoggedIn,
+                'isUserAdmin'=>$this->isUserAdmin,
                 'userFeedbacks' => $feedback]);
     }
 
@@ -106,6 +109,7 @@ class commentController extends baseController {
             ['blogpost'=>$blogpostFound,
                 'comment' => $commentFound,
                 'loggedIn'=>$this->isLoggedIn,
+                'isUserAdmin'=>$this->isUserAdmin,
                 'userFeedbacks' => $feedback]);
     }
 
@@ -135,8 +139,8 @@ class commentController extends baseController {
             } else {
                 //handle the form submission
                 $now = new DateTime();
-                $datas = ['title' => $_POST['title'],
-                    'text' => $_POST['content'],
+                $datas = ['title' => $_POST['comment_edit_title'],
+                    'text' => $_POST['comment_edit_content'],
                     'author' => intval($author),
                     'blogpost' => intval($blogpostId),
                     'creation_date' => $now->format('Y-m-d H:i:s'),
@@ -152,11 +156,16 @@ class commentController extends baseController {
         }
         $feedback = $msg->getFeedback();
         $blogpostsController=new blogpostController();
-        $comments=$blogpostsController->getBlogpostComments();
+        $onlyValidatedComments=true;
+        if($this->isUserAdmin){
+            $onlyValidatedComments=false;
+        }
+        $comments=$blogpostsController->getBlogpostComments($onlyValidatedComments);
         echo $this->twig->render($page,
             ['blogpost'=>$blogpostFound,
                 'comments' => $comments,
                 'loggedIn'=>$this->isLoggedIn,
+                'isUserAdmin'=>$this->isUserAdmin,
                 'userFeedbacks' => $feedback]);
     }
 
@@ -180,6 +189,7 @@ class commentController extends baseController {
         $feedback = $msg->getFeedback();
         echo $this->twig->render($page,
             ['userFeedbacks' => $feedback,
+                'isUserAdmin'=>$this->isUserAdmin,
                 'loggedIn'=>$this->isLoggedIn]);
     }
 
@@ -214,6 +224,7 @@ class commentController extends baseController {
         $feedback = $msg->getFeedback();
         echo $this->twig->render($page,
             ['loggedIn'=>$this->isLoggedIn,
+                'isUserAdmin'=>$this->isUserAdmin,
                 'comments'=> $comments,
                 'userFeedbacks' => $feedback]);
     }

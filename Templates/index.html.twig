@@ -113,20 +113,22 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="navbar-menu">
                         <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
-                            <li><a href="#hello">Hello</a></li>                    
-                            <li><a href="#about">About</a></li>                    
-                            <li><a href="#service">Services</a></li>                    
-                            <li><a href="#portfolio">Portfolio</a></li>                    
+                            <li><a href="/">Accueil</a></li>
+                            <li><a href="index.php/blogposts">Blogposts</a></li>
+                            {%  if isUserAdmin %}
+                            <li><a href="index.php/comments">Modération</a></li>
+                            {% endif %}
+                            {#<li><a href="#portfolio">Portfolio</a></li>
                             <li><a href="#pricing">Pricing</a></li>                    
-                            <li><a href="#blog">Blog</a></li>                    
-                            <li><a href="#contact">Contact</a></li>  
+                            <li><a href="#blog">Blog</a></li>#}
+                            <li><a href="index.php/#main_contact">Contact</a></li>
                         </ul>
                     </div><!-- /.navbar-collapse -->
                 </div>  
 
 
                 <!-- Start Side Menu -->
-                <div class="side">
+               {# <div class="side">
                     <a href="#" class="close-side"><i class="fa fa-times"></i></a>
                     <div class="widget">
                         <h6 class="title">Custom Pages</h6>
@@ -148,7 +150,7 @@
                             <li><a href="#">Ultimate Font Collection</a></li>
                         </ul>
                     </div>
-                </div>
+                </div>#}
                 <!-- End Side Menu -->
 
             </nav>
@@ -180,6 +182,8 @@
             {% endblock %}
 
             {% block blogpostEditPage %}
+            {% endblock %}
+            {% block commentEditPage %}
             {% endblock %}
 
 
@@ -1011,17 +1015,9 @@
 
             <!-- paradise slider js -->
 
-
-
-
-
-
-
-
-
             <script src="/Templates/assets/js/plugins.js"></script>
             <script src="/Templates/assets/js/main.js"></script>
-
+        </div>
     </body>
 </html>
 

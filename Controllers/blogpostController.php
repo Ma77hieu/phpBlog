@@ -13,7 +13,8 @@ class blogpostController extends baseController {
         $blogposts=$blogpost->findAll($orderBy);
         echo $this->twig->render('blogpostsList.html.twig',
             ['blogposts' => $blogposts,
-                'loggedIn'=>$this->isLoggedIn]);
+                'loggedIn'=>$this->isLoggedIn,
+                'isUserAdmin'=>$this->isUserAdmin,]);
     }
 
     public function getOneBlogpost()
@@ -80,6 +81,7 @@ class blogpostController extends baseController {
         echo $this->twig->render($page,
             [ 'blogpost' => $blogpostFound,
                 'loggedIn'=>$this->isLoggedIn,
+                'isUserAdmin'=>$this->isUserAdmin,
                 'userFeedbacks' => $feedback]);
     }
 
@@ -115,6 +117,7 @@ class blogpostController extends baseController {
             ['blogposts'=>$blogposts,
                 'blogpost' => $blogpostFound,
                 'loggedIn'=>$this->isLoggedIn,
+                'isUserAdmin'=>$this->isUserAdmin,
                 'userFeedbacks' => $feedback]);
     }
 
@@ -155,6 +158,7 @@ class blogpostController extends baseController {
         echo $this->twig->render($page,
             ['blogposts' => $blogposts,
                 'loggedIn'=>$this->isLoggedIn,
+                'isUserAdmin'=>$this->isUserAdmin,
                 'userFeedbacks' => $feedback]);
     }
 

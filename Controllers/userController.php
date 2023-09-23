@@ -23,6 +23,7 @@ class userController extends baseController {
         echo $this->twig->render($page,
         ['userFeedbacks' => $feedback,
             'loggedIn'=>$this->isLoggedIn,
+            'isUserAdmin'=>$this->isUserAdmin,
             'users' => $users]);
     }
 
@@ -47,6 +48,7 @@ class userController extends baseController {
         echo $this->twig->render($page,
             ['user' => $this->userFound,
                 'loggedIn'=>$this->isLoggedIn,
+                'isUserAdmin'=>$this->isUserAdmin,
                 'userFeedbacks' => $feedback]);
     }
 
@@ -87,6 +89,7 @@ class userController extends baseController {
         }
         echo $this->twig->render($page,
             ['userFeedbacks' => $feedback,
+                'isUserAdmin'=>$this->isUserAdmin,
                 'loggedIn'=>$this->isLoggedIn]);
     }
 
@@ -111,7 +114,9 @@ class userController extends baseController {
             $feedback = $msg->getFeedback();
         }
         echo $this->twig->render($page,
-            ['userFeedbacks' => $feedback]);
+            ['userFeedbacks' => $feedback,
+                'isUserAdmin'=>$this->isUserAdmin,
+                'isLoggedIn'=>$this->isLoggedIn]);
     }
 
     public function logout(){
@@ -121,7 +126,9 @@ class userController extends baseController {
         $feedback=$msg->getFeedback();
         session_unset();
         echo $this->twig->render('index.html.twig',
-            ['userFeedbacks' => $feedback]);
+            ['userFeedbacks' => $feedback,
+                'isUserAdmin' => $this->isUserAdmin,
+                'isLoggedIn' => $this->isLoggedIn]);
     }
 
     public function displayUpdateUser()
@@ -144,6 +151,8 @@ class userController extends baseController {
         $feedback = $msg->getFeedback();
         echo $this->twig->render($page,
             ['user' => $this->userFound,
+                'isUserAdmin' => $this->isUserAdmin,
+                'isLoggedIn' => $this->isLoggedIn,
                 'userFeedbacks' => $feedback]);
     }
 
@@ -185,6 +194,8 @@ class userController extends baseController {
         $feedback = $msg->getFeedback();
         echo $this->twig->render($page,
             ['users' => $users,
+                'isUserAdmin' => $this->isUserAdmin,
+                'isLoggedIn' => $this->isLoggedIn,
                 'userFeedbacks' => $feedback]);
     }
 

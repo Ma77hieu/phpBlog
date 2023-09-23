@@ -15,6 +15,6 @@
             {% set feedback_type = 'Succès: ' %}
         {% endif %}
         {#{% endfor %}#}
-    <div class="{{ feedback_class }}" role="alert"> {{ feedback_type }}{{ feedback.text }}</div>
+    <div class=" {{ feedback_class }} p-1" role="alert"> {{ feedback_type }}{{ feedback.text }}</div>
     {% endfor %}
 {% endblock %}
