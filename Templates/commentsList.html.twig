@@ -1,8 +1,13 @@
 {% extends "index.html.twig" %}
 
 {% block commentsList %}
-    <p>COMMENTS LIST</p>
-    {% for comment in comments %}
-        {{ include ('commentCard.html.twig',{'comment':comment})}}
-    {% endfor %}
+    <div class="container m-t-40">
+        <div class="row">
+            <h2>Liste des commentaires en attente de validation</h2>
+            {% for comment in comments %}
+                {{ include ('commentCard.html.twig',{'comment':comment})}}
+            {% endfor %}
+        </div>
+    </div>
+
 {% endblock %}

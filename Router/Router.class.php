@@ -54,7 +54,7 @@ class Router{
             case('/comments'):
                 require $this->controllersDir.'commentController.php';
                 $controller=new commentController();
-                $controller->displayCommentsAdmin();
+                $controller->displayUnvalidatedComments();
                 break;
             case('/comment'):
                 require $this->controllersDir.'commentController.php';

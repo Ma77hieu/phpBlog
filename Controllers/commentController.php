@@ -7,14 +7,26 @@ class commentController extends baseController {
         parent::__construct();
     }
 
-    public function displayCommentsAdmin(){
-        $comment=new comment();
-        $orderBy='ORDER BY creation_date DESC';
-        $comments=$comment->findAll($orderBy);
-        echo $this->twig->render('commentsList.html.twig',
-            ['comments' => $comments,
+    public function displayUnvalidatedComments(){
+        $rightsChecker = new accessController();
+        if(!$rightsChecker->isAdmin()){
+            $page='index.html.twig';
+            $msg=new userFeedback('error',ACCESS_ERROR);
+            $feedback=$msg->getFeedback();
+            $data=['isUserAdmin'=>$this->isUserAdmin,
+                'loggedIn'=>$this->isLoggedIn,
+                'userFeedbacks' => $feedback];
+        } else {
+            $page='commentsList.html.twig';
+            $comment=new comment();
+            $whereClause='WHERE is_validated=false';
+            $orderBy='ORDER BY creation_date DESC';
+            $comments=$comment->findRowsBy($whereClause,$orderBy);
+            $data=['comments' => $comments,
                 'isUserAdmin'=>$this->isUserAdmin,
-                'loggedIn'=>$this->isLoggedIn]);
+                'loggedIn'=>$this->isLoggedIn];
+        }
+        echo $this->twig->render($page,$data);
     }
 
 
