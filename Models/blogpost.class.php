@@ -159,7 +159,7 @@ class blogpost extends model
         'modification_date' => PDO::PARAM_STR
     ];
 
-    public $tableName='blogpost';
+    public $tableName = 'blogpost';
 
     /**
      * Returns an array of all the comments related to the blogpost whose id
@@ -167,27 +167,28 @@ class blogpost extends model
      * @param bool $onlyValidatedComments true if only validated comments need to be returned
      * @return array
      */
-    public function getBlogpostComments($onlyValidatedComments){
-        $blogpostId=htmlspecialchars($_GET['blogpost_id']);
-        if(!$blogpostId){
-            $blogpostId=htmlspecialchars($_POST['blogpost_id']);
+    public function getBlogpostComments($onlyValidatedComments)
+    {
+        $blogpostId = htmlspecialchars($_GET['blogpost_id']);
+        if (!$blogpostId) {
+            $blogpostId = htmlspecialchars($_POST['blogpost_id']);
         }
-        $comment=new comment();
-        $where="WHERE blogpost=$blogpostId";
-        if($onlyValidatedComments){
-            $where.=" AND is_validated=true";
+        $comment = new comment();
+        $where = "WHERE blogpost=$blogpostId";
+        if ($onlyValidatedComments) {
+            $where .= " AND is_validated=true";
         }
-        $orderBy='ORDER BY creation_date DESC';
-        $comments=$comment->findRowsBy($where,$orderBy);
-        $currentUserId=$_SESSION['id'];
-        $treatedComments=[];
-        foreach($comments as $comment){
-            $isUserAuthor=false;
-            if($currentUserId==$comment['author']){
-                $isUserAuthor=true;
+        $orderBy = 'ORDER BY creation_date DESC';
+        $comments = $comment->findRowsBy($where, $orderBy);
+        $currentUserId = $_SESSION['id'];
+        $treatedComments = [];
+        foreach ($comments as $comment) {
+            $isUserAuthor = false;
+            if ($currentUserId == $comment['author']) {
+                $isUserAuthor = true;
             }
-            $comment+=['isUserAuthor'=>$isUserAuthor];
-            $treatedComments[]=$comment;
+            $comment += ['isUserAuthor' => $isUserAuthor];
+            $treatedComments[] = $comment;
         }
         /*var_dump($treatedComments);die;*/
         return $treatedComments;

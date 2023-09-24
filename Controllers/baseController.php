@@ -1,7 +1,9 @@
 <?php
-require(BASEDIR.'/Translations/fr/userDisplayedMessages.php');
+require(BASEDIR . '/Translations/fr/userDisplayedMessages.php');
 require('Controllers/accessController.php');
-class baseController {
+
+class baseController
+{
 
     /**
      * @var \Twig\Environment
@@ -63,8 +65,9 @@ class baseController {
         $this->isUserAdmin();
     }
 
-    public function generateTwig(){
-        $loader = new \Twig\Loader\FilesystemLoader(BASEDIR .'/Templates');
+    public function generateTwig()
+    {
+        $loader = new \Twig\Loader\FilesystemLoader(BASEDIR . '/Templates');
         $this->twig = new \Twig\Environment($loader, [
             'cache' => false,
             'debug' => true,
@@ -74,37 +77,40 @@ class baseController {
 
     }
 
-    public function getUserId(){
-        if ($this->getVars['id']){
-            $userId=htmlspecialchars($this->getVars['id']);
+    public function getUserId()
+    {
+        if ($this->getVars['id']) {
+            $userId = htmlspecialchars($this->getVars['id']);
             $user = new user();
-            $userFound=$user->findById($userId);
+            $userFound = $user->findById($userId);
         } else {
-            $userFound=[];
+            $userFound = [];
         }
-        $this->userFound=$userFound;
+        $this->userFound = $userFound;
     }
 
-    public function isUserLoggedIn(){
-        if ($this->sessionVars['id']){
-            $this->isLoggedIn=true;
+    public function isUserLoggedIn()
+    {
+        if ($this->sessionVars['id']) {
+            $this->isLoggedIn = true;
         } else {
-            $this->isLoggedIn=false;
+            $this->isLoggedIn = false;
         }
     }
 
-    public function isUserAdmin(){
+    public function isUserAdmin()
+    {
         if (!$this->sessionVars['id']) {
-            $this->isUserAdmin=false;
+            $this->isUserAdmin = false;
         } else {
             $userId = $this->sessionVars['id'];
             $user = new user();
             $userConnected = $user->findById($userId);
             $userRoles = explode(',', $userConnected['roles']);
             if (in_array('admin', $userRoles)) {
-                $this->isUserAdmin=true;
+                $this->isUserAdmin = true;
             } else {
-                $this->isUserAdmin=false;
+                $this->isUserAdmin = false;
             }
         }
     }

@@ -1,6 +1,7 @@
 <?php
 
-class dbSingleton{
+class dbSingleton
+{
 
     /**
      * @var self the database instance
@@ -29,13 +30,13 @@ class dbSingleton{
      */
     public static function dbConnection()
     {
-        $dbName=$_ENV['DB_NAME'];
-        $dbUser=$_ENV['DB_USER'];
-        $dbPwd=$_ENV['DB_PWD'];
+        $dbName = $_ENV['DB_NAME'];
+        $dbUser = $_ENV['DB_USER'];
+        $dbPwd = $_ENV['DB_PWD'];
         try {
             $database = new PDO("mysql:host=localhost;dbname=$dbName;charset=utf8", $dbUser, $dbPwd);
-        } catch(Exception $e) {
-            die('Erreur : '.$e->getMessage());
+        } catch (Exception $e) {
+            die('Erreur : ' . $e->getMessage());
         }
         return $database;
     }

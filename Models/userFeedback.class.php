@@ -7,19 +7,21 @@
  * The type variable can be 'success' 'error' or 'warning'
  * The msgTxt variable represents the actual message to be displayed
  */
-class userFeedback {
+class userFeedback
+{
 
     private $type;
     private $msgTxt;
 
-    public function __construct($type,$msgTxt)
+    public function __construct($type, $msgTxt)
     {
-        $this->type=$type;
-        $this->msgTxt=$msgTxt;
+        $this->type = $type;
+        $this->msgTxt = $msgTxt;
     }
 
-    public function getFeedback(){
-        return [['type'=>$this->type,'text'=>$this->msgTxt]];
+    public function getFeedback()
+    {
+        return [['type' => $this->type, 'text' => $this->msgTxt]];
     }
 
 }

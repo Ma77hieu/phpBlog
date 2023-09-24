@@ -1,13 +1,13 @@
 <?php
 
-class accessController extends baseController {
-
+class accessController extends baseController
+{
 
 
     // All uri that should be accessed only with admin rights need
     // to be inside this array, the controller checks for each value of the array if
     // it is INCLUDED inside the uri (not an exact match)
-    const URI_ADMIN_REQUIRED=['/users',
+    const URI_ADMIN_REQUIRED = ['/users',
         '/user/',
         '/comments'];
 
@@ -42,8 +42,9 @@ class accessController extends baseController {
      * Returns true if the user is logged in, false if not
      * @return bool
      */
-    public function isLoggedIn(){
-        if ($this->sessionVars['id']){
+    public function isLoggedIn()
+    {
+        if ($this->sessionVars['id']) {
             return true;
         } else {
             return false;
@@ -57,10 +58,10 @@ class accessController extends baseController {
      */
     public function isAdminRightRequired($route)
     {
-        $isAdminsRequired=false;
+        $isAdminsRequired = false;
         foreach (self::URI_ADMIN_REQUIRED as $uri) {
             if (str_contains($route, $uri)) {
-                $isAdminsRequired= true;
+                $isAdminsRequired = true;
             }
         }
         return $isAdminsRequired;
@@ -74,17 +75,17 @@ class accessController extends baseController {
      */
     public function checkAccessRights()
     {
-        $route=strtok($_SERVER['REQUEST_URI'],'?');
-        if (str_contains($route,'/index.php')!==false){
-            $route=str_replace('/index.php','',$route);
+        $route = strtok($_SERVER['REQUEST_URI'], '?');
+        if (str_contains($route, '/index.php') !== false) {
+            $route = str_replace('/index.php', '', $route);
         }
-        $isAccessOk=true;
-        $adminRightNeeded=$this->isAdminRightRequired($route);
-        if ($adminRightNeeded){
-            $isLoggedIn=$this->isLoggedIn();
-            $isAdmin=$this->isAdmin();
-            if(!($isLoggedIn && $isAdmin)){
-                $isAccessOk=false;
+        $isAccessOk = true;
+        $adminRightNeeded = $this->isAdminRightRequired($route);
+        if ($adminRightNeeded) {
+            $isLoggedIn = $this->isLoggedIn();
+            $isAdmin = $this->isAdmin();
+            if (!($isLoggedIn && $isAdmin)) {
+                $isAccessOk = false;
             }
         }
         return $isAccessOk;
@@ -96,9 +97,10 @@ class accessController extends baseController {
      * @param array $model
      * @return bool
      */
-    public function isUpdateAuthorized($model){
-        $author=$model['author'];
-        if($author==$this->sessionVars['id'] || $this->isAdmin()){
+    public function isUpdateAuthorized($model)
+    {
+        $author = $model['author'];
+        if ($author == $this->sessionVars['id'] || $this->isAdmin()) {
             return true;
         } else {
             return false;

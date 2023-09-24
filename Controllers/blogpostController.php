@@ -1,72 +1,75 @@
 <?php
 
-class blogpostController extends baseController {
+class blogpostController extends baseController
+{
 
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function displayBlogposts(){
-        $blogpost=new blogpost();
-        $orderBy='ORDER BY creation_date DESC';
-        $blogposts=$blogpost->findAll($orderBy);
+    public function displayBlogposts()
+    {
+        $blogpost = new blogpost();
+        $orderBy = 'ORDER BY creation_date DESC';
+        $blogposts = $blogpost->findAll($orderBy);
         echo $this->twig->render('blogpostsList.html.twig',
             ['blogposts' => $blogposts,
-                'loggedIn'=>$this->isLoggedIn,
-                'isUserAdmin'=>$this->isUserAdmin,]);
+                'loggedIn' => $this->isLoggedIn,
+                'isUserAdmin' => $this->isUserAdmin,]);
     }
 
     public function getOneBlogpost()
     {
-        if ($this->getVars['blogpost_id']){
-            $blogpostId=htmlspecialchars($this->getVars['blogpost_id']);
+        if ($this->getVars['blogpost_id']) {
+            $blogpostId = htmlspecialchars($this->getVars['blogpost_id']);
         }
         $blogpost = new blogpost();
-        $blogpostFound=$blogpost->findById($blogpostId);
-        $authorId=intval($blogpostFound['author']);
-        $isCurrentUserAuthor=false;
-        if (!$blogpostFound){
-            $page='index.html.twig';
-            $msg=new userFeedback('error',ERROR_BLOGPOST_NOT_FOUND);
+        $blogpostFound = $blogpost->findById($blogpostId);
+        $authorId = intval($blogpostFound['author']);
+        $isCurrentUserAuthor = false;
+        if (!$blogpostFound) {
+            $page = 'index.html.twig';
+            $msg = new userFeedback('error', ERROR_BLOGPOST_NOT_FOUND);
         } else {
-            $page='blogpostPage.html.twig';
-            $user=new user();
-            $userFound=$user->findById($authorId);
-            $author=$userFound['email'];
-            if($this->sessionVars['id']==$authorId) {
+            $page = 'blogpostPage.html.twig';
+            $user = new user();
+            $userFound = $user->findById($authorId);
+            $author = $userFound['email'];
+            if ($this->sessionVars['id'] == $authorId) {
                 $isCurrentUserAuthor = true;
             }
 
         }
-        $commentsFound=$blogpost->getBlogpostComments(true);
+        $commentsFound = $blogpost->getBlogpostComments(true);
         if ($msg) {
             $feedback = $msg->getFeedback();
         }
         echo $this->twig->render($page,
-            [ 'blogpost' => $blogpostFound,
+            ['blogpost' => $blogpostFound,
                 'author' => $author,
-                'authorId'=>$authorId,
-                'comments'=>$commentsFound,
-                'loggedIn'=>$this->isLoggedIn,
+                'authorId' => $authorId,
+                'comments' => $commentsFound,
+                'loggedIn' => $this->isLoggedIn,
                 'isCurrentUserAuthor' => $isCurrentUserAuthor,
-                'isUserAdmin'=>$this->isUserAdmin,
+                'isUserAdmin' => $this->isUserAdmin,
                 'userFeedbacks' => $feedback]);
     }
 
-    public function createBlogpost(){
+    public function createBlogpost()
+    {
         $blogpost = new blogpost();
-        $userId=$this->sessionVars['id'];
-        $now=new DateTime();
+        $userId = $this->sessionVars['id'];
+        $now = new DateTime();
 
-        if(!$this->postVars){
+        if (!$this->postVars) {
             //display the form
-            $page='blogpostCreation.html.twig';
+            $page = 'blogpostCreation.html.twig';
         } else {
             //CSRF token check
-            if($this->postVars['csrf_token'] != $this->sessionVars['csrfToken']){
-                $page='blogpostCreation.html.twig';
-                $msg=new userFeedback('error',ERROR_BLOGPOST_CREATION);
+            if ($this->postVars['csrf_token'] != $this->sessionVars['csrfToken']) {
+                $page = 'blogpostCreation.html.twig';
+                $msg = new userFeedback('error', ERROR_BLOGPOST_CREATION);
             } else {
                 //handle the form submission
                 $datas = ['title' => htmlspecialchars($this->postVars['blogpost_title']),
@@ -84,13 +87,13 @@ class blogpostController extends baseController {
                     $msg = new userFeedback('success', BLOGPOST_CREATED);
                 }
             }
-            $feedback=$msg->getFeedback();
+            $feedback = $msg->getFeedback();
 
         }
         echo $this->twig->render($page,
-            [ 'blogpost' => $blogpostFound,
-                'loggedIn'=>$this->isLoggedIn,
-                'isUserAdmin'=>$this->isUserAdmin,
+            ['blogpost' => $blogpostFound,
+                'loggedIn' => $this->isLoggedIn,
+                'isUserAdmin' => $this->isUserAdmin,
                 'userFeedbacks' => $feedback]);
     }
 
@@ -102,12 +105,12 @@ class blogpostController extends baseController {
      */
     public function displayUpdateBlogpost()
     {
-        $blogpostId=htmlspecialchars($this->getVars['blogpost_id']);
-        $blogpost=new blogpost();
-        $blogpostFound=$blogpost->findById($blogpostId);
+        $blogpostId = htmlspecialchars($this->getVars['blogpost_id']);
+        $blogpost = new blogpost();
+        $blogpostFound = $blogpost->findById($blogpostId);
         $rightsChecker = new accessController();
-        $orderBy='ORDER BY creation_date DESC';
-        $blogposts=$blogpost->findAll($orderBy);
+        $orderBy = 'ORDER BY creation_date DESC';
+        $blogposts = $blogpost->findAll($orderBy);
         //we check if the user tries to access one of its own blogposts
         if (!($rightsChecker->isUpdateAuthorized($blogpostFound))) {
             $page = 'blogpostsList.html.twig';
@@ -120,14 +123,14 @@ class blogpostController extends baseController {
                 $page = 'blogpostEditPage.html.twig';
             }
         }
-        if($msg){
+        if ($msg) {
             $feedback = $msg->getFeedback();
         }
         echo $this->twig->render($page,
-            ['blogposts'=>$blogposts,
+            ['blogposts' => $blogposts,
                 'blogpost' => $blogpostFound,
-                'loggedIn'=>$this->isLoggedIn,
-                'isUserAdmin'=>$this->isUserAdmin,
+                'loggedIn' => $this->isLoggedIn,
+                'isUserAdmin' => $this->isUserAdmin,
                 'userFeedbacks' => $feedback]);
     }
 
@@ -139,12 +142,12 @@ class blogpostController extends baseController {
      */
     public function saveUpdateBlogpost()
     {
-        $blogpostId=htmlspecialchars($this->getVars['blogpost_id']);
-        $blogpost=new blogpost();
-        $blogpostFound=$blogpost->findById($blogpostId);
+        $blogpostId = htmlspecialchars($this->getVars['blogpost_id']);
+        $blogpost = new blogpost();
+        $blogpostFound = $blogpost->findById($blogpostId);
         $rightsChecker = new accessController();
-        $orderBy='ORDER BY creation_date DESC';
-        $blogposts=$blogpost->findAll($orderBy);
+        $orderBy = 'ORDER BY creation_date DESC';
+        $blogposts = $blogpost->findAll($orderBy);
         $page = 'blogpostsList.html.twig';
         //we check if the user tries to access one of its own blogposts
         if (!($rightsChecker->isUpdateAuthorized($blogpostFound))) {
@@ -158,7 +161,7 @@ class blogpostController extends baseController {
                 $datas = ['title' => htmlspecialchars($this->postVars['blogpost_edit_title']),
                     'summary' => htmlspecialchars($this->postVars['blogpost_edit_summary']),
                     'content' => htmlspecialchars($this->postVars['blogpost_edit_content']),
-                    'modification_date'=>$now->format('Y-m-d H:i:s')];
+                    'modification_date' => $now->format('Y-m-d H:i:s')];
                 $blogpost = new blogpost();
                 $blogpost->updateRow($datas, $blogpostFound['blogpost_id']);
                 $msg = new userFeedback('success', BLOGPOST_UPDATED);
@@ -167,17 +170,18 @@ class blogpostController extends baseController {
         $feedback = $msg->getFeedback();
         echo $this->twig->render($page,
             ['blogposts' => $blogposts,
-                'loggedIn'=>$this->isLoggedIn,
-                'isUserAdmin'=>$this->isUserAdmin,
+                'loggedIn' => $this->isLoggedIn,
+                'isUserAdmin' => $this->isUserAdmin,
                 'userFeedbacks' => $feedback]);
     }
 
-    public function deleteBlogpost(){
-        $blogpostId=htmlspecialchars($this->getVars['blogpost_id']);
-        $blogpost=new blogpost();
-        $blogpostFound=$blogpost->findById($blogpostId);
+    public function deleteBlogpost()
+    {
+        $blogpostId = htmlspecialchars($this->getVars['blogpost_id']);
+        $blogpost = new blogpost();
+        $blogpostFound = $blogpost->findById($blogpostId);
         $rightsChecker = new accessController();
-        $page='homepage.html.twig';
+        $page = 'homepage.html.twig';
         if (!($rightsChecker->isUpdateAuthorized($blogpostFound))) {
             $msg = new userFeedback('error', NOT_OWNER);
         } else {
@@ -192,7 +196,7 @@ class blogpostController extends baseController {
         $feedback = $msg->getFeedback();
         echo $this->twig->render($page,
             ['userFeedbacks' => $feedback,
-                'loggedIn'=>$this->isLoggedIn,
-                'isUserAdmin'=>$this->isUserAdmin]);
+                'loggedIn' => $this->isLoggedIn,
+                'isUserAdmin' => $this->isUserAdmin]);
     }
 }

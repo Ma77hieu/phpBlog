@@ -1,30 +1,32 @@
 <?php
 
 
-class userController extends baseController {
+class userController extends baseController
+{
 
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function displayUsers(){
-        $rightsChecker=new accessController();
+    public function displayUsers()
+    {
+        $rightsChecker = new accessController();
         //we check if the user can access this page that is for admin only
-        if (!($rightsChecker->checkAccessRights())){
-            $page='index.html.twig';
-            $msg=new userFeedback('error',ACCESS_ERROR);
+        if (!($rightsChecker->checkAccessRights())) {
+            $page = 'index.html.twig';
+            $msg = new userFeedback('error', ACCESS_ERROR);
             $feedback = $msg->getFeedback();
         } else {
-            $page='usersList.html.twig';
-            $user=new user();
-            $users=$user->findAll();
+            $page = 'usersList.html.twig';
+            $user = new user();
+            $users = $user->findAll();
         }
         echo $this->twig->render($page,
-        ['userFeedbacks' => $feedback,
-            'loggedIn'=>$this->isLoggedIn,
-            'isUserAdmin'=>$this->isUserAdmin,
-            'users' => $users]);
+            ['userFeedbacks' => $feedback,
+                'loggedIn' => $this->isLoggedIn,
+                'isUserAdmin' => $this->isUserAdmin,
+                'users' => $users]);
     }
 
     public function getOneUser()
@@ -43,20 +45,21 @@ class userController extends baseController {
                 $page = 'userPage.html.twig';
             }
         }
-        if($msg){
+        if ($msg) {
             $feedback = $msg->getFeedback();
         }
 
         echo $this->twig->render($page,
             ['user' => $this->userFound,
-                'loggedIn'=>$this->isLoggedIn,
-                'isUserAdmin'=>$this->isUserAdmin,
+                'loggedIn' => $this->isLoggedIn,
+                'isUserAdmin' => $this->isUserAdmin,
                 'userFeedbacks' => $feedback]);
     }
 
-    public function createUser(){
+    public function createUser()
+    {
         $user = new user();
-        if(!$this->postVars){
+        if (!$this->postVars) {
             //display the form
             $page = 'signup.html.twig';
         } else {
@@ -94,8 +97,8 @@ class userController extends baseController {
         }
         echo $this->twig->render($page,
             ['userFeedbacks' => $feedback,
-                'isUserAdmin'=>$this->isUserAdmin,
-                'loggedIn'=>$this->isLoggedIn]);
+                'isUserAdmin' => $this->isUserAdmin,
+                'loggedIn' => $this->isLoggedIn]);
     }
 
     public function login()
@@ -106,10 +109,10 @@ class userController extends baseController {
             $page = 'login.html.twig';
         } else {
             //handle the form submission
-            $email=htmlspecialchars($this->postVars['email']);
-            $encodedPwd=md5(htmlspecialchars($this->postVars['password']));
-            $userFound=$user->findRowsBy("WHERE email='$email' AND password='$encodedPwd'");
-            if ($userFound==[]){
+            $email = htmlspecialchars($this->postVars['email']);
+            $encodedPwd = md5(htmlspecialchars($this->postVars['password']));
+            $userFound = $user->findRowsBy("WHERE email='$email' AND password='$encodedPwd'");
+            if ($userFound == []) {
                 $msg = new userFeedback('error', LOGIN_FAIL);
             } else {
                 $this->saveLoginInSession($userFound[0]['user_id']);
@@ -121,15 +124,16 @@ class userController extends baseController {
         $this->isUserAdmin();
         echo $this->twig->render($page,
             ['userFeedbacks' => $feedback,
-                'isUserAdmin'=>$this->isUserAdmin,
-                'loggedIn'=>true]);
+                'isUserAdmin' => $this->isUserAdmin,
+                'loggedIn' => true]);
     }
 
-    public function logout(){
-        $this->sessionVars['isLoggedIn']=false;
-        $this->sessionVars['roles']=[];
-        $msg=new userFeedback('success',LOGOUT_OK);
-        $feedback=$msg->getFeedback();
+    public function logout()
+    {
+        $this->sessionVars['isLoggedIn'] = false;
+        $this->sessionVars['roles'] = [];
+        $msg = new userFeedback('success', LOGOUT_OK);
+        $feedback = $msg->getFeedback();
         session_unset();
         echo $this->twig->render('homepage.html.twig',
             ['userFeedbacks' => $feedback,
@@ -151,23 +155,23 @@ class userController extends baseController {
                 $msg = new userFeedback('error', ERROR_USER_NOT_FOUND);
             } else {
                 $page = 'userEditPage.html.twig';
-                $viewedUserIsAdmin=false;
-                $user=new User;
-                $viewedUser=$user->findById($this->getVars['id']);
-                $viewedUserRoles=$viewedUser['roles'];
-                if (str_contains($viewedUserRoles,'admin')){
-                    $viewedUserIsAdmin=true;
+                $viewedUserIsAdmin = false;
+                $user = new User;
+                $viewedUser = $user->findById($this->getVars['id']);
+                $viewedUserRoles = $viewedUser['roles'];
+                if (str_contains($viewedUserRoles, 'admin')) {
+                    $viewedUserIsAdmin = true;
                 }
             }
         }
-        if($msg){
-        $feedback = $msg->getFeedback();
+        if ($msg) {
+            $feedback = $msg->getFeedback();
         }
         echo $this->twig->render($page,
             ['user' => $this->userFound,
                 'isUserAdmin' => $this->isUserAdmin,
                 'loggedIn' => $this->isLoggedIn,
-                'viewedUserIsAdmin'=>$viewedUserIsAdmin,
+                'viewedUserIsAdmin' => $viewedUserIsAdmin,
                 'userFeedbacks' => $feedback]);
     }
 
@@ -179,7 +183,7 @@ class userController extends baseController {
             $page = 'index.html.twig';
             $msg = new userFeedback('error', ACCESS_ERROR);
         } else {
-            if (!$this->userFound || $this->postVars['csrf_token'] != $this->sessionVars['csrfToken'] ) {
+            if (!$this->userFound || $this->postVars['csrf_token'] != $this->sessionVars['csrfToken']) {
                 $page = 'index.html.twig';
                 $msg = new userFeedback('error', USER_NOT_CREATED);
             } else {
@@ -211,8 +215,9 @@ class userController extends baseController {
                 'userFeedbacks' => $feedback]);
     }
 
-    public function saveLoginInSession($userId){
-        $this->sessionVars['id']=$userId;
+    public function saveLoginInSession($userId)
+    {
+        $this->sessionVars['id'] = $userId;
     }
 
     /**
@@ -220,10 +225,11 @@ class userController extends baseController {
      * @param $userMail
      * @return bool
      */
-    public function checkAlreadyExistsMail($userMail){
-        $searchUser=new User();
-        $userFound=$searchUser->findRowsBy("WHERE email='$userMail'");
-        if($userFound==[]){
+    public function checkAlreadyExistsMail($userMail)
+    {
+        $searchUser = new User();
+        $userFound = $searchUser->findRowsBy("WHERE email='$userMail'");
+        if ($userFound == []) {
             return false;
         } else {
             return true;

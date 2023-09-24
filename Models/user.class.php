@@ -1,6 +1,7 @@
 <?php
 
-class user extends model {
+class user extends model
+{
     /**
      * @var int user's id
      */
@@ -28,7 +29,7 @@ class user extends model {
         'roles' => PDO::PARAM_STR
     ];
 
-    public $tableName='user';
+    public $tableName = 'user';
 
 
     public function __construct()
@@ -104,18 +105,20 @@ class user extends model {
      * Find user by its email
      * @param string $email email of the searched user
      */
-    public function findUserByEmail($email){
-        $whereClause="WHERE email='$email'";
-        $find=$this->findRowsBy($whereClause);
+    public function findUserByEmail($email)
+    {
+        $whereClause = "WHERE email='$email'";
+        $find = $this->findRowsBy($whereClause);
         return $find;
     }
 
     /**
      * Find all users with admin rights
      */
-    public function findAllAdminUsers(){
-        $whereClause="WHERE roles LIKE '%admin%'";
-        $find=$this->findRowsBy($whereClause);
+    public function findAllAdminUsers()
+    {
+        $whereClause = "WHERE roles LIKE '%admin%'";
+        $find = $this->findRowsBy($whereClause);
         return $find;
     }
 

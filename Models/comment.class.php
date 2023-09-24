@@ -1,6 +1,7 @@
 <?php
 
-class comment extends model{
+class comment extends model
+{
     /**
      * @var int comment's id
      */
@@ -38,7 +39,7 @@ class comment extends model{
         'is_validated' => PDO::PARAM_BOOL
     ];
 
-    public $tableName='comment';
+    public $tableName = 'comment';
 
     /**
      * @return string

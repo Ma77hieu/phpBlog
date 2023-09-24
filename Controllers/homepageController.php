@@ -1,6 +1,7 @@
 <?php
 
-class homepageController extends baseController {
+class homepageController extends baseController
+{
 
     public function __construct()
     {
@@ -16,9 +17,10 @@ class homepageController extends baseController {
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function displayHome($with404Message){
-        if($with404Message){
-        $msg = new userFeedback('error', ERROR_404);
+    public function displayHome($with404Message)
+    {
+        if ($with404Message) {
+            $msg = new userFeedback('error', ERROR_404);
             $feedback = $msg->getFeedback();
         }
         echo $this->twig->render('homepage.html.twig',
