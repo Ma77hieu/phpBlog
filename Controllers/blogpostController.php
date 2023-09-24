@@ -25,6 +25,7 @@ class blogpostController extends baseController {
         $blogpost = new blogpost();
         $blogpostFound=$blogpost->findById($blogpostId);
         $authorId=intval($blogpostFound['author']);
+        $isCurrentUserAuthor=false;
         if (!$blogpostFound){
             $page='index.html.twig';
             $msg=new userFeedback('error',ERROR_BLOGPOST_NOT_FOUND);
@@ -33,6 +34,10 @@ class blogpostController extends baseController {
             $user=new user();
             $userFound=$user->findById($authorId);
             $author=$userFound['email'];
+            if($_SESSION['id']==$authorId) {
+                $isCurrentUserAuthor = true;
+            }
+
         }
         $commentsFound=$blogpost->getBlogpostComments(true);
         if ($msg) {
@@ -44,6 +49,7 @@ class blogpostController extends baseController {
                 'authorId'=>$authorId,
                 'comments'=>$commentsFound,
                 'loggedIn'=>$this->isLoggedIn,
+                'isCurrentUserAuthor' => $isCurrentUserAuthor,
                 'isUserAdmin'=>$this->isUserAdmin,
                 'userFeedbacks' => $feedback]);
     }

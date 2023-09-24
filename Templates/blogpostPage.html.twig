@@ -11,7 +11,7 @@
         <div class="row">
             <div class="m-top-40">
                 <div class="col-md-8 col-md-offset-2 col-sm-12">
-                    <div class="head_title text-center">
+                    <div class="text-center m-top-40 m-bottom-40">
                         <h2>{{ blogpost.title }}</h2>
                         </br>
                         <div class="separator_auto"></div>
@@ -22,15 +22,24 @@
                         <p>{{ blogpost.content }}</p>
                         <p>{{ wording_date }}{{ date }}</p>
                         <p>Publié par: {{ author }}</p>
+                        {% if isCurrentUserAuthor %}
+                            <div class="m-top-30">
+                            <a class="text-primary" href="blogpost/edit?blogpost_id={{ blogpost.blogpost_id }}"><strong><i
+                                        class="fa fa-edit"></i> Modification</strong></a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="separator_auto m-bottom-40"></div>
     <div class="container">
         <div class="row">
+
             {#<div class="main_pricing roomy-100">#}
-                <div class="col-md-8 col-md-offset-2 col-sm-12">
+                <div class="col-md-8 col-md-offset-1 col-sm-12">
+                    <h2 class="m-bottom-20">Commentaires:</h2>
                     {% if comments %}
                     {% for comment in comments %}
                         {{ include ('commentCard.html.twig',{'comment':comment})}}
@@ -42,10 +51,11 @@
             {#</div>#}
         </div>
     </div>
+    <div class="separator_auto m-top-40 m-bottom-40"></div>
 
     <div class="container">
         <div class="row">
-                <div class="col-md-8 col-md-offset-2 col-sm-12 m-top-20">
+                <div class="col-md-8 col-md-offset-1 col-sm-12 m-top-20">
                         {{ include ('commentCreation.html.twig')}}
                 </div>
         </div>

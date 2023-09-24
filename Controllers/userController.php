@@ -112,7 +112,7 @@ class userController extends baseController {
                 $this->saveLoginInSession($userFound[0]['user_id']);
                 $msg = new userFeedback('success', LOGIN_OK);
             }
-            $page = 'index.html.twig';
+            $page = 'homepage.html.twig';
             $feedback = $msg->getFeedback();
         }
         echo $this->twig->render($page,
