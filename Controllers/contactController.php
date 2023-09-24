@@ -11,7 +11,7 @@ class contactController extends baseController {
 
     public function sendContactForm(){
         $errors = [];
-        if (!empty($_POST)) {
+        if (!empty($_POST) && $_POST['csrf_token'] != $_SESSION['csrfToken']) {
             $lastName = htmlspecialchars($_POST['last_name']);
             $firstName = htmlspecialchars($_POST['first_name']);
             $email = htmlspecialchars($_POST['email']);
@@ -72,7 +72,8 @@ class contactController extends baseController {
         }
         $feedback = $msg->getFeedback();
         echo $this->twig->render('homepage.html.twig',
-            [
+            ['isUserAdmin' => $this->isUserAdmin,
+                'loggedIn' => $this->isLoggedIn,
                 'userFeedbacks' => $feedback]);
     }
 }
