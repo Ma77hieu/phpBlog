@@ -164,6 +164,7 @@ class blogpost extends model
     /**
      * Returns an array of all the comments related to the blogpost whose id
      * is defined inside the url blogpost_id parameter
+     *
      * @param bool $onlyValidatedComments true if only validated comments need to be returned
      * @return array
      */

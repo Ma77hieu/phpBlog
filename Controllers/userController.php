@@ -14,6 +14,8 @@ class userController extends baseController
 
     /**
      * Handle the display of all users (to user with admin rights only)
+     *
+     * @return void
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
@@ -42,6 +44,7 @@ class userController extends baseController
      * Echo the twig template to create a user (if get request) and
      * manage the form submission (if post request)
      *
+     * @return void
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
@@ -94,6 +97,7 @@ class userController extends baseController
     /**
      * Handle the user login feature
      *
+     * @return void
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
@@ -128,6 +132,7 @@ class userController extends baseController
     /**
      * Handle the user logout function
      *
+     * @return void
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
@@ -149,6 +154,7 @@ class userController extends baseController
      * Displays the form in order for the admins to update
      * the users attributes (if she/he is admin, change email adress etc)
      *
+     * @return void
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
@@ -190,6 +196,7 @@ class userController extends baseController
     /**
      * Handle the form submission to save update on users attributes
      *
+     * @return void
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
@@ -235,6 +242,9 @@ class userController extends baseController
     }
 
     /**
+     * Stores the userId passed as paramter inside
+     * the session 'id' variable
+     *
      * @param int $userId id of the logged in user
      */
     public function saveLoginInSession($userId)
@@ -244,6 +254,7 @@ class userController extends baseController
 
     /**
      * Checks if an email is already associated to a DB user
+     *
      * @param $userMail
      * @return bool
      */

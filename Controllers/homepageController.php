@@ -12,6 +12,8 @@ class homepageController extends baseController
      * Displays the homepage.
      * The homepage is also used as redirection for 404 errors with a specific
      * error message.
+     *
+     * @return void
      * @param boolean $with404Message true if error 404 message needs to be displayed
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError

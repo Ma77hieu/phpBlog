@@ -11,6 +11,7 @@ class blogpostController extends baseController
     /**
      * Echo the twig template showing all blogposts
      *
+     * @return void
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
@@ -29,6 +30,7 @@ class blogpostController extends baseController
     /**
      * Echo the twig template showing one blogpost and its comments
      *
+     * @return void
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
@@ -75,6 +77,7 @@ class blogpostController extends baseController
      * echo the twig template with the create blogpost form or manage
      * the form submission
      *
+     * @return void
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
@@ -122,6 +125,8 @@ class blogpostController extends baseController
 
     /**
      * Display the form to edit a blogpost
+     *
+     * @return void
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
@@ -159,6 +164,8 @@ class blogpostController extends baseController
 
     /**
      * Handle the form submission to edit a blogpost
+     *
+     * @return void
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
@@ -200,6 +207,8 @@ class blogpostController extends baseController
 
     /**
      * Handle the deletion of a blogpost
+     *
+     * @return void
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError

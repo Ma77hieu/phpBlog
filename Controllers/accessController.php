@@ -19,8 +19,10 @@ class accessController extends baseController
         parent::__construct();
     }
 
-    /** Returns true if the user is admin, false if not
+    /**
+     * Returns true if the user is admin, false if not
      * (always call after checking if the user is logged in)
+     *
      * @return bool
      */
     public function isAdmin()
@@ -43,6 +45,7 @@ class accessController extends baseController
 
     /**
      * Returns true if the user is logged in, false if not
+     *
      * @return bool
      */
     public function isLoggedIn()
@@ -55,6 +58,9 @@ class accessController extends baseController
     }
 
     /**
+     * Returns true if admin rights are required to access the route passed
+     * as a parameter
+     *
      * @param string $route name of the route for which we want to check if
      * admin rights are required to access
      * @return bool
@@ -74,6 +80,7 @@ class accessController extends baseController
     /**
      * Checks if the route requires adin rights and if the user has admin rights
      * returns true for access granted and false for access denied
+     *
      * @return bool
      */
     public function checkAccessRights()
@@ -97,6 +104,7 @@ class accessController extends baseController
     /**
      * Returns true if the current user is admin or if it is the author of the blogpost or comment
      * whose id is passed as parameter
+     *
      * @param array $model
      * @return bool
      */

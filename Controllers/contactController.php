@@ -15,6 +15,7 @@ class contactController extends baseController
      * Handle the mail sending when the main contact form on homepage
      * is posted
      *
+     * @return void
      * @throws \PHPMailer\PHPMailer\Exception
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError

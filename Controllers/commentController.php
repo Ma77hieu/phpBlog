@@ -12,7 +12,8 @@ class commentController extends baseController
     /**
      * Echo the twig template showing all unvalidated comments (waiting for an 
      * admin validation)
-     * 
+     *
+     * @return void
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
@@ -46,6 +47,7 @@ class commentController extends baseController
      * Echo the twig template to create a comment (if get request) and
      * manage the form submission (if post request)
      *
+     * @return void
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
@@ -89,6 +91,8 @@ class commentController extends baseController
 
     /**
      * Display the form to edit a comment
+     *
+     * @return void
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
@@ -127,6 +131,8 @@ class commentController extends baseController
 
     /**
      * Handle the form submission to edit a comment
+     *
+     * @return void
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
@@ -183,6 +189,8 @@ class commentController extends baseController
 
     /**
      * Handle the deletion of a comment
+     *
+     * @return void
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
@@ -212,6 +220,14 @@ class commentController extends baseController
                 'loggedIn' => $this->isLoggedIn]);
     }
 
+    /**
+     * Handle the validation of a comment by an admin or its unvalidation
+     *
+     * @return void
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     public function changeCommentVisibility()
     {
         $commentId = intval(htmlspecialchars($this->getVars['comment_id']));

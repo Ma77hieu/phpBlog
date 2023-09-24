@@ -70,6 +70,8 @@ class baseController
 
     /**
      * setup the Twig parameters to be used each time a template is rendered
+     *
+     * @return void
      */
     public function generateTwig()
     {
@@ -86,6 +88,8 @@ class baseController
     /**
      * associate the user id stored in session to the
      * userFound attribute of baseController class
+     *
+     * @return void
      */
     public function getUserId()
     {
@@ -102,6 +106,8 @@ class baseController
     /**
      * defines the isLoggedIn attribute of baseController class to true if
      * there is a user id stored in session
+     *
+     * @return void
      */
     public function isUserLoggedIn()
     {
@@ -115,6 +121,8 @@ class baseController
     /**
      * defines the isUserAdmin attribute of baseController class to true if
      * the user corresponding to the session variable id is admin
+     *
+     * @return void
      */
     public function isUserAdmin()
     {
