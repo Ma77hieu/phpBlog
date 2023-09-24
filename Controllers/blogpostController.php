@@ -57,20 +57,26 @@ class blogpostController extends baseController {
             //display the form
             $page='blogpostCreation.html.twig';
         } else {
-            //handle the form submission
-            $datas = ['title' => htmlspecialchars($_POST['title']),
-                'summary' => htmlspecialchars($_POST['summary']),
-                'content' => htmlspecialchars($_POST['content']),
-                'author'=> $userId,
-                'creation_date'=> $now->format('Y-m-d H:i:s')];
-            $blogpostCreation=$blogpost->insertRow($datas);
-            if (!$blogpostCreation){
+            //CSRF token check
+            if($_POST['csrf_token'] != $_SESSION['csrfToken']){
                 $page='blogpostCreation.html.twig';
                 $msg=new userFeedback('error',ERROR_BLOGPOST_CREATION);
             } else {
-                $page='blogpostPage.html.twig';
-                $blogpostFound=$blogpost->findById($blogpostCreation);
-                $msg=new userFeedback('success',BLOGPOST_CREATED);
+                //handle the form submission
+                $datas = ['title' => htmlspecialchars($_POST['blogpost_title']),
+                    'summary' => htmlspecialchars($_POST['blogpost_summary']),
+                    'content' => htmlspecialchars($_POST['blogpost_content']),
+                    'author' => $userId,
+                    'creation_date' => $now->format('Y-m-d H:i:s')];
+                $blogpostCreation = $blogpost->insertRow($datas);
+                if (!$blogpostCreation) {
+                    $page = 'blogpostCreation.html.twig';
+                    $msg = new userFeedback('error', ERROR_BLOGPOST_CREATION);
+                } else {
+                    $page = 'blogpostPage.html.twig';
+                    $blogpostFound = $blogpost->findById($blogpostCreation);
+                    $msg = new userFeedback('success', BLOGPOST_CREATED);
+                }
             }
             $feedback=$msg->getFeedback();
 
@@ -138,14 +144,14 @@ class blogpostController extends baseController {
         if (!($rightsChecker->isUpdateAuthorized($blogpostFound))) {
             $msg = new userFeedback('error', NOT_OWNER);
         } else {
-            if (!$blogpostFound) {
-                $msg = new userFeedback('error', BLOGPOST_NOT_FOUND);
+            if (!$blogpostFound || $_POST['csrf_token'] != $_SESSION['csrfToken']) {
+                $msg = new userFeedback('error', ERROR_BLOGPOST_CREATION);
             } else {
                 //handle the form submission
                 $now = new DateTime();
-                $datas = ['title' => htmlspecialchars($_POST['title']),
-                    'summary' => htmlspecialchars($_POST['summary']),
-                    'content' => htmlspecialchars($_POST['content']),
+                $datas = ['title' => htmlspecialchars($_POST['blogpost_edit_title']),
+                    'summary' => htmlspecialchars($_POST['blogpost_edit_summary']),
+                    'content' => htmlspecialchars($_POST['blogpost_edit_content']),
                     'modification_date'=>$now->format('Y-m-d H:i:s')];
                 $blogpost = new blogpost();
                 $blogpost->updateRow($datas, $blogpostFound['blogpost_id']);

@@ -1,21 +1,28 @@
 {% extends "index.html.twig" %}
 
 {% block blogpostCreation %}
-    <form action="" method="post" class="form-example">
-        <div class="form-example">
-            <label for="title">Titre: </label>
-            <input type="text" name="title" id="title" required />
+    <div class="container">
+        <div class="row">
+            <h2 class="m-bottom-40 m-top-50">Rédigez votre blogpost:</h2>
+            <form action="" method="post" class="form-example">
+                <input type="hidden" name="csrf_token" value="{{ session.csrfToken }}">
+                <div class="form-group">
+                    <label for="blogpost_title" class="col-md-1 p-r-5 text-right">Titre: </label>
+                    <input type="text" name="blogpost_title" id="blogpost_title" required />
+                </div>
+                <div class="form-group ">
+                    <label for="blogpost_summary" class="col-md-1 p-r-5 text-right">Résumé: </label>
+                    <input type="text" name="blogpost_summary" id="blogpost_summary" required />
+                </div>
+                <div class="form-group">
+                    <label for="blogpost_content" class="col-md-1 p-r-5 text-right">Contenu: </label>
+                    <textarea class="col" rows="3" name="blogpost_content" id="blogpost_content" required ></textarea>
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-primary col-md-offset-1" type="submit" value="Enregistrer" />
+                </div>
+            </form>
         </div>
-        <div class="form-example">
-            <label for="summary">Résumé: </label>
-            <input type="text" name="summary" id="summary" required />
-        </div>
-        <div class="form-example">
-            <label for="content">Contenu: </label>
-            <input type="text" name="content" id="content" required />
-        </div>
-        <div class="form-example">
-            <input type="submit" value="Enregistrer" />
-        </div>
-    </form>
+    </div>
+
 {% endblock %}

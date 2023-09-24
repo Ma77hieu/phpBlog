@@ -16,7 +16,7 @@ const ACCESS_ERROR="Vous devez être connecté et avoir les droits suffisants po
 
 //used in blogpostController
 const ERROR_BLOGPOST_NOT_FOUND="Problème dans la récupération du post.";
-const ERROR_BLOGPOST_CREATION="Problème lors de la création du blogpost.";
+const ERROR_BLOGPOST_CREATION="Problème lors de l'enregistrement du blogpost.";
 const BLOGPOST_CREATED="Votre post a été enregistré.";
 const NOT_OWNER="Vous ne pouvez pas modifier ce blogpost.";
 const BLOGPOST_NOT_FOUND="Nous n'avons pas réussi à récupérer les information du blogpost demandé.";

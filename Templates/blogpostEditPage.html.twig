@@ -1,22 +1,27 @@
 {% extends "index.html.twig" %}
 
 {% block blogpostEditPage %}
-    <p>blogpostEdit page</p>
-    <form action="save?id={{ blogpost.blogpost_id }}" method="post" class="blogpost_modif-form">
-        <div class="blogpost_modif-input">
-            <label for="title">Titre: </label>
-            <input type="text" name="title" id="title" value="{{ blogpost.title }}" />
+    <div class="container">
+        <div class="row">
+            <h2 class="m-bottom-40 m-top-50">Modifiez votre blogpost:</h2>
+            <form action="save?blogpost_id={{ blogpost.blogpost_id }}" method="post" class="form-example">
+                <input type="hidden" name="csrf_token" value="{{ session.csrfToken }}">
+                <div class="form-group">
+                    <label for="blogpost_edit_title" class="col-md-1 p-r-5 text-right">Titre: </label>
+                    <input type="text" name="blogpost_edit_title" id="blogpost_edit_title" value="{{ blogpost.title }}" required />
+                </div>
+                <div class="form-group ">
+                    <label for="blogpost_edit_summary" class="col-md-1 p-r-5 text-right">Résumé: </label>
+                    <input type="text" name="blogpost_edit_summary" id="blogpost_edit_summary" value="{{ blogpost.summary }}" required />
+                </div>
+                <div class="form-group">
+                    <label for="blogpost_edit_content" class="col-md-1 p-r-5 text-right">Contenu: </label>
+                    <textarea class="col" rows="3" name="blogpost_edit_content" id="blogpost_edit_content" required >{{ blogpost.content }}</textarea>
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-primary col-md-offset-1" type="submit" value="Enregistrer" />
+                </div>
+            </form>
         </div>
-        <div class="blogpost_modif-input">
-            <label for="summary">Résumé: </label>
-            <input type="text" name="summary" id="summary" value="{{ blogpost.summary }}"/>
-        </div>
-        <div class="blogpost_modif-input">
-            <label for="content">Contenu:</label>
-            <input type="text" name="content" id="content" value="{{ blogpost.content }}"/>
-        </div>
-        <div class="form-example">
-            <input type="submit" value="Enregistrer" />
-        </div>
-    </form>
+    </div>
 {% endblock %}
