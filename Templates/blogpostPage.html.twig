@@ -28,6 +28,11 @@
                                         class="fa fa-edit"></i> Modification</strong></a>
                             </div>
                         {% endif %}
+                        {% if isCurrentUserAuthor or isUserAdmin%}
+                        <a class="text-primary" href="blogpost/delete?blogpost_id={{ blogpost.blogpost_id }}"><strong><i
+                                        class="fa fa-trash"></i> Suppression</strong></a>
+                    </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -54,7 +59,7 @@
     <div class="separator_auto m-top-40 m-bottom-40"></div>
 
     <div class="container">
-        <div class="row">
+        <div class="row m-bottom-30">
                 <div class="col-md-8 col-md-offset-1 col-sm-12 m-top-20">
                         {{ include ('commentCreation.html.twig')}}
                 </div>

@@ -177,7 +177,7 @@ class blogpostController extends baseController {
         $blogpost=new blogpost();
         $blogpostFound=$blogpost->findById($blogpostId);
         $rightsChecker = new accessController();
-        $page='index.html.twig';
+        $page='homepage.html.twig';
         if (!($rightsChecker->isUpdateAuthorized($blogpostFound))) {
             $msg = new userFeedback('error', NOT_OWNER);
         } else {
@@ -192,6 +192,7 @@ class blogpostController extends baseController {
         $feedback = $msg->getFeedback();
         echo $this->twig->render($page,
             ['userFeedbacks' => $feedback,
-                'loggedIn'=>$this->isLoggedIn]);
+                'loggedIn'=>$this->isLoggedIn,
+                'isUserAdmin'=>$this->isUserAdmin]);
     }
 }
