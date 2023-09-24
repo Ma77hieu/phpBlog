@@ -32,8 +32,8 @@ class commentController extends baseController {
 
     public function getOneComment()
     {
-        if ($_GET['id']){
-            $commentId=htmlspecialchars($_GET['id']);
+        if ($this->getVars['id']){
+            $commentId=htmlspecialchars($this->getVars['id']);
         }
         $comment = new comment();
         $commentFound=$comment->findById($commentId);
@@ -55,25 +55,25 @@ class commentController extends baseController {
 
     public function createComment(){
         $comment = new comment();
-        $author=$_SESSION['id'];
-        $blogpostId=htmlspecialchars($_GET['blogpost_id']);
+        $author=$this->sessionVars['id'];
+        $blogpostId=htmlspecialchars($this->getVars['blogpost_id']);
         $blogpost=new blogpost();
         $blogpostFound=$blogpost->findById($blogpostId);
         $now = new DateTime();
-        if (!$_POST) {
+        if (!$this->postVars) {
             //display the form
             $page = 'commentCreation.html.twig';
         } else {
             $page = 'blogpostPage.html.twig';
             //handle the form submission
-            $datas = ['title' => htmlspecialchars($_POST['comment_title']),
-                'text' => htmlspecialchars($_POST['comment_content']),
+            $datas = ['title' => htmlspecialchars($this->postVars['comment_title']),
+                'text' => htmlspecialchars($this->postVars['comment_content']),
                 'author' => intval($author),
                 'blogpost' => intval($blogpostId),
                 'creation_date' => $now->format('Y-m-d H:i:s'),
                 'is_validated' => false];
             $commentCreation = $comment->insertRow($datas);
-            if (!$commentCreation || $_POST['csrf_token'] != $_SESSION['csrfToken']) {
+            if (!$commentCreation || $this->postVars['csrf_token'] != $this->sessionVars['csrfToken']) {
                 $msg = new userFeedback('error', ERROR_COMMENT_CREATION);
             } else {
                 $msg = new userFeedback('success', COMMENT_CREATED);
@@ -97,10 +97,10 @@ class commentController extends baseController {
      */
     public function displayUpdateComment()
     {
-        $commentId=htmlspecialchars($_GET['comment_id']);
+        $commentId=htmlspecialchars($this->getVars['comment_id']);
         $comment=new comment();
         $commentFound=$comment->findById($commentId);
-        $blogpostId=htmlspecialchars($_GET['blogpost_id']);
+        $blogpostId=htmlspecialchars($this->getVars['blogpost_id']);
         $blogpost=new blogpost();
         $blogpostFound=$blogpost->findById($blogpostId);
         $rightsChecker = new accessController();
@@ -135,9 +135,9 @@ class commentController extends baseController {
      */
     public function saveUpdateComment()
     {
-        $commentId=htmlspecialchars($_GET['comment_id']);
-        $blogpostId=htmlspecialchars($_GET['blogpost_id']);
-        $author=$_SESSION['id'];
+        $commentId=htmlspecialchars($this->getVars['comment_id']);
+        $blogpostId=htmlspecialchars($this->getVars['blogpost_id']);
+        $author=$this->sessionVars['id'];
         $blogpost=new blogpost();
         $blogpostFound=$blogpost->findById($blogpostId);
         $comment=new comment();
@@ -148,13 +148,13 @@ class commentController extends baseController {
         if (!($rightsChecker->isUpdateAuthorized($commentFound))) {
             $msg = new userFeedback('error', NOT_OWNER_COMMENT);
         } else {
-            if (!$commentFound || $_POST['csrf_token'] != $_SESSION['csrfToken']) {
+            if (!$commentFound || $this->postVars['csrf_token'] != $this->sessionVars['csrfToken']) {
                 $msg = new userFeedback('error', ERROR_COMMENT_CREATION);
             } else {
                 //handle the form submission
                 $now = new DateTime();
-                $datas = ['title' => htmlspecialchars($_POST['comment_edit_title']),
-                    'text' => htmlspecialchars($_POST['comment_edit_content']),
+                $datas = ['title' => htmlspecialchars($this->postVars['comment_edit_title']),
+                    'text' => htmlspecialchars($this->postVars['comment_edit_content']),
                     'author' => intval($author),
                     'blogpost' => intval($blogpostId),
                     'creation_date' => $now->format('Y-m-d H:i:s'),
@@ -184,7 +184,7 @@ class commentController extends baseController {
     }
 
     public function deleteComment(){
-        $commentId=htmlspecialchars($_GET['comment_id']);
+        $commentId=htmlspecialchars($this->getVars['comment_id']);
         $comment=new comment();
         $commentFound=$comment->findById($commentId);
         $rightsChecker = new accessController();
@@ -208,7 +208,7 @@ class commentController extends baseController {
     }
 
     public function changeCommentVisibility(){
-        $commentId=intval(htmlspecialchars($_GET['comment_id']));
+        $commentId=intval(htmlspecialchars($this->getVars['comment_id']));
         $comment=new comment();
         $commentFound=$comment->findById($commentId);
         $rightsChecker = new accessController();

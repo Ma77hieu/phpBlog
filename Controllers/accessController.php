@@ -22,10 +22,10 @@ class accessController extends baseController {
      */
     public function isAdmin()
     {
-        if (!$_SESSION['id']) {
+        if (!$this->sessionVars['id']) {
             return false;
         } else {
-            $userId = $_SESSION['id'];
+            $userId = $this->sessionVars['id'];
             $user = new user();
             $userConnected = $user->findById($userId);
             $userRoles = explode(',', $userConnected['roles']);
@@ -43,7 +43,7 @@ class accessController extends baseController {
      * @return bool
      */
     public function isLoggedIn(){
-        if ($_SESSION['id']){
+        if ($this->sessionVars['id']){
             return true;
         } else {
             return false;
@@ -98,7 +98,7 @@ class accessController extends baseController {
      */
     public function isUpdateAuthorized($model){
         $author=$model['author'];
-        if($author==$_SESSION['id'] || $this->isAdmin()){
+        if($author==$this->sessionVars['id'] || $this->isAdmin()){
             return true;
         } else {
             return false;

@@ -27,8 +27,29 @@ class baseController {
      */
     public bool $isUserAdmin;
 
+    /**
+     * store the superglobal $_SESSION variables
+     * @var array
+     */
+    public array $sessionVars;
+
+    /**
+     * store the superglobal $_GET variables
+     * @var array
+     */
+    public array $getVars;
+
+    /**
+     * store the superglobal $_POST variables
+     * @var array
+     */
+    public array $postVars;
+
     public function __construct()
     {
+        $this->sessionVars = &$_SESSION;
+        $this->getVars = &$_GET;
+        $this->postVars = &$_POST;
         $this->generateTwig();
         $this->getUserId();
         $this->isUserLoggedIn();
@@ -47,8 +68,8 @@ class baseController {
     }
 
     public function getUserId(){
-        if ($_GET['id']){
-            $userId=htmlspecialchars($_GET['id']);
+        if ($this->getVars['id']){
+            $userId=htmlspecialchars($this->getVars['id']);
             $user = new user();
             $userFound=$user->findById($userId);
         } else {
@@ -58,7 +79,7 @@ class baseController {
     }
 
     public function isUserLoggedIn(){
-        if ($_SESSION['id']){
+        if ($this->sessionVars['id']){
             $this->isLoggedIn=true;
         } else {
             $this->isLoggedIn=false;
@@ -66,10 +87,10 @@ class baseController {
     }
 
     public function isUserAdmin(){
-        if (!$_SESSION['id']) {
+        if (!$this->sessionVars['id']) {
             $this->isUserAdmin=false;
         } else {
-            $userId = $_SESSION['id'];
+            $userId = $this->sessionVars['id'];
             $user = new user();
             $userConnected = $user->findById($userId);
             $userRoles = explode(',', $userConnected['roles']);

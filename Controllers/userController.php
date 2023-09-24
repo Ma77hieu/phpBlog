@@ -56,22 +56,22 @@ class userController extends baseController {
 
     public function createUser(){
         $user = new user();
-        if(!$_POST){
+        if(!$this->postVars){
             //display the form
             $page = 'signup.html.twig';
         } else {
             //handle the form submission only if password = password reentry inside the form
-            if ($_POST['password'] == $_POST['password_reentry']) {
-                $datas = ['email' => htmlspecialchars($_POST['email']),
-                    'password' => htmlspecialchars($_POST['password']),
+            if ($this->postVars['password'] == $this->postVars['password_reentry']) {
+                $datas = ['email' => htmlspecialchars($this->postVars['email']),
+                    'password' => htmlspecialchars($this->postVars['password']),
                     'roles' => 'user'];
                 //check if the email is already used
-                $alreadyUsedMail = $this->checkAlreadyExistsMail(htmlspecialchars($_POST['email']));
+                $alreadyUsedMail = $this->checkAlreadyExistsMail(htmlspecialchars($this->postVars['email']));
                 if ($alreadyUsedMail) {
                     $page = 'signup.html.twig';
                     $msg = new userFeedback('error', USER_ALREADY_EXISTS);
                 } else {
-                    if ($_POST['csrf_token'] != $_SESSION['csrfToken']) {
+                    if ($this->postVars['csrf_token'] != $this->sessionVars['csrfToken']) {
                         $page = 'signup.html.twig';
                         $msg = new userFeedback('error', USER_NOT_CREATED);
                     } else {
@@ -101,13 +101,13 @@ class userController extends baseController {
     public function login()
     {
         $user = new user();
-        if (!$_POST) {
+        if (!$this->postVars) {
             //display the form
             $page = 'login.html.twig';
         } else {
             //handle the form submission
-            $email=htmlspecialchars($_POST['email']);
-            $encodedPwd=md5(htmlspecialchars($_POST['password']));
+            $email=htmlspecialchars($this->postVars['email']);
+            $encodedPwd=md5(htmlspecialchars($this->postVars['password']));
             $userFound=$user->findRowsBy("WHERE email='$email' AND password='$encodedPwd'");
             if ($userFound==[]){
                 $msg = new userFeedback('error', LOGIN_FAIL);
@@ -126,8 +126,8 @@ class userController extends baseController {
     }
 
     public function logout(){
-        $_SESSION['isLoggedIn']=false;
-        $_SESSION['roles']=[];
+        $this->sessionVars['isLoggedIn']=false;
+        $this->sessionVars['roles']=[];
         $msg=new userFeedback('success',LOGOUT_OK);
         $feedback=$msg->getFeedback();
         session_unset();
@@ -153,7 +153,7 @@ class userController extends baseController {
                 $page = 'userEditPage.html.twig';
                 $viewedUserIsAdmin=false;
                 $user=new User;
-                $viewedUser=$user->findById($_GET['id']);
+                $viewedUser=$user->findById($this->getVars['id']);
                 $viewedUserRoles=$viewedUser['roles'];
                 if (str_contains($viewedUserRoles,'admin')){
                     $viewedUserIsAdmin=true;
@@ -179,22 +179,22 @@ class userController extends baseController {
             $page = 'index.html.twig';
             $msg = new userFeedback('error', ACCESS_ERROR);
         } else {
-            if (!$this->userFound || $_POST['csrf_token'] != $_SESSION['csrfToken'] ) {
+            if (!$this->userFound || $this->postVars['csrf_token'] != $this->sessionVars['csrfToken'] ) {
                 $page = 'index.html.twig';
                 $msg = new userFeedback('error', USER_NOT_CREATED);
             } else {
                 //handle the form submission
-                //as we use a checkbox, if it is not checked, $_POST['roles'] is not sent by the form
-                if ($_POST['edit_roles'] == 'admin') {
+                //as we use a checkbox, if it is not checked, $this->>$this->postVars['roles'] is not sent by the form
+                if ($this->postVars['edit_roles'] == 'admin') {
                     $roles = 'user,admin';
                 } else {
                     $roles = 'user';
                 }
-                $datas = ['email' => htmlspecialchars($_POST['edit_email']),
+                $datas = ['email' => htmlspecialchars($this->postVars['edit_email']),
                     'roles' => $roles];
                 //change password only if needed
-                if ($_POST['password'] != '') {
-                    $datas = $datas + ['password' => htmlspecialchars($_POST['edit_password'])];
+                if ($this->postVars['password'] != '') {
+                    $datas = $datas + ['password' => htmlspecialchars($this->postVars['edit_password'])];
                 }
                 $user = new user();
                 $user->updateRow($datas, $this->userFound['user_id']);
@@ -212,7 +212,7 @@ class userController extends baseController {
     }
 
     public function saveLoginInSession($userId){
-        $_SESSION['id']=$userId;
+        $this->sessionVars['id']=$userId;
     }
 
     /**

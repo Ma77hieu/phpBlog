@@ -19,8 +19,8 @@ class blogpostController extends baseController {
 
     public function getOneBlogpost()
     {
-        if ($_GET['blogpost_id']){
-            $blogpostId=htmlspecialchars($_GET['blogpost_id']);
+        if ($this->getVars['blogpost_id']){
+            $blogpostId=htmlspecialchars($this->getVars['blogpost_id']);
         }
         $blogpost = new blogpost();
         $blogpostFound=$blogpost->findById($blogpostId);
@@ -34,7 +34,7 @@ class blogpostController extends baseController {
             $user=new user();
             $userFound=$user->findById($authorId);
             $author=$userFound['email'];
-            if($_SESSION['id']==$authorId) {
+            if($this->sessionVars['id']==$authorId) {
                 $isCurrentUserAuthor = true;
             }
 
@@ -56,22 +56,22 @@ class blogpostController extends baseController {
 
     public function createBlogpost(){
         $blogpost = new blogpost();
-        $userId=$_SESSION['id'];
+        $userId=$this->sessionVars['id'];
         $now=new DateTime();
 
-        if(!$_POST){
+        if(!$this->postVars){
             //display the form
             $page='blogpostCreation.html.twig';
         } else {
             //CSRF token check
-            if($_POST['csrf_token'] != $_SESSION['csrfToken']){
+            if($this->postVars['csrf_token'] != $this->sessionVars['csrfToken']){
                 $page='blogpostCreation.html.twig';
                 $msg=new userFeedback('error',ERROR_BLOGPOST_CREATION);
             } else {
                 //handle the form submission
-                $datas = ['title' => htmlspecialchars($_POST['blogpost_title']),
-                    'summary' => htmlspecialchars($_POST['blogpost_summary']),
-                    'content' => htmlspecialchars($_POST['blogpost_content']),
+                $datas = ['title' => htmlspecialchars($this->postVars['blogpost_title']),
+                    'summary' => htmlspecialchars($this->postVars['blogpost_summary']),
+                    'content' => htmlspecialchars($this->postVars['blogpost_content']),
                     'author' => $userId,
                     'creation_date' => $now->format('Y-m-d H:i:s')];
                 $blogpostCreation = $blogpost->insertRow($datas);
@@ -102,7 +102,7 @@ class blogpostController extends baseController {
      */
     public function displayUpdateBlogpost()
     {
-        $blogpostId=htmlspecialchars($_GET['blogpost_id']);
+        $blogpostId=htmlspecialchars($this->getVars['blogpost_id']);
         $blogpost=new blogpost();
         $blogpostFound=$blogpost->findById($blogpostId);
         $rightsChecker = new accessController();
@@ -139,7 +139,7 @@ class blogpostController extends baseController {
      */
     public function saveUpdateBlogpost()
     {
-        $blogpostId=htmlspecialchars($_GET['blogpost_id']);
+        $blogpostId=htmlspecialchars($this->getVars['blogpost_id']);
         $blogpost=new blogpost();
         $blogpostFound=$blogpost->findById($blogpostId);
         $rightsChecker = new accessController();
@@ -150,14 +150,14 @@ class blogpostController extends baseController {
         if (!($rightsChecker->isUpdateAuthorized($blogpostFound))) {
             $msg = new userFeedback('error', NOT_OWNER);
         } else {
-            if (!$blogpostFound || $_POST['csrf_token'] != $_SESSION['csrfToken']) {
+            if (!$blogpostFound || $this->postVars['csrf_token'] != $this->sessionVars['csrfToken']) {
                 $msg = new userFeedback('error', ERROR_BLOGPOST_CREATION);
             } else {
                 //handle the form submission
                 $now = new DateTime();
-                $datas = ['title' => htmlspecialchars($_POST['blogpost_edit_title']),
-                    'summary' => htmlspecialchars($_POST['blogpost_edit_summary']),
-                    'content' => htmlspecialchars($_POST['blogpost_edit_content']),
+                $datas = ['title' => htmlspecialchars($this->postVars['blogpost_edit_title']),
+                    'summary' => htmlspecialchars($this->postVars['blogpost_edit_summary']),
+                    'content' => htmlspecialchars($this->postVars['blogpost_edit_content']),
                     'modification_date'=>$now->format('Y-m-d H:i:s')];
                 $blogpost = new blogpost();
                 $blogpost->updateRow($datas, $blogpostFound['blogpost_id']);
@@ -173,7 +173,7 @@ class blogpostController extends baseController {
     }
 
     public function deleteBlogpost(){
-        $blogpostId=htmlspecialchars($_GET['blogpost_id']);
+        $blogpostId=htmlspecialchars($this->getVars['blogpost_id']);
         $blogpost=new blogpost();
         $blogpostFound=$blogpost->findById($blogpostId);
         $rightsChecker = new accessController();

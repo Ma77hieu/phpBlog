@@ -11,11 +11,11 @@ class contactController extends baseController {
 
     public function sendContactForm(){
         $errors = [];
-        if (!empty($_POST) && $_POST['csrf_token'] != $_SESSION['csrfToken']) {
-            $lastName = htmlspecialchars($_POST['last_name']);
-            $firstName = htmlspecialchars($_POST['first_name']);
-            $email = htmlspecialchars($_POST['email']);
-            $message = htmlspecialchars($_POST['message']);
+        if (!empty($this->postVars) && $this->postVars['csrf_token'] != $this->sessionVars['csrfToken']) {
+            $lastName = htmlspecialchars($this->postVars['last_name']);
+            $firstName = htmlspecialchars($this->postVars['first_name']);
+            $email = htmlspecialchars($this->postVars['email']);
+            $message = htmlspecialchars($this->postVars['message']);
 
             if (empty($lastName)) {
                 $errors[] = MISSING_LASTNAME;
