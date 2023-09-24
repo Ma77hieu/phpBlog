@@ -67,8 +67,8 @@ class commentController extends baseController
             //handle the form submission
             $datas = ['title' => htmlspecialchars($this->postVars['comment_title']),
                 'text' => htmlspecialchars($this->postVars['comment_content']),
-                'author' => (int)$author,
-                'blogpost' => (int)$blogpostId,
+                'author' => (int) $author,
+                'blogpost' => (int) $blogpostId,
                 'creation_date' => $now->format('Y-m-d H:i:s'),
                 'is_validated' => false];
             $commentCreation = $comment->insertRow($datas);
@@ -158,8 +158,8 @@ class commentController extends baseController
                 $now = new DateTime();
                 $datas = ['title' => htmlspecialchars($this->postVars['comment_edit_title']),
                     'text' => htmlspecialchars($this->postVars['comment_edit_content']),
-                    'author' => (int)$author,
-                    'blogpost' => (int)$blogpostId,
+                    'author' => (int) $author,
+                    'blogpost' => (int) $blogpostId,
                     'creation_date' => $now->format('Y-m-d H:i:s'),
                     'is_validated' => 0];
                 $comment = new comment();
@@ -229,7 +229,7 @@ class commentController extends baseController
      */
     public function changeCommentVisibility()
     {
-        $commentId = (int)htmlspecialchars($this->getVars['comment_id']);
+        $commentId = (int) htmlspecialchars($this->getVars['comment_id']);
         $comment = new comment();
         $commentFound = $comment->findById($commentId);
         $rightsChecker = new accessController();
