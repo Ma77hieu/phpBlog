@@ -36,15 +36,15 @@ class contactController extends baseController {
             if (empty($errors)) {
                 $mail = new PHPMailer();
                     $mail->isSMTP();
-                    $mail->Host = $_ENV['SMTP_HOST'];
+                    $mail->Host = $this->envVars['SMTP_HOST'];
                     $mail->SMTPAuth = true;
                     $mail->SMTPDebug = SMTP::DEBUG_OFF;
-                    $mail->Username = $_ENV['SMTP_USERNAME'];
-                    $mail->Password = $_ENV['SMTP_PASSWORD'];
-                    $mail->SMTPSecure = $_ENV['SMTP_SECURE'];
-                    $mail->Port = $_ENV['SMTP_PORT'];
-                    $mail->setFrom($_ENV['CONTACT_FORM_FROM_EMAIL'], $_ENV['CONTACT_FORM_FROM_NAME']);
-                    $mail->addAddress($_ENV['CONTACT_FORM_TO']);
+                    $mail->Username = $this->envVars['SMTP_USERNAME'];
+                    $mail->Password = $this->envVars['SMTP_PASSWORD'];
+                    $mail->SMTPSecure = $this->envVars['SMTP_SECURE'];
+                    $mail->Port = $this->envVars['SMTP_PORT'];
+                    $mail->setFrom($this->envVars['CONTACT_FORM_FROM_EMAIL'], $this->envVars['CONTACT_FORM_FROM_NAME']);
+                    $mail->addAddress($this->envVars['CONTACT_FORM_TO']);
                     $mail->Subject = MAIL_SUBJECT;
                     $mail->isHTML(true);
                     $bodyParagraphs = [

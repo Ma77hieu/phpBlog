@@ -45,11 +45,18 @@ class baseController {
      */
     public array $postVars;
 
+    /**
+     * store the superglobal $_ENV variables
+     * @var array
+     */
+    public array $envVars;
+
     public function __construct()
     {
         $this->sessionVars = &$_SESSION;
         $this->getVars = &$_GET;
         $this->postVars = &$_POST;
+        $this->envVars = &$_ENV;
         $this->generateTwig();
         $this->getUserId();
         $this->isUserLoggedIn();
