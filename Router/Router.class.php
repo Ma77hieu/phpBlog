@@ -1,5 +1,5 @@
 <?php
-require('Controllers/baseController.php');
+
 class Router{
 
     private $uri;

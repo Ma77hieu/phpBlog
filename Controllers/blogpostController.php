@@ -42,7 +42,7 @@ class blogpostController extends baseController
         }
         $blogpost = new blogpost();
         $blogpostFound = $blogpost->findById($blogpostId);
-        $authorId = intval($blogpostFound['author']);
+        $authorId = (int)$blogpostFound['author'];
         $isCurrentUserAuthor = false;
         if (!$blogpostFound) {
             $page = 'index.html.twig';

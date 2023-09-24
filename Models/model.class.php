@@ -1,5 +1,4 @@
 <?php
-require('dbSingleton.class.php');
 
 class model
 {

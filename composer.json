@@ -3,5 +3,9 @@
         "twig/twig": "^3.6",
         "vlucas/phpdotenv": "^5.5",
         "phpmailer/phpmailer": "^6.8"
+    },
+    "autoload": {
+        "classmap": ["Controllers"],
+        "files": ["Translations/fr/userDisplayedMessages.php","Models/dbSingleton.class.php"]
     }
 }
