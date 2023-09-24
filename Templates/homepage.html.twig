@@ -20,65 +20,6 @@
         </div><!--End off container -->
     </section> <!--End off Home Sections-->
 
-    <section id="contact" class="contact bg-mega fix">
-        <div class="container">
-            <div class="row">
-                <div class="main_contact roomy-100 text-white">
-                    <div class="col-md-4">
-                        <div class="rage_widget">
-                            <div class="widget_head">
-                                <h3 class="text-white">RAGE</h3>
-                                <div class="separator_small"></div>
-                            </div>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                                sed diam nonummy nibh euismod tincidunt ut laoreet dolore
-                                magna aliquam erat volutpat. Ut wisi enim ad minim veniam,
-                                quis nostrud exerci tation ullamcorper suscipit lobortis nisl
-                                ut aliquip ex ea commodo consequat. </p>
-
-                            <div class="widget_socail m-top-30">
-                                <ul class="list-inline">
-                                    <li><a href=""><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href=""><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href=""><i class="fa fa-linkedin"></i></a></li>
-                                    <li><a href=""><i class="fa fa-vimeo"></i></a></li>
-                                    <li><a href=""><i class="fa fa-instagram"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-8 sm-m-top-30">
-                        <form class="" action="subcribe.php">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <input id="first_name" name="first_name" type="text" placeholder="Name" class="form-control" required="">
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <input id="phone" name="phone" type="text" placeholder="Phone" class="form-control">
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-12">
-                                    <div class="form-group">
-                                        <textarea class="form-control" rows="6" placeholder="Message"></textarea>
-                                    </div>
-                                    <div class="form-group text-center">
-                                        <a href="" class="btn btn-primary">SEND MESSAGE</a>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-            </div><!--End off row -->
-        </div><!--End off container -->
-    </section><!--End off Contact Section-->
     {% include 'contactForm.html.twig' %}
     <div class="container">
         <div class="row">
@@ -98,9 +39,33 @@
             </div>
         </div>
     </div>
-    <div class="container">
-        <div class="row">
-        </div>
-    </div>
+    <section id="" class="testimonial fix">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="main_testimonial roomy-100">
+                    <div class="m-bottom-20 text-center">
+                        <h2 class="text-white">Contactez moi sur les réseaux:</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 text-right">
+                            <a href="https://www.linkedin.com/in/matthieu-ortlieb-485a6779/"><i class="fa fa-linkedin text-white" style="font-size:6em;"></i></a>
+                        </div>
+                        <div class="col-xs-6 text-left">
+                            <a href="https://github.com/Ma77hieu"><i class="fa fa-github text-white" style="font-size:6em;"></i></a>
+                        </div>
+                    </div>
+
+
+                    {#<div class="widget_socail m-top-30 text-center">
+                        <ul class="list-inline">
+                            <li></li>
+                            <li><a href=""><i class="fa fa-github" style="font-size:10em;"></i></a></li>
+                        </ul>
+                    </div>#}
+                </div>
+            </div><!--End off row-->
+        </div><!--End off container -->
+    </section> <!--End off Testimonial section -->
 {% endblock %}
 

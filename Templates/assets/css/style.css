@@ -1402,7 +1402,7 @@ Skill Section style
 Testimonial Section style
 =======================*/
 .testimonial{
-    background: url(../images/background/testimonial.jpg) no-repeat center center;
+    /*background: url(../images/background/testimonial.jpg) no-repeat center center;*/
     background-size: cover;
     position: relative;
 }
