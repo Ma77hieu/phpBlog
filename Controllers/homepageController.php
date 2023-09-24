@@ -25,6 +25,6 @@ class homepageController extends baseController {
             [
                 'userFeedbacks' => $feedback,
                 'isUserAdmin' => $this->isUserAdmin,
-                'isLoggedIn' => $this->isLoggedIn]);
+                'loggedIn' => $this->isLoggedIn]);
     }
 }

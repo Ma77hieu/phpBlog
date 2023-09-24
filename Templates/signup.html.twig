@@ -1,22 +1,28 @@
 {% extends "index.html.twig" %}
 
 {% block signup %}
-    <p>signup form</p>
-    <form action="signup" method="post" class="signup-form">
-        <div class="signup-input">
-            <label for="email">Email: </label>
-            <input type="email" name="email" id="email" required />
+    <div class="container">
+        <h1 class="m-bottom-40 m-top-40 col-md-offset-1">Inscription</h1>
+        <div class="row">
+            <form action="signup" method="post">
+                <input type="hidden" name="csrf_token" value="{{ session.csrfToken }}">
+                <div class="form-group">
+                    <label for="email" class="col-md-2 p-r-5 text-right">Email: </label>
+                    <input type="email" name="email" id="email" />
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-md-2 p-r-5 text-right">Mot de passe: </label>
+                    <input type="text" name="password" id="password" />
+                </div>
+                <div class="form-group">
+                    <label for="password_reentry" class="col-md-2 p-r-5 text-right">Répéter mot de passe: </label>
+                    <input type="text" name="password_reentry" id="password_reentry" />
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-primary col-md-offset-2" type="submit" value="S'inscrire" id="user_btn"/>
+                </div>
+            </form>
         </div>
-        <div class="signup-input">
-            <label for="password">Mot de passe: </label>
-            <input type="text" name="password" id="password" required />
-        </div>
-        <div class="signup-input">
-            <label for="password_reentry">Répétez le mot de passe: </label>
-            <input type="text" name="password_reentry" id="password_reentry" required />
-        </div>
-        <div class="form-example">
-            <input type="submit" value="Inscription" />
-        </div>
-    </form>
+    </div>
+
 {% endblock %}

@@ -38,6 +38,7 @@ $request_method = strtoupper($_SERVER['REQUEST_METHOD']);
 if ($request_method === 'GET') {
     $_SESSION['csrfToken'] = bin2hex(random_bytes(35));
 }
+echo($_SESSION['csrfToken']);
 require('Router/Router.class.php');
 $router=new Router();
 $router->goToRoute();

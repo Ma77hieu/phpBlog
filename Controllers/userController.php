@@ -71,16 +71,19 @@ class userController extends baseController {
                     $page = 'signup.html.twig';
                     $msg = new userFeedback('error', USER_ALREADY_EXISTS);
                 } else {
-                    $userCreation = $user->insertRow($datas);
-                    if (!$userCreation) {
+                    if ($_POST['csrf_token'] != $_SESSION['csrfToken']) {
                         $page = 'signup.html.twig';
                         $msg = new userFeedback('error', USER_NOT_CREATED);
                     } else {
-                        $user = new User();
-                        $this->saveLoginInSession($userCreation);
-                        $page = 'index.html.twig';
-                        $userFound = $user->findById($userCreation);
-                        $msg = new userFeedback('success', USER_CREATED);
+                        $userCreation = $user->insertRow($datas);
+                        if (!$userCreation) {
+                            $page = 'signup.html.twig';
+                            $msg = new userFeedback('error', USER_NOT_CREATED);
+                        } else {
+                            $this->saveLoginInSession($userCreation);
+                            $page = 'homepage.html.twig';
+                            $msg = new userFeedback('success', USER_CREATED);
+                        }
                     }
                 }
             } else {
@@ -115,10 +118,11 @@ class userController extends baseController {
             $page = 'homepage.html.twig';
             $feedback = $msg->getFeedback();
         }
+        $this->isUserAdmin();
         echo $this->twig->render($page,
             ['userFeedbacks' => $feedback,
                 'isUserAdmin'=>$this->isUserAdmin,
-                'isLoggedIn'=>$this->isLoggedIn]);
+                'loggedIn'=>true]);
     }
 
     public function logout(){
@@ -129,8 +133,8 @@ class userController extends baseController {
         session_unset();
         echo $this->twig->render('homepage.html.twig',
             ['userFeedbacks' => $feedback,
-                'isUserAdmin' => $this->isUserAdmin,
-                'isLoggedIn' => $this->isLoggedIn]);
+                'isUserAdmin' => false,
+                'loggedIn' => false]);
     }
 
     public function displayUpdateUser()
@@ -147,6 +151,13 @@ class userController extends baseController {
                 $msg = new userFeedback('error', ERROR_USER_NOT_FOUND);
             } else {
                 $page = 'userEditPage.html.twig';
+                $viewedUserIsAdmin=false;
+                $user=new User;
+                $viewedUser=$user->findById($_GET['id']);
+                $viewedUserRoles=$viewedUser['roles'];
+                if (str_contains($viewedUserRoles,'admin')){
+                    $viewedUserIsAdmin=true;
+                }
             }
         }
         if($msg){
@@ -155,7 +166,8 @@ class userController extends baseController {
         echo $this->twig->render($page,
             ['user' => $this->userFound,
                 'isUserAdmin' => $this->isUserAdmin,
-                'isLoggedIn' => $this->isLoggedIn,
+                'loggedIn' => $this->isLoggedIn,
+                'viewedUserIsAdmin'=>$viewedUserIsAdmin,
                 'userFeedbacks' => $feedback]);
     }
 
@@ -166,25 +178,22 @@ class userController extends baseController {
         if (!($rightsChecker->checkAccessRights())) {
             $page = 'index.html.twig';
             $msg = new userFeedback('error', ACCESS_ERROR);
-            $feedback = $msg->getFeedback();
         } else {
-            if (!$this->userFound) {
+            if (!$this->userFound || $_POST['csrf_token'] != $_SESSION['csrfToken'] ) {
                 $page = 'index.html.twig';
-                $msg = new userFeedback('error', ERROR_USER_NOT_FOUND);
+                $msg = new userFeedback('error', USER_NOT_CREATED);
             } else {
                 //handle the form submission
                 //as we use a checkbox, if it is not checked, $_POST['roles'] is not sent by the form
-                if ($_POST['roles'] == 'admin') {
+                if ($_POST['edit_roles'] == 'admin') {
                     $roles = 'user,admin';
                 } else {
                     $roles = 'user';
                 }
-                $now = new DateTime();
                 $datas = ['email' => htmlspecialchars($_POST['edit_email']),
                     'roles' => $roles];
                 //change password only if needed
                 if ($_POST['password'] != '') {
-
                     $datas = $datas + ['password' => htmlspecialchars($_POST['edit_password'])];
                 }
                 $user = new user();
@@ -198,7 +207,7 @@ class userController extends baseController {
         echo $this->twig->render($page,
             ['users' => $users,
                 'isUserAdmin' => $this->isUserAdmin,
-                'isLoggedIn' => $this->isLoggedIn,
+                'loggedIn' => $this->isLoggedIn,
                 'userFeedbacks' => $feedback]);
     }
 
@@ -212,7 +221,6 @@ class userController extends baseController {
      * @return bool
      */
     public function checkAlreadyExistsMail($userMail){
-        $existingMail=false;
         $searchUser=new User();
         $userFound=$searchUser->findRowsBy("WHERE email='$userMail'");
         if($userFound==[]){

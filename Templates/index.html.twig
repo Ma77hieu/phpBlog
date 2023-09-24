@@ -86,14 +86,18 @@
                                             {% set connection_status='déconnecté' %}
                                             {% set login_redirect='login' %}
                                             {% set text_btn='connexion' %}
+                                            {% set display_signup=true %}
                                         {% endif %}
                                         <p class="m-top-10">Vous êtes actuellement <span class="connexion_status">{{ connection_status }}</span></p>
                                     </li>
-                                    <!---- More List ---->
                                     <li class="total">
-                                        {#<span class="pull-right"><strong>Total</strong>: $0.00</span>#}
                                         <a href="{{ login_redirect }}" class="btn btn-cart">{{ text_btn }}</a>
                                     </li>
+                                    {% if display_signup %}
+                                    <li class="total">
+                                        <a href="signup" class="btn btn-cart">S'inscrire</a>
+                                    </li>
+                                    {% endif %}
                                 </ul>
                             </li>
                             {#<li class="search"><a href="#"><i class="fa fa-search"></i></a></li>#}
@@ -189,6 +193,8 @@
                 {% block commentEditPage %}
                 {% endblock %}
                 {% block commentsList %}
+                {% endblock %}
+                {% block signup %}
                 {% endblock %}
 
 

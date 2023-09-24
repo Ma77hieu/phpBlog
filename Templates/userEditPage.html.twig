@@ -5,6 +5,7 @@
         <h1 class="m-bottom-40 m-top-40 col-md-offset-1">Modification des informations utilisateur</h1>
         <div class="row">
             <form action="save?id={{ user.user_id }}" method="post">
+                <input type="hidden" name="csrf_token" value="{{ session.csrfToken }}">
                 <div class="form-group">
                     <label for="edit_email" class="col-md-2 p-r-5 text-right">Email: </label>
                     <input type="edit_email" name="edit_email" id="edit_email" value="{{ user.email }}" />
@@ -15,7 +16,7 @@
                 </div>
                 <div class="form-group">
                     <label for="edit_roles" class="col-md-2 p-r-5 text-right">admin?:</label>
-                    <input type="checkbox" name="edit_roles" id="edit_roles" value="admin"/>
+                    <input type="checkbox" name="edit_roles" id="edit_roles" value="admin" {% if viewedUserIsAdmin %}checked{% endif %}/>
                 </div>
                 <div class="form-group">
                     <input class="btn btn-primary col-md-offset-2" type="submit" value="Enregistrer" id="edit_user_btn"/>

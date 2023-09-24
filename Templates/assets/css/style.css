@@ -1744,3 +1744,12 @@ Footer Section style
 .usr-edit-btn{
     margin:50px 0;
 }
+
+.row.display-flex {
+    display: flex;
+    flex-wrap: wrap;
+}
+.row.display-flex > [class*='col-'] {
+    display: flex;
+    flex-direction: column;
+}
