@@ -19,6 +19,11 @@ class userFeedback
         $this->msgTxt = $msgTxt;
     }
 
+    /**
+     * Used to associace a message to its type (error or success)
+     * this type is then used in front in order to modify css class
+     * @return array[]
+     */
     public function getFeedback()
     {
         return [['type' => $this->type, 'text' => $this->msgTxt]];

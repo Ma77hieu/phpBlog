@@ -9,6 +9,14 @@ class commentController extends baseController
         parent::__construct();
     }
 
+    /**
+     * Echo the twig template showing all unvalidated comments (waiting for an 
+     * admin validation)
+     * 
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     public function displayUnvalidatedComments()
     {
         $twigData = ['isUserAdmin' => $this->isUserAdmin,
@@ -33,29 +41,15 @@ class commentController extends baseController
     }
 
 
-    public function getOneComment()
-    {
-        if ($this->getVars['id']) {
-            $commentId = htmlspecialchars($this->getVars['id']);
-        }
-        $comment = new comment();
-        $commentFound = $comment->findById($commentId);
-        if (!$commentFound) {
-            $page = 'index.html.twig';
-            $msg = new userFeedback('error', ERROR_COMMENT_NOT_FOUND);
-        } else {
-            $page = 'commentPage.html.twig';
-        }
-        if ($msg) {
-            $feedback = $msg->getFeedback();
-        }
-        echo $this->twig->render($page,
-            ['comment' => $commentFound,
-                'loggedIn' => $this->isLoggedIn,
-                'isUserAdmin' => $this->isUserAdmin,
-                'userFeedbacks' => $feedback]);
-    }
 
+    /**
+     * Echo the twig template to create a comment (if get request) and
+     * manage the form submission (if post request)
+     *
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     public function createComment()
     {
         $comment = new comment();
@@ -187,6 +181,12 @@ class commentController extends baseController
                 'userFeedbacks' => $feedback]);
     }
 
+    /**
+     * Handle the deletion of a comment
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     public function deleteComment()
     {
         $commentId = htmlspecialchars($this->getVars['comment_id']);

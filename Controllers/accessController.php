@@ -11,6 +11,9 @@ class accessController extends baseController
         '/user/',
         '/comments'];
 
+    /**
+     * Constructor of accessController class
+     */
     public function __construct()
     {
         parent::__construct();

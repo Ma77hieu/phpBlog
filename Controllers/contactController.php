@@ -11,6 +11,15 @@ class contactController extends baseController
         parent::__construct();
     }
 
+    /**
+     * Handle the mail sending when the main contact form on homepage
+     * is posted
+     *
+     * @throws \PHPMailer\PHPMailer\Exception
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     public function sendContactForm()
     {
         $errors = [];

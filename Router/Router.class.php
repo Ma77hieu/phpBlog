@@ -48,11 +48,6 @@ class Router{
                 $controller=new commentController();
                 $controller->displayUnvalidatedComments();
                 break;
-            case('/comment'):
-                require $this->controllersDir.'commentController.php';
-                $controller=new commentController();
-                $controller->getOneComment();
-                break;
             case('/comment/create'):
                 require $this->controllersDir.'commentController.php';
                 $controller=new commentController();
@@ -97,11 +92,6 @@ class Router{
                 require $this->controllersDir.'userController.php';
                 $controller=new userController();
                 $controller->displayUsers();
-                break;
-            case('/user'):
-                require $this->controllersDir.'userController.php';
-                $controller=new userController();
-                $controller->getOneUser();
                 break;
             case('/user/edit'):
                 require $this->controllersDir.'userController.php';

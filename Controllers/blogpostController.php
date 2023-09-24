@@ -8,6 +8,13 @@ class blogpostController extends baseController
         parent::__construct();
     }
 
+    /**
+     * Echo the twig template showing all blogposts
+     *
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     public function displayBlogposts()
     {
         $blogpost = new blogpost();
@@ -19,6 +26,13 @@ class blogpostController extends baseController
                 'isUserAdmin' => $this->isUserAdmin,]);
     }
 
+    /**
+     * Echo the twig template showing one blogpost and its comments
+     *
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     public function getOneBlogpost()
     {
         if ($this->getVars['blogpost_id']) {
@@ -56,6 +70,15 @@ class blogpostController extends baseController
                 'userFeedbacks' => $feedback]);
     }
 
+    /**
+     * Based on the type of http request (get or post),
+     * echo the twig template with the create blogpost form or manage
+     * the form submission
+     *
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     public function createBlogpost()
     {
         $blogpost = new blogpost();
@@ -175,6 +198,12 @@ class blogpostController extends baseController
                 'userFeedbacks' => $feedback]);
     }
 
+    /**
+     * Handle the deletion of a blogpost
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     public function deleteBlogpost()
     {
         $blogpostId = htmlspecialchars($this->getVars['blogpost_id']);

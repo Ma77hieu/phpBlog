@@ -4,11 +4,20 @@
 class userController extends baseController
 {
 
+    /**
+     * The constructor function of the userController class
+     */
     public function __construct()
     {
         parent::__construct();
     }
 
+    /**
+     * Handle the display of all users (to user with admin rights only)
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     public function displayUsers()
     {
         $rightsChecker = new accessController();
@@ -29,33 +38,14 @@ class userController extends baseController
                 'users' => $users]);
     }
 
-    public function getOneUser()
-    {
-        $rightsChecker = new accessController();
-        //we check if the user can access this page that is for admin only
-        if (!($rightsChecker->checkAccessRights())) {
-            $page = 'index.html.twig';
-            $msg = new userFeedback('error', ACCESS_ERROR);
-            $feedback = $msg->getFeedback();
-        } else {
-            if (!$this->userFound) {
-                $page = 'index.html.twig';
-                $msg = new userFeedback('error', ERROR_USER_NOT_FOUND);
-            } else {
-                $page = 'userPage.html.twig';
-            }
-        }
-        if ($msg) {
-            $feedback = $msg->getFeedback();
-        }
-
-        echo $this->twig->render($page,
-            ['user' => $this->userFound,
-                'loggedIn' => $this->isLoggedIn,
-                'isUserAdmin' => $this->isUserAdmin,
-                'userFeedbacks' => $feedback]);
-    }
-
+    /**
+     * Echo the twig template to create a user (if get request) and
+     * manage the form submission (if post request)
+     *
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     public function createUser()
     {
         $user = new user();
@@ -101,6 +91,13 @@ class userController extends baseController
                 'loggedIn' => $this->isLoggedIn]);
     }
 
+    /**
+     * Handle the user login feature
+     *
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     public function login()
     {
         $user = new user();
@@ -128,6 +125,13 @@ class userController extends baseController
                 'loggedIn' => true]);
     }
 
+    /**
+     * Handle the user logout function
+     *
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     public function logout()
     {
         $this->sessionVars['isLoggedIn'] = false;
@@ -141,6 +145,14 @@ class userController extends baseController
                 'loggedIn' => false]);
     }
 
+    /**
+     * Displays the form in order for the admins to update
+     * the users attributes (if she/he is admin, change email adress etc)
+     *
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     public function displayUpdateUser()
     {
         $rightsChecker = new accessController();
@@ -175,6 +187,13 @@ class userController extends baseController
                 'userFeedbacks' => $feedback]);
     }
 
+    /**
+     * Handle the form submission to save update on users attributes
+     *
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     public function saveUpdateUser()
     {
         $rightsChecker = new accessController();
@@ -215,6 +234,9 @@ class userController extends baseController
                 'userFeedbacks' => $feedback]);
     }
 
+    /**
+     * @param int $userId id of the logged in user
+     */
     public function saveLoginInSession($userId)
     {
         $this->sessionVars['id'] = $userId;
