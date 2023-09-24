@@ -716,17 +716,7 @@ textarea::-ms-input-placeholder{
     padding: 5px;
 }
 
-/*for image bg*/
-/*.img-bg{
-  background: url(../images/home-msg.jpg) no-repeat center top fixed;
-  background-size
-  -moz-background-size: cover;
-  -webkit-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  width: 100%;
-  overflow: hidden;
-}*/
+
 
 
 .transform_scal_rotate:hover img{ 
@@ -1148,7 +1138,7 @@ FAQ Page
 Video Section style
 ======================*/
 .video{
-    background: url(../images/background/video.jpg) no-repeat center center;
+
     background-size: cover;
     position: relative;
 }
@@ -1266,7 +1256,7 @@ Impress section style
 ========================*/
 
 .impress{
-    background:url(../images/background/work-together.jpg) no-repeat center center;
+
     background-size: cover;
     position: relative;
 }
@@ -1402,7 +1392,7 @@ Skill Section style
 Testimonial Section style
 =======================*/
 .testimonial{
-    /*background: url(../images/background/testimonial.jpg) no-repeat center center;*/
+
     background-size: cover;
     position: relative;
 }
@@ -1536,7 +1526,7 @@ Brand Section style
 Subscribe Section style
 =====================*/
 .subscribe{
-    background: url(../images/background/subscribe.jpg) no-repeat center center;
+
     background-size: cover;
     position: relative;
 }
@@ -1598,7 +1588,7 @@ Maps Section style
 =====================*/
 
 .main_maps{
-    background: url(../images/maps.jpg) no-repeat center center;
+
     position: relative;
     width:100%;
     overflow: hidden;
