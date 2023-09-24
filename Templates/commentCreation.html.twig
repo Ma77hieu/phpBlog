@@ -2,6 +2,7 @@
 {% block commentCreation %}
     <h2 class="m-bottom-20">Écrire un commentaire:</h2>
     <form action="comment/create?blogpost_id={{ blogpost.blogpost_id }}" method="post" class="form-example">
+        <input type="hidden" name="csrf_token" value="{{ session.csrfToken }}">
         <div class="form-group">
             <label for="comment_title" class="col-md-2 p-r-5 text-right">Titre: </label>
             <input type="text" class="col" name="comment_title" id="comment_title" required />

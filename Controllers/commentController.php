@@ -64,6 +64,7 @@ class commentController extends baseController {
             //display the form
             $page = 'commentCreation.html.twig';
         } else {
+            $page = 'blogpostPage.html.twig';
             //handle the form submission
             $datas = ['title' => htmlspecialchars($_POST['comment_title']),
                 'text' => htmlspecialchars($_POST['comment_content']),
@@ -72,18 +73,17 @@ class commentController extends baseController {
                 'creation_date' => $now->format('Y-m-d H:i:s'),
                 'is_validated' => false];
             $commentCreation = $comment->insertRow($datas);
-            if (!$commentCreation) {
-                $page = 'commentCreation.html.twig';
+            if (!$commentCreation || $_POST['csrf_token'] != $_SESSION['csrfToken']) {
                 $msg = new userFeedback('error', ERROR_COMMENT_CREATION);
             } else {
-                $page = 'blogpostPage.html.twig';
-                $commentFound = $comment->findById($commentCreation);
                 $msg = new userFeedback('success', COMMENT_CREATED);
             }
+            $comments=$blogpost->getBlogpostComments(true);
             $feedback = $msg->getFeedback();
         }
         echo $this->twig->render($page,
             ['blogpost' => $blogpostFound,
+                'comments' => $comments,
                 'loggedIn'=>$this->isLoggedIn,
                 'isUserAdmin'=>$this->isUserAdmin,
                 'userFeedbacks' => $feedback]);
@@ -148,8 +148,8 @@ class commentController extends baseController {
         if (!($rightsChecker->isUpdateAuthorized($commentFound))) {
             $msg = new userFeedback('error', NOT_OWNER_COMMENT);
         } else {
-            if (!$commentFound) {
-                $msg = new userFeedback('error', COMMENT_NOT_FOUND);
+            if (!$commentFound || $_POST['csrf_token'] != $_SESSION['csrfToken']) {
+                $msg = new userFeedback('error', ERROR_COMMENT_CREATION);
             } else {
                 //handle the form submission
                 $now = new DateTime();
@@ -174,7 +174,7 @@ class commentController extends baseController {
         if($this->isUserAdmin){
             $onlyValidatedComments=false;
         }
-        $comments=$blogpostsController->getBlogpostComments($onlyValidatedComments);
+        $comments=$blogpost->getBlogpostComments($onlyValidatedComments);
         echo $this->twig->render($page,
             ['blogpost'=>$blogpostFound,
                 'comments' => $comments,

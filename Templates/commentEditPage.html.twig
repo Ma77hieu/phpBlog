@@ -8,6 +8,7 @@
                 <form action="save?comment_id={{ comment.comment_id }}&blogpost_id={{ blogpost.blogpost_id }}"
                       method="post"
                       class="comment_modif-form">
+                    <input type="hidden" name="csrf_token" value="{{ session.csrfToken }}">
                     <div class="form-group">
                         <label for="comment_edit_title" class="col-md-1 p-r-5 text-right">Titre: </label>
                         <input type="text" name="comment_edit_title" id="comment_edit_title"

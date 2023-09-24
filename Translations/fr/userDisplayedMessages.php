@@ -25,7 +25,7 @@ const BLOGPOST_DELETED="Le post a bien été supprimé.";
 
 //used in commentController
 const ERROR_COMMENT_NOT_FOUND="Problème dans la récupération du commentaire.";
-const ERROR_COMMENT_CREATION="Problème lors de la création du commentaire.";
+const ERROR_COMMENT_CREATION="Problème lors de l'enregistrement du commentaire.";
 const COMMENT_CREATED="Votre commentaire a été enregistré, il sera visible dès sa validation par un modérateur.";
 const NOT_OWNER_COMMENT="Vous ne pouvez pas modifier ce commentaire.";
 const COMMENT_NOT_FOUND="Nous n'avons pas réussi à récupérer les information du commentaire demandé.";

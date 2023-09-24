@@ -33,6 +33,13 @@ if(!isset($_SESSION['id'])){
     var_dump($v);
 }*/
 
+//CSRF token generation
+$request_method = strtoupper($_SERVER['REQUEST_METHOD']);
+$csrfToken=bin2hex(random_bytes(35));
+if ($request_method === 'GET') {
+    $_SESSION['csrfToken'] = $csrfToken;
+}
+
 require('Router/Router.class.php');
 $router=new Router();
 $router->goToRoute();

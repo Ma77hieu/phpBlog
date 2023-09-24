@@ -42,6 +42,7 @@ class baseController {
             'debug' => true,
         ]);
         $this->twig->addExtension(new \Twig\Extension\DebugExtension());
+        $this->twig->addGlobal('session', $_SESSION);
 
     }
 
