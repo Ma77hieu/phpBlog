@@ -24,7 +24,7 @@ class userController extends baseController
     {
         $rightsChecker = new accessController();
         //we check if the user can access this page that is for admin only
-        if (!($rightsChecker->checkAccessRights())) {
+        if ($rightsChecker->checkAccessRights()===false) {
             $page = 'index.html.twig';
             $msg = new userFeedback('error', ACCESS_ERROR);
             $feedback = $msg->getFeedback();
@@ -34,7 +34,8 @@ class userController extends baseController
             $users = $user->findAll();
         }
         echo $this->twig->render($page,
-            ['userFeedbacks' => $feedback,
+            [
+                'userFeedbacks' => $feedback,
                 'loggedIn' => $this->isLoggedIn,
                 'isUserAdmin' => $this->isUserAdmin,
                 'users' => $users]);
@@ -57,7 +58,7 @@ class userController extends baseController
             $page = 'signup.html.twig';
         } else {
             //handle the form submission only if password = password reentry inside the form
-            if ($this->postVars['password'] == $this->postVars['password_reentry']) {
+            if ($this->postVars['password'] === $this->postVars['password_reentry']) {
                 $datas = ['email' => htmlspecialchars($this->postVars['email']),
                     'password' => htmlspecialchars($this->postVars['password']),
                     'roles' => 'user'];
@@ -89,7 +90,8 @@ class userController extends baseController
             $feedback = $msg->getFeedback();
         }
         echo $this->twig->render($page,
-            ['userFeedbacks' => $feedback,
+            [
+                'userFeedbacks' => $feedback,
                 'isUserAdmin' => $this->isUserAdmin,
                 'loggedIn' => $this->isLoggedIn]);
     }
@@ -124,7 +126,8 @@ class userController extends baseController
         }
         $this->isUserAdmin();
         echo $this->twig->render($page,
-            ['userFeedbacks' => $feedback,
+            [
+                'userFeedbacks' => $feedback,
                 'isUserAdmin' => $this->isUserAdmin,
                 'loggedIn' => true]);
     }
@@ -145,7 +148,8 @@ class userController extends baseController
         $feedback = $msg->getFeedback();
         session_unset();
         echo $this->twig->render('homepage.html.twig',
-            ['userFeedbacks' => $feedback,
+            [
+                'userFeedbacks' => $feedback,
                 'isUserAdmin' => false,
                 'loggedIn' => false]);
     }
@@ -186,7 +190,8 @@ class userController extends baseController
             $feedback = $msg->getFeedback();
         }
         echo $this->twig->render($page,
-            ['user' => $this->userFound,
+            [
+                'user' => $this->userFound,
                 'isUserAdmin' => $this->isUserAdmin,
                 'loggedIn' => $this->isLoggedIn,
                 'viewedUserIsAdmin' => $viewedUserIsAdmin,
@@ -235,7 +240,8 @@ class userController extends baseController
         }
         $feedback = $msg->getFeedback();
         echo $this->twig->render($page,
-            ['users' => $users,
+            [
+                'users' => $users,
                 'isUserAdmin' => $this->isUserAdmin,
                 'loggedIn' => $this->isLoggedIn,
                 'userFeedbacks' => $feedback]);

@@ -68,7 +68,7 @@ class contactController extends baseController
                 $body = join('<br />', $bodyParagraphs);
                 $mail->Body = $body;
                 if (!$mail->send()) {
-                    if ($mail->SMTPDebug != SMTP::DEBUG_OFF) {
+                    if ($mail->SMTPDebug !== SMTP::DEBUG_OFF) {
                         $errorDetails = "MailerError: " . $mail->ErrorInfo;
                     } else {
                         $errorDetails = '';
