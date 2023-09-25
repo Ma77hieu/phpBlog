@@ -15,6 +15,9 @@ class model
     // it will always be declared inside the object that extend this base model
     public $tableName;
 
+    /**
+     * constructor of the model class
+     */
     public function __construct()
     {
         $this->database = dbSingleton::getInstance();

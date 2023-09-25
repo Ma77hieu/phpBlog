@@ -8,6 +8,9 @@ class dbSingleton
      */
     public static $instance;
 
+    /**
+     * Cnstructor of the dbSingleton class
+     */
     public function __construct()
     {
         self::getInstance();
