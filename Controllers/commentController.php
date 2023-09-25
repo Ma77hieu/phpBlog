@@ -77,7 +77,8 @@ class commentController extends baseController
             } else {
                 $msg = new userFeedback('success', COMMENT_CREATED);
             }
-            $comments = $blogpost->getBlogpostComments(true);
+            $userId=$this->sessionVars['id'];
+            $comments = $blogpost->getBlogpostComments(true,$blogpostId, $userId);
             $feedback = $msg->getFeedback();
         }
         echo $this->twig->render($page,
@@ -140,7 +141,7 @@ class commentController extends baseController
     {
         $commentId = htmlspecialchars($this->getVars['comment_id']);
         $blogpostId = htmlspecialchars($this->getVars['blogpost_id']);
-        $author = $this->sessionVars['id'];
+        $author = htmlspecialchars($this->sessionVars['id']);
         $blogpost = new blogpost();
         $blogpostFound = $blogpost->findById($blogpostId);
         $comment = new comment();
@@ -172,12 +173,11 @@ class commentController extends baseController
             }
         }
         $feedback = $msg->getFeedback();
-        $blogpostsController = new blogpostController();
         $onlyValidatedComments = true;
         if ($this->isUserAdmin) {
             $onlyValidatedComments = false;
         }
-        $comments = $blogpost->getBlogpostComments($onlyValidatedComments);
+        $comments = $blogpost->getBlogpostComments($onlyValidatedComments,$blogpostId, $author);
         echo $this->twig->render($page,
             ['blogpost' => $blogpostFound,
                 'comments' => $comments,

@@ -85,7 +85,7 @@ class accessController extends baseController
      */
     public function checkAccessRights()
     {
-        $route = strtok($_SERVER['REQUEST_URI'], '?');
+        $route = strtok($this->serverVars['REQUEST_URI'], '?');
         if (str_contains($route, '/index.php') !== false) {
             $route = str_replace('/index.php', '', $route);
         }

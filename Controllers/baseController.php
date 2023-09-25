@@ -52,6 +52,12 @@ class baseController
     public array $envVars;
 
     /**
+     * store the superglobal $_SERVER variables
+     * @var array
+     */
+    public array $serverVars;
+
+    /**
      * Constructor of baseController class
      */
     public function __construct()
@@ -60,6 +66,7 @@ class baseController
         $this->getVars = &$_GET;
         $this->postVars = &$_POST;
         $this->envVars = &$_ENV;
+        $this->serverVars = &$_SERVER;
         $this->generateTwig();
         $this->getUserId();
         $this->isUserLoggedIn();
@@ -79,7 +86,7 @@ class baseController
             'debug' => true,
         ]);
         $this->twig->addExtension(new \Twig\Extension\DebugExtension());
-        $this->twig->addGlobal('session', $_SESSION);
+        $this->twig->addGlobal('session', $this->sessionVars);
 
     }
 

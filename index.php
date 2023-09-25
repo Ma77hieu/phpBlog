@@ -12,11 +12,6 @@ const BASEDIR=__DIR__;
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-//including all classes from the Models directory
-spl_autoload_register(function ($class_name) {
-    $fullPath = 'Models/' . $class_name . '.class.php';
-    if(file_exists($fullPath)) include $fullPath;
-});
 
 //initialize user's session
 session_start();
@@ -36,9 +31,9 @@ if(!isset($_SESSION['id'])){
 //CSRF token generation
 $request_method = strtoupper($_SERVER['REQUEST_METHOD']);
 if ($request_method === 'GET') {
-    $_SESSION['csrfToken'] = bin2hex(random_bytes(35));
+    manageCsrf();
 }
-echo($_SESSION['csrfToken']);
+
 require('Router/Router.class.php');
 $router=new Router();
 $router->goToRoute();
