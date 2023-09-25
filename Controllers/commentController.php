@@ -65,7 +65,8 @@ class commentController extends baseController
         } else {
             $page = 'blogpostPage.html.twig';
             //handle the form submission
-            $datas = ['title' => htmlspecialchars($this->postVars['comment_title']),
+            $datas = [
+                'title' => htmlspecialchars($this->postVars['comment_title']),
                 'text' => htmlspecialchars($this->postVars['comment_content']),
                 'author' => (int) $author,
                 'blogpost' => (int) $blogpostId,
@@ -82,7 +83,8 @@ class commentController extends baseController
             $feedback = $msg->getFeedback();
         }
         echo $this->twig->render($page,
-            ['blogpost' => $blogpostFound,
+            [
+                'blogpost' => $blogpostFound,
                 'comments' => $comments,
                 'loggedIn' => $this->isLoggedIn,
                 'isUserAdmin' => $this->isUserAdmin,
@@ -122,7 +124,8 @@ class commentController extends baseController
             $feedback = $msg->getFeedback();
         }
         echo $this->twig->render($page,
-            ['blogpost' => $blogpostFound,
+            [
+                'blogpost' => $blogpostFound,
                 'comment' => $commentFound,
                 'loggedIn' => $this->isLoggedIn,
                 'isUserAdmin' => $this->isUserAdmin,
@@ -157,7 +160,8 @@ class commentController extends baseController
             } else {
                 //handle the form submission
                 $now = new DateTime();
-                $datas = ['title' => htmlspecialchars($this->postVars['comment_edit_title']),
+                $datas = [
+                    'title' => htmlspecialchars($this->postVars['comment_edit_title']),
                     'text' => htmlspecialchars($this->postVars['comment_edit_content']),
                     'author' => (int) $author,
                     'blogpost' => (int) $blogpostId,
@@ -179,7 +183,8 @@ class commentController extends baseController
         }
         $comments = $blogpost->getBlogpostComments($onlyValidatedComments,$blogpostId, $author);
         echo $this->twig->render($page,
-            ['blogpost' => $blogpostFound,
+            [
+                'blogpost' => $blogpostFound,
                 'comments' => $comments,
                 'loggedIn' => $this->isLoggedIn,
                 'isUserAdmin' => $this->isUserAdmin,
@@ -214,7 +219,8 @@ class commentController extends baseController
         }
         $feedback = $msg->getFeedback();
         echo $this->twig->render($page,
-            ['userFeedbacks' => $feedback,
+            [
+                'userFeedbacks' => $feedback,
                 'isUserAdmin' => $this->isUserAdmin,
                 'loggedIn' => $this->isLoggedIn]);
     }

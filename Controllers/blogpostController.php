@@ -22,7 +22,8 @@ class blogpostController extends baseController
         $orderBy = 'ORDER BY creation_date DESC';
         $blogposts = $blogpost->findAll($orderBy);
         echo $this->twig->render('blogpostsList.html.twig',
-            ['blogposts' => $blogposts,
+            [
+                'blogposts' => $blogposts,
                 'loggedIn' => $this->isLoggedIn,
                 'isUserAdmin' => $this->isUserAdmin,]);
     }
@@ -67,7 +68,8 @@ class blogpostController extends baseController
             $feedback = $msg->getFeedback();
         }
         echo $this->twig->render($page,
-            ['blogpost' => $blogpostFound,
+            [
+                'blogpost' => $blogpostFound,
                 'author' => $author,
                 'authorId' => $authorId,
                 'comments' => $commentsFound,
@@ -123,7 +125,8 @@ class blogpostController extends baseController
 
         }
         echo $this->twig->render($page,
-            ['blogpost' => $blogpostFound,
+            [
+                'blogpost' => $blogpostFound,
                 'loggedIn' => $this->isLoggedIn,
                 'isUserAdmin' => $this->isUserAdmin,
                 'userFeedbacks' => $feedback]);
@@ -161,7 +164,8 @@ class blogpostController extends baseController
             $feedback = $msg->getFeedback();
         }
         echo $this->twig->render($page,
-            ['blogposts' => $blogposts,
+            [
+                'blogposts' => $blogposts,
                 'blogpost' => $blogpostFound,
                 'loggedIn' => $this->isLoggedIn,
                 'isUserAdmin' => $this->isUserAdmin,
@@ -194,7 +198,8 @@ class blogpostController extends baseController
             } else {
                 //handle the form submission
                 $now = new DateTime();
-                $datas = ['title' => htmlspecialchars($this->postVars['blogpost_edit_title']),
+                $datas = [
+                    'title' => htmlspecialchars($this->postVars['blogpost_edit_title']),
                     'summary' => htmlspecialchars($this->postVars['blogpost_edit_summary']),
                     'content' => htmlspecialchars($this->postVars['blogpost_edit_content']),
                     'modification_date' => $now->format('Y-m-d H:i:s')];
@@ -205,7 +210,8 @@ class blogpostController extends baseController
         }
         $feedback = $msg->getFeedback();
         echo $this->twig->render($page,
-            ['blogposts' => $blogposts,
+            [
+                'blogposts' => $blogposts,
                 'loggedIn' => $this->isLoggedIn,
                 'isUserAdmin' => $this->isUserAdmin,
                 'userFeedbacks' => $feedback]);
@@ -239,7 +245,8 @@ class blogpostController extends baseController
         }
         $feedback = $msg->getFeedback();
         echo $this->twig->render($page,
-            ['userFeedbacks' => $feedback,
+            [
+                'userFeedbacks' => $feedback,
                 'loggedIn' => $this->isLoggedIn,
                 'isUserAdmin' => $this->isUserAdmin]);
     }

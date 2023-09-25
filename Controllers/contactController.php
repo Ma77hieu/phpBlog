@@ -85,7 +85,8 @@ class contactController extends baseController
         }
         $feedback = $msg->getFeedback();
         echo $this->twig->render('homepage.html.twig',
-            ['isUserAdmin' => $this->isUserAdmin,
+            [
+                'isUserAdmin' => $this->isUserAdmin,
                 'loggedIn' => $this->isLoggedIn,
                 'userFeedbacks' => $feedback]);
     }

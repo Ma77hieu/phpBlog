@@ -7,7 +7,8 @@ class accessController extends baseController
     // All uri that should be accessed only with admin rights need
     // to be inside this array, the controller checks for each value of the array if
     // it is INCLUDED inside the uri (not an exact match)
-    const URI_ADMIN_REQUIRED = ['/users',
+    const URI_ADMIN_REQUIRED = [
+        '/users',
         '/user/',
         '/comments'];
 
