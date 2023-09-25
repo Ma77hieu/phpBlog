@@ -166,14 +166,12 @@ class blogpost extends model
      * is defined inside the url blogpost_id parameter
      *
      * @param bool $onlyValidatedComments true if only validated comments need to be returned
+     * @param string $blogpostId id of the blogpost for which comments are looked for
+     * @param string $userId id of the person currently viewing the blogpost
      * @return array
      */
-    public function getBlogpostComments($onlyValidatedComments)
+    public function getBlogpostComments($onlyValidatedComments,$blogpostId, $userId)
     {
-        $blogpostId = htmlspecialchars($_GET['blogpost_id']);
-        if (!$blogpostId) {
-            $blogpostId = htmlspecialchars($_POST['blogpost_id']);
-        }
         $comment = new comment();
         $where = "WHERE blogpost=$blogpostId";
         if ($onlyValidatedComments) {
@@ -181,7 +179,7 @@ class blogpost extends model
         }
         $orderBy = 'ORDER BY creation_date DESC';
         $comments = $comment->findRowsBy($where, $orderBy);
-        $currentUserId = $_SESSION['id'];
+        $currentUserId = $userId;
         $treatedComments = [];
         foreach ($comments as $comment) {
             $isUserAuthor = false;
@@ -191,7 +189,6 @@ class blogpost extends model
             $comment += ['isUserAuthor' => $isUserAuthor];
             $treatedComments[] = $comment;
         }
-        /*var_dump($treatedComments);die;*/
         return $treatedComments;
     }
 

@@ -40,7 +40,7 @@
         <script src="/Templates/assets/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     </head>
 
-    <body data-spy="scroll" data-target=".navbar-collapse">
+    <body data-spy="scroll" data-target=".navbar-collapse" class="m-bottom-70">
         <!-- Preloader -->
         <div id="loading">
             <div id="loading-center">
@@ -80,7 +80,7 @@
                                     <li>
                                         {% if loggedIn %}
                                             {% set connection_status='connecté' %}
-                                            {% set login_redirect='logout' %}
+                                            {% set login_redirect='/logout' %}
                                             {% set text_btn='déconnexion' %}
                                         {% else %}
                                             {% set connection_status='déconnecté' %}

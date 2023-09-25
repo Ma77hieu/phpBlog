@@ -40,6 +40,7 @@ class blogpostController extends baseController
         if ($this->getVars['blogpost_id']) {
             $blogpostId = htmlspecialchars($this->getVars['blogpost_id']);
         }
+        $userId=$this->sessionVars['id'];
         $blogpost = new blogpost();
         $blogpostFound = $blogpost->findById($blogpostId);
         $authorId = (int)$blogpostFound['author'];
@@ -52,12 +53,16 @@ class blogpostController extends baseController
             $user = new user();
             $userFound = $user->findById($authorId);
             $author = $userFound['email'];
-            if ($this->sessionVars['id'] == $authorId) {
+            if ($userId== $authorId) {
                 $isCurrentUserAuthor = true;
             }
 
         }
-        $commentsFound = $blogpost->getBlogpostComments(true);
+        $blogpostId = htmlspecialchars($this->getVars['blogpost_id']);
+        if (!$blogpostId) {
+            $blogpostId = htmlspecialchars($this->postVars['blogpost_id']);
+        }
+        $commentsFound = $blogpost->getBlogpostComments(true,$blogpostId,$userId);
         if ($msg) {
             $feedback = $msg->getFeedback();
         }
@@ -93,6 +98,7 @@ class blogpostController extends baseController
             $page = 'blogpostCreation.html.twig';
         } else {
             //CSRF token check
+            /*var_dump($this->postVars['csrf_token']);var_dump($this->sessionVars['csrfToken']);die;*/
             if ($this->postVars['csrf_token'] != $this->sessionVars['csrfToken']) {
                 $page = 'blogpostCreation.html.twig';
                 $msg = new userFeedback('error', ERROR_BLOGPOST_CREATION);

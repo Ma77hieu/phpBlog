@@ -36,7 +36,7 @@ class dbSingleton
         try {
             $database = new PDO("mysql:host=localhost;dbname=$dbName;charset=utf8", $dbUser, $dbPwd);
         } catch (Exception $e) {
-            die('Erreur : ' . $e->getMessage());
+            echo('Erreur : ' . $e->getMessage());
         }
         return $database;
     }

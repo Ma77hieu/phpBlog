@@ -12,18 +12,18 @@
     {% if comment.isUserAuthor %}
         <div class="m-bottom-20">
             <div>
-                <a href="comment/edit?blogpost_id={{ comment.blogpost }}&comment_id={{ comment.comment_id }}"><i
+                <a href="/comment/edit?blogpost_id={{ comment.blogpost }}&comment_id={{ comment.comment_id }}"><i
                             class="fa fa-edit"></i> Modification</a>
             </div>
             <div>
-                <a class="m-bottom-10" href="comment/delete?blogpost_id={{ comment.blogpost }}&comment_id={{ comment.comment_id }}"><i
+                <a class="m-bottom-10" href="/comment/delete?blogpost_id={{ comment.blogpost }}&comment_id={{ comment.comment_id }}"><i
                             class="fa fa-trash"></i> Supprimer</a>
             </div>
         </div>
     {% endif %}
     {% if isUserAdmin %}
         <div>
-            <a class='{{ btn_class }}' href="comment/moderate?blogpost_id={{ comment.blogpost }}&comment_id={{ comment.comment_id }}">{{ wording }}
+            <a class='{{ btn_class }}' href="/comment/moderate?blogpost_id={{ comment.blogpost }}&comment_id={{ comment.comment_id }}">{{ wording }}
                 ce commentaire</a>
         </div>
     {% endif %}
