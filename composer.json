@@ -5,7 +5,10 @@
         "phpmailer/phpmailer": "^6.8"
     },
     "autoload": {
-        "classmap": ["Controllers","Models"],
-        "files": ["Translations/fr/userDisplayedMessages.php","Models/dbSingleton.class.php","Helpers/sessionHelper.php"]
+        "classmap": ["Controllers","Models","Router"],
+        "files": [
+            "Translations/fr/userDisplayedMessages.php",
+            "Models/dbSingleton.class.php",
+            "Helpers/sessionHelper.php"]
     }
 }
