@@ -34,6 +34,5 @@ if ($request_method === 'GET') {
     manageCsrf();
 }
 
-require('Router/Router.class.php');
 $router=new Router();
 $router->goToRoute();
